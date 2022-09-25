@@ -9,8 +9,11 @@ const fontes ={
     title:30,
     },
     estilo:{
-        titleFont:'Inter',
-        
+        titleFont:{
+            titleFamily:'inter',
+            
+        },
+
     }
 
 };
