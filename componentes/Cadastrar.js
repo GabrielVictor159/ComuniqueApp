@@ -5,7 +5,7 @@ export default class Cadastrar extends React.Component{
     render(){
         return(
     <View>
-
+        <View></View>
     </View>
         );
     }
