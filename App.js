@@ -19,7 +19,8 @@ function App() {
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false}}/>
         <Stack.Screen name='Login' component={Login}
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false}}/>
-        <Stack.Screen name='Logar' component={Logar} />
+        <Stack.Screen name='Logar' component={Logar} 
+        />
         <Stack.Screen name='Cadastrar' component={Cadastrar} />
       </Stack.Navigator>
     </NavigationContainer>
