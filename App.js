@@ -6,10 +6,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Logar from './componentes/Logar';
 import Cadastrar from './componentes/Cadastrar';
-
+import {Image, TouchableOpacity} from 'react-native';
 const Stack = createNativeStackNavigator();
 
-function App() {
+function App(navigation) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Mensagem1">
@@ -20,7 +20,7 @@ function App() {
         <Stack.Screen name='Login' component={Login}
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false}}/>
         <Stack.Screen name='Logar' component={Logar} 
-        />
+        options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
         <Stack.Screen name='Cadastrar' component={Cadastrar} />
       </Stack.Navigator>
     </NavigationContainer>
