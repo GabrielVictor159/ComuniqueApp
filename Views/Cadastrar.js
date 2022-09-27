@@ -13,7 +13,7 @@ export default class Cadastrar extends React.Component{
 
        <View style={{backgroundColor:'white', width:'100%', height:'80%' , top:'7%' ,borderTopRightRadius:50, borderTopLeftRadius:50, justifyContent:'center', alignItems:'center'}}>
             <View>
-            <Button1 width={220} height={55} borderRadius={20} navegacao='Logar'  texto='Cadastrar' color1={cores.buttonGradientColor1} color2={cores.buttonGradientColor2}/>
+            <Button1 width={220} height={55} borderRadius={20} fontSize={20}  navegacao='Logar'  texto='Cadastrar' color1={cores.buttonGradientColor1} color2={cores.buttonGradientColor2}/>
             </View>
        </View>
     </View>

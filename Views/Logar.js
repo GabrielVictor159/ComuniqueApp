@@ -1,13 +1,16 @@
 import React from "react";
-import {View, Image, Button, TouchableOpacity,Text, StyleSheet, TextInput} from "react-native";
+import {View, Text, Image, TouchableOpacity, StyleSheet, TextInput} from "react-native";
 import Button1 from "../componentes/Button1";
 import { Link } from "@react-navigation/native";
 import LogarStyle from "../estilos/Views_Estilos/LogarStyle";
 import { cores } from "../estilos";
+
+// Pagina para logarmos os usuarios
 export default class Logar extends React.Component{
     constructor(props){
         super(props);
         this.state={
+        //    atributos que serão armazenados do input 
             Usuario:'',
             Senha:''
         }
@@ -49,7 +52,7 @@ export default class Logar extends React.Component{
             />
         </View>
         <View style={styles.LogarStyle.ViewBottons}>
-        <Button1 width={220} height={55} borderRadius={20} navegacao='PaginaUsuario'  texto='Logar' color1={cores.buttonGradientColor1} color2={cores.buttonGradientColor2}/>
+        <Button1 width={220} height={55} borderRadius={20} fontSize={20}  navegacao='PaginaUsuario'  texto='Logar' color1={cores.buttonGradientColor1} color2={cores.buttonGradientColor2}/>
               <Link
               style={styles.LogarStyle.Link1}
               to={{screen:'RecuperarSenha'}}

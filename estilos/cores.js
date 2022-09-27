@@ -1,4 +1,4 @@
-
+// cores gerais usadas no projeto (por favor utilizar delas!)
 const cores ={
     header: '#333333',
     primario: '#069',

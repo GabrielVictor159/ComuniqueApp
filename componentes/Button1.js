@@ -1,12 +1,11 @@
 import React from "react";
 import {View, TouchableOpacity,Text} from "react-native";
 import {LinearGradient} from 'expo-linear-gradient';
-import {cores} from "../estilos";
 import {useNavigation} from '@react-navigation/native';
 const button1 = (props)=>{
     const navigation = useNavigation();
     return (
-    <View style={{borderRadius:20, width:props.width ,height:props.height,  alignItems:'center',
+    <View style={{borderRadius:props.borderRadius, width:props.width ,height:props.height,  alignItems:'center',
                  shadowColor: "black",
                  shadowOffset: {
                          width: 0,
@@ -29,7 +28,7 @@ const button1 = (props)=>{
                   navigation.navigate(props.navegacao)
                 }
                   >
-                  <Text style={{color:'white' , fontWeight: "normal", fontSize:20}}>{props.texto}</Text>
+                  <Text style={{color:'white' , fontWeight: "normal", fontSize:props.fontSize}}>{props.texto}</Text>
                   </TouchableOpacity>
                   
                 </LinearGradient>
