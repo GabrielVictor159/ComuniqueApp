@@ -1,3 +1,4 @@
+import cores from '../cores';
 const LogarStyle ={
     body:{
         width:"100%",
@@ -6,7 +7,7 @@ const LogarStyle ={
            flexDirection:'row',
             justifyContent:'center',
              alignItems:'flex-end',
-              backgroundColor:'#277BC0'
+              backgroundColor:cores.backgroundColor
     },
     buttonBack:{
         position:'absolute',
@@ -32,7 +33,7 @@ const LogarStyle ={
         width:220,
          textAlign:'center',
           borderBottomWidth : 1.0,
-           borderColor:'#0D5692'
+           borderColor:cores.backgroundColor
     },
     InputContainer1:{
         top:-120,
@@ -52,13 +53,13 @@ const LogarStyle ={
         alignItems:'center'
     },
     Link1:{
-        color:'#277BC0',
+        color:cores.backgroundColor,
         fontSize:15,
         top:10
 
     },
     Link2:{
-        color:'#277BC0',
+        color:cores.backgroundColor,
         fontSize:20,
         top: 100
     }

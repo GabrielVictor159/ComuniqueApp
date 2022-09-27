@@ -21,7 +21,7 @@ const button1 = (props)=>{
                 style={{ borderRadius:props.borderRadius, width:'100%', height:'100%'}}
                 start={{x:0, y:0}}
                 end={{x:1,y:1}}
-                colors={[cores.buttonGradientColor1 , cores.buttonGradientColor2]}
+                colors={[props.color1 , props.color2]}
                 >
                   <TouchableOpacity
                   style={{width:'100%', height:'100%', justifyContent:'center', alignItems:'center' }}
