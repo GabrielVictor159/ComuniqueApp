@@ -1,6 +1,7 @@
 import React from "react";
 import { View} from "react-native";
 import Button1 from "./Button1";
+// componente que sera utilizado nas duas mensagens iniciais para navegar entre elas
 const NavigationMensagens = (props)=>{
     if(props.screenNumber==1){
         return (

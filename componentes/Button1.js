@@ -2,6 +2,8 @@ import React from "react";
 import {View, TouchableOpacity,Text} from "react-native";
 import {LinearGradient} from 'expo-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
+
+// botão com gradiente reutilizado no codigo
 const button1 = (props)=>{
     const navigation = useNavigation();
     return (
