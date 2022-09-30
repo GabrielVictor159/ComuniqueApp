@@ -34,6 +34,7 @@ export default class Logar extends React.Component{
             <Image style={styles.LogarStyle.InputIcons} source={require("../assets/user.png")}/>
             <TextInput 
             style={styles.LogarStyle.Input}
+            keyboardType={"email-address"}
             placeholder={'E-mail'}
             onChangeText={
                 Usuario => {this.setState({Usuario})}
@@ -46,6 +47,7 @@ export default class Logar extends React.Component{
             <TextInput 
             style={styles.LogarStyle.Input}
             placeholder={'Senha'}
+            secureTextEntry={true}
             onChangeText={
                 Senha => {this.setState({Senha})}
             }
