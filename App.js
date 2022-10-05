@@ -9,6 +9,8 @@ import Cadastrar from './Views/Cadastrar';
 import {Image, TouchableOpacity} from 'react-native';
 import RecuperarSenha from './Views/RecuperarSenha';
 import PaginaUsuario from './Views/PaginaUsuario';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { GestureHandlerGestureEvent } from 'react-native-gesture-handler';
 const Stack = createNativeStackNavigator();
 
 function App(navigation) {
