@@ -9,7 +9,7 @@ function Mensagem1({navigation}){
                 <Image style={styles.Mensagem1Style.ImageCenter} source={require("../assets/selfcare.png")}/>
                 <Text style={styles.Mensagem1Style.Title}>Comunique</Text>
                 <View style={styles.Mensagem1Style.TextContainer}>
-                <Text style={styles.Mensagem1Style.Mensagem}>Um app de comunicação para ajudar alunos com autismo a se comunicar com amigos e professores</Text>
+                <Text style={styles.Mensagem1Style.Mensagem}>Um app de comunicação para ajudar alunos com autismo a se comunicarem com amigos e professores</Text>
                 </View>
                 <NavigationMensagens screenNumber={1}  navigationButton1='Login' button1Text='PULAR' buttonColor1={cores.buttonGradientColor1} 
                 buttonColor2={cores.buttonGradientColor2} navigationButton2='Mensagem2' button2Text='PRÓXIMO' 
