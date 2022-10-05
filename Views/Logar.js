@@ -17,7 +17,9 @@ export default class Logar extends React.Component{
     }
     render(){
         return(
-    <View style={styles.LogarStyle.body}>
+    <View style={styles.LogarStyle.body}
+    
+    >
         <TouchableOpacity
         style={styles.LogarStyle.buttonBack}
         onPress={() => this.props.navigation.goBack()}

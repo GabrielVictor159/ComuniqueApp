@@ -1,8 +1,10 @@
 import React from "react";
 import { View} from "react-native";
 import Button1 from "./Button1";
+import {useNavigation} from '@react-navigation/native';
 // componente que sera utilizado nas duas mensagens iniciais para navegar entre elas
 const NavigationMensagens = (props)=>{
+    const navigation = useNavigation();
     if(props.screenNumber==1){
         return (
             <View style={{width:'90%', height:'5%', justifyContent:'space-between', flexDirection:'row', position:'absolute', top:'90%', alignItems:'center'}}>
