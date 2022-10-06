@@ -46,7 +46,7 @@ const LogarStyle ={
     InputIcons: {
         position:'relative',
          left:-80,
-          top:22
+          top:"30%"
     },
     ViewBottons:{
         top:70,

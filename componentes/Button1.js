@@ -24,10 +24,17 @@ const button1 = (props)=>{
                 end={{x:1,y:1}}
                 colors={[props.color1 , props.color2]}
                 >
+                  
                   <TouchableOpacity
                   style={{width:'100%', height:'100%', justifyContent:'center', alignItems:'center' }}
                   onPress={()=>
-                  navigation.navigate(props.navegacao)
+                 
+                  props.tipoNavegacao==='navigate'
+                  ?navigation.navigate(props.navegacao)
+                  : props.tipoNavegacao==='push'?navigation.push(props.navegacao)
+                  : props.tipoNavegacao=='popToPop'?navigation.popToPop()
+                  : navigation.goBack()
+
                 }
                   >
                   <Text style={{color:'white' , fontWeight: "normal", fontSize:props.fontSize}}>{props.texto}</Text>
