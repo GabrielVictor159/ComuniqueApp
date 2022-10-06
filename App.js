@@ -34,7 +34,7 @@ function App(navigation) {
       >
         <Stack.Screen name="Mensagem1" component={Mensagem1} 
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false, 
-        cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS,
+        cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS, 
         }}/>
         <Stack.Screen name="Mensagem2" component={Mensagem2} 
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false ,
