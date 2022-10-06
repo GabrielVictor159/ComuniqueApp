@@ -12,17 +12,7 @@ import PaginaUsuario from './Views/PaginaUsuario';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { GestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { fromLeft } from 'react-navigation-transitions';
-const animationConfig={
-  animation:'FadeInFromBottomAndroidSpec',
-  config:{
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 10,
-    restSpeedThreshold: 10,
-  }
-}
+
 const Stack = createStackNavigator();
 
 function App(navigation) {
