@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, Image} f
 import Button1 from "../componentes/Button1";
 import { cores } from "../estilos";
 import CadastrarStyle from "../estilos/Views_Estilos/CadastrarStyle";
+
+
 export default class Cadastrar extends React.Component{
     constructor(props){
         super(props);
