@@ -39,7 +39,8 @@ function App(navigation) {
         <Stack.Screen name='Cadastrar' component={Cadastrar} 
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
         <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} />
-        <Stack.Screen name='PaginaUsuario' component={PaginaUsuario} />
+        <Stack.Screen name='PaginaUsuario' component={PaginaUsuario} 
+         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
