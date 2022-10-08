@@ -12,6 +12,7 @@ import PaginaUsuario from './Views/PaginaUsuario';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { GestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { fromLeft } from 'react-navigation-transitions';
+import PaginaInicial from './Views/PaginaInicial';
 
 const Stack = createStackNavigator();
 
@@ -39,7 +40,7 @@ function App(navigation) {
         <Stack.Screen name='Cadastrar' component={Cadastrar} 
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
         <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} />
-        <Stack.Screen name='PaginaUsuario' component={PaginaUsuario} 
+        <Stack.Screen name='PaginaInicial' component={PaginaInicial} 
          options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
       </Stack.Navigator>
     </NavigationContainer>
