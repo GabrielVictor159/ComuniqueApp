@@ -56,7 +56,7 @@ export default class Logar extends React.Component{
             />
         </View>
         <View style={styles.LogarStyle.ViewBottons}>
-        <Button1 width={220} height={55} borderRadius={20} fontSize={20} tipoNavegacao='reset' navegacao='PaginaUsuario'  texto='Logar' color1={cores.buttonGradientColor1} color2={cores.buttonGradientColor2}/>
+        <Button1 width={220} height={55} borderRadius={20} fontSize={20} tipoNavegacao='reset' navegacao='PaginaInicial'  texto='Logar' color1={cores.buttonGradientColor1} color2={cores.buttonGradientColor2}/>
               <Link
               style={styles.LogarStyle.Link1}
               to={{screen:'RecuperarSenha'}}
