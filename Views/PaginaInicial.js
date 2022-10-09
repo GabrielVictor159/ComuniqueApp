@@ -4,9 +4,9 @@ import { Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import PaginaUsuario from "./PaginaUsuario";
 import TabBarIcons from "../componentes/TabBarIcons";
-import Mensagens from "./Mensagens";
 import School from "./School";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Comunicacao from "./Comunicacao";
 const TabBarIconsConfig = {
   sizeActive:120,
   sizeInactive:50,
@@ -57,8 +57,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Mensagens"
-        component={Mensagens}
+        name="Comunicacao"
+        component={Comunicacao}
         options={{
           tabBarShowLabel:false,
           headerShown: false,
@@ -78,7 +78,7 @@ function MyTabs() {
       />
     <Tab.Screen
         name="School"
-        component={Mensagens}
+        component={School}
         options={{
           tabBarShowLabel:false,
           headerShown: false,

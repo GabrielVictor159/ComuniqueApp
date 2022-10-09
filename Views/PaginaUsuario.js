@@ -26,7 +26,7 @@ constructor(props){
             return(
             
                 <GestureRecognizer
-                onSwipeLeft={(state)=>this.props.navigation.navigate('Mensagens')}
+                onSwipeLeft={(state)=>this.props.navigation.navigate('Comunicacao')}
                 config={swipeConfig}
                 style={style.PaginaUsuarioStyle.container}
                 >
