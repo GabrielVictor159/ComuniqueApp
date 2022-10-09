@@ -1,11 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, View } from 'react-native';
+import { Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import PaginaUsuario from "./PaginaUsuario";
 import TabBarIcons from "../componentes/TabBarIcons";
 import Mensagens from "./Mensagens";
 import School from "./School";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 const TabBarIconsConfig = {
   sizeActive:120,
   sizeInactive:50,
@@ -20,17 +21,25 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
+    <SafeAreaView style={{flex:1}}>
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="PaginaUsuario"
+     
       screenOptions={{
+        tabBarPosition:'bootom',
+        tabBarIndicatorStyle:{
+          height:0
+        },
         tabBarStyle:{height:80, },
+        
         tabBarActiveTintColor: '#e91e63',
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="PaginaUsuario"
         component={PaginaUsuario}
         options={{
+          
           tabBarShowLabel:false,
           headerShown: false,
           
@@ -89,6 +98,7 @@ function MyTabs() {
       />
      
     </Tab.Navigator>
+    </SafeAreaView>
   );
 }
 
