@@ -2,7 +2,7 @@
 import cores from "./cores";
 import fontes from "./fontes";
 import { StyleSheet } from "react-native";
-const geral = {
+const geral = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor: cores.background,
@@ -30,16 +30,17 @@ const geral = {
             alignItems:'center',
     },
     shadow:{
-        shadowColor:'#C9C9C9',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4.84,
         
-        elevation: 5,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 7,
+},
+shadowOpacity: 0.41,
+shadowRadius: 9.11,
+
+elevation: 14,
     }
-};
+});
 
 export default geral;

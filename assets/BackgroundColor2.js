@@ -1,4 +1,5 @@
 import * as React from "react"
+import { View } from "react-native"
 import Svg, {
   Defs,
   RadialGradient,
@@ -9,7 +10,8 @@ import Svg, {
 } from "react-native-svg"
 
 const BackgroundColor2 = (props) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={'100%'} height={'100%'} preserveAspectRatio="xMinYMin slice" viewBox="0 0 375 808">
+
+  <Svg xmlns="http://www.w3.org/2000/svg" width={'100%'} height={'100%'} preserveAspectRatio="xMinYMin slice" viewBox="0 0 375 808" >
     <Defs>
       <RadialGradient
         id="b"
