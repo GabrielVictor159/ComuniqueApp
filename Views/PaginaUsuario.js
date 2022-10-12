@@ -43,16 +43,7 @@ constructor(props){
                 <Image  source={require('../assets/settingsIcon.png')} style={style.PaginaUsuarioStyle.imageSettings}/>
                 
             </View>
-            <View style={style.PaginaUsuarioStyle.imageReturn}>
-            <TouchableOpacity
-                onPress={()=>{
-                    this.props.navigation.goBack();
-                }}
-              
-                >
-                <Image source={require('../assets/IconReturn_PaginaUsuario.png')} />
-                </TouchableOpacity>
-            </View>
+            
             
                 
             <View style={style.PaginaUsuarioStyle.containerAtividades}>
@@ -60,7 +51,7 @@ constructor(props){
                 <Atividades width={350} height={100} borderRadius={35} color='#7BDAAC' completo='80%' image={require('../assets/Woman_meditates_under_a_rainbow.png')} text='Jogos' fontSize={20}/>
                 </View>
                 <View >
-                <Atividades width={350} height={100} borderRadius={35} color='#D23535' completo='30%' image={require('../assets/Man_with_laptop_uploading_files_to_cloud.png')}  fontSize={20}/>
+                <Atividades width={350} height={100} borderRadius={35} color='#D23535' completo='30%' image={require('../assets/Man_with_laptop_uploading_files_to_cloud.png')} text='Cronograma'  fontSize={20}/>
                 </View>
                 <View >
                 <Atividades width={350} height={100} borderRadius={35} color='#EFE378' completo='60%' image={require('../assets/Man_erases_the_inscription_from_the_board.png')}  text='Estudo Diario' fontSize={20}/>
