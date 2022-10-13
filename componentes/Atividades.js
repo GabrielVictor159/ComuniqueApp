@@ -1,10 +1,16 @@
 import React from "react";
-import { View,  Text, Image } from "react-native";
-import { TouchableOpacity } from "react-native";
-
+import { View,  Text, Image,  TouchableNativeFeedback } from "react-native";
+import {useNavigation} from '@react-navigation/native';
 const Atividades = (props) =>{
+    const navigation = useNavigation();
 const position1 = props.height*1.5
 return(
+   
+    <TouchableNativeFeedback 
+                    onPress={()=>{
+                        navigation.navigate(props.navigate)
+                    }}
+                    >
         <View style={{width:props.width, height:props.height, borderRadius:props.borderRadius, backgroundColor:props.color, shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -36,7 +42,7 @@ elevation: 8,}}>
             <View style={{width:props.completo, height:'80%', borderRadius:props.borderRadius, backgroundColor:props.color, left:'2%'}}/>
         </View>
         </View>
-  
+        </TouchableNativeFeedback>
 );
 }
 

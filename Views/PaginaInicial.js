@@ -4,9 +4,10 @@ import { Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import PaginaUsuario from "./PaginaUsuario";
 import TabBarIcons from "../componentes/TabBarIcons";
-import School from "./School";
+import Personalizar from "./Personalizar";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Comunicacao from "./Comunicacao";
+import Jogos from "./Jogos";
 const TabBarIconsConfig = {
   sizeActive:120,
   sizeInactive:50,
@@ -77,14 +78,14 @@ function MyTabs() {
         }}
       />
     <Tab.Screen
-        name="School"
-        component={School}
+        name="Personalizar"
+        component={Personalizar}
         options={{
           tabBarShowLabel:false,
           headerShown: false,
           
           tabBarIcon: ({ focused}) => (
-            <TabBarIcons focused={focused} name='School'
+            <TabBarIcons focused={focused} name='Personalizar'
             sizeActive={TabBarIconsConfig.sizeActive} 
             sizeInactive={TabBarIconsConfig.sizeInactive} 
             backgroundColorActive={TabBarIconsConfig.backgroundColorActive}
@@ -94,6 +95,16 @@ function MyTabs() {
              />
           ),
           
+        }}
+      />
+      <Tab.Screen 
+        name="Jogos"
+        component={Jogos}
+        options={{
+          tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false,
+        
+         
+          tabBarItemStyle:{display:'none'}
         }}
       />
      

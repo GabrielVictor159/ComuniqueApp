@@ -9,6 +9,7 @@ import ImagePerfil from "../componentes/ImagePerfil";
 import Lupa from "../assets/Lupa";
 import Comunicacoes from "../componentes/Comunicacoes";
 import ComunicacaoStyle from "../estilos/Views_Estilos/ComunicacaoStyle";
+
 export default class Comunicacao extends React.Component{
     
     constructor(props){
@@ -32,7 +33,7 @@ export default class Comunicacao extends React.Component{
         return callback.map(value =>{
             return(
                 <View style={{width:'100%', alignItems:'center'}} key={value.id}>
-            <Comunicacoes  width='90%' height={100} backgroundColor='white' imageUrl={require('../assets/PerfilImage.jpg')} 
+            <Comunicacoes  width='90%' height={100} backgroundColor='white' tipoUsuario='Professor' imageUrl={require('../assets/PerfilImage.jpg')} 
             nomeUsuario={value.nomeUsuario} mensagem={value.mensagem} online={value.online} horario={value.horario}/>
             <Text>{'\n'}</Text>
             </View>
@@ -45,7 +46,7 @@ export default class Comunicacao extends React.Component{
             
             <GestureRecognizer
             onSwipeRight={(state)=>this.props.navigation.navigate('PaginaUsuario')}
-            onSwipeLeft={(state)=>this.props.navigation.navigate('School')}
+            onSwipeLeft={(state)=>this.props.navigation.navigate('Personalizar')}
                 config={swipeConfig}
             style={{width:'100%', height:'100%', flex:1, justifyContent:'center', flexDirection:'column', overflow:'visible'}}
             >
