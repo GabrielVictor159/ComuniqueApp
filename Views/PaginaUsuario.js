@@ -14,7 +14,7 @@ constructor(props){
 
     super(props);
     this.state={
-        
+       
     }
 }
 
@@ -40,7 +40,7 @@ constructor(props){
                 
                 </View>
                
-                <Image  source={require('../assets/settingsIcon.png')} style={style.PaginaUsuarioStyle.imageSettings}/>
+               
                 
             </View>
             
@@ -48,7 +48,9 @@ constructor(props){
                 
             <View style={style.PaginaUsuarioStyle.containerAtividades}>
                 <View>
-                <Atividades width={350} height={100} borderRadius={35} color='#7BDAAC' completo='80%' image={require('../assets/Woman_meditates_under_a_rainbow.png')} text='Jogos' fontSize={20}/>
+                    
+                    <Atividades width={350} height={100} borderRadius={35} color='#7BDAAC' completo='80%' image={require('../assets/Woman_meditates_under_a_rainbow.png')} text='Jogos' fontSize={20} navigate='Jogos'/>
+               
                 </View>
                 <View >
                 <Atividades width={350} height={100} borderRadius={35} color='#D23535' completo='30%' image={require('../assets/Man_with_laptop_uploading_files_to_cloud.png')} text='Cronograma'  fontSize={20}/>

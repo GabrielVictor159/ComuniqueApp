@@ -17,4 +17,4 @@ const Lupa = (props) => (
   </Svg>
 )
 
-export default Lupa
+export default Lupa;
