@@ -9,7 +9,8 @@ const cores ={
     buttonActive:'#277BC0',
     buttonInative:'#D9D9D9',
     backgroundColor:'#277BC0',
-
+    jogosGradientColor1:'#367C5A',
+    jogosGradientColor2:'#94FECB',
 }
 
 export default cores;
