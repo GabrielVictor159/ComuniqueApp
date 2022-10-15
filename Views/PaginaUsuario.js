@@ -7,7 +7,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { cores } from "../estilos";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import swipeConfig from "../configs/swipeConfig";
-
+const properties ={
+    with:350,
+    height:105,
+    borderRadius:35,
+    iconType:'barComplete',
+    barWidth:'40%',
+    barHeight:'15%',
+    textColor:'black',
+    fontSize:20,
+    imageWidth:140,
+    imageHeight:140,
+    imageLeft:'50%',
+    imageTop:-40,
+}
 export default class PaginaUsuario extends React.Component{
 
 constructor(props){
@@ -16,11 +29,7 @@ constructor(props){
     this.state={
        
     }
-}
-
- 
-
-    
+}  
     render(){
       
             return(
@@ -47,17 +56,18 @@ constructor(props){
             
                 
             <View style={style.PaginaUsuarioStyle.containerAtividades}>
-                <View>
-                    
-                    <Atividades width={350} height={100} borderRadius={35} color='#7BDAAC' completo='80%' image={require('../assets/Woman_meditates_under_a_rainbow.png')} text='Jogos' fontSize={20} navigate='Jogos'/>
-               
-                </View>
-                <View >
-                <Atividades width={350} height={100} borderRadius={35} color='#D23535' completo='30%' image={require('../assets/Man_with_laptop_uploading_files_to_cloud.png')} text='Cronograma'  fontSize={20}/>
-                </View>
-                <View >
-                <Atividades width={350} height={100} borderRadius={35} color='#EFE378' completo='60%' image={require('../assets/Man_erases_the_inscription_from_the_board.png')}  text='Estudo Diario' fontSize={20}/>
-                </View>
+            <Atividades navigate='Jogos' width={properties.with} height={properties.height} borderRadius={properties.borderRadius}  iconType={properties.iconType} 
+                 barWidth={properties.barWidth}  barHeight={properties.barHeight} color='#7BDAAC'
+                    completo='80%' image={require('../assets/Woman_meditates_under_a_rainbow.png')} text='Jogos'   textColor={properties.textColor}
+                    fontSize={properties.fontSize} imageWidth={properties.imageWidth} imageHeight={properties.imageHeight} imageLeft={properties.imageLeft} imageTop={properties.imageTop}/>
+                 <Atividades width={properties.with} height={properties.height} borderRadius={properties.borderRadius}  iconType={properties.iconType} 
+                 barWidth={properties.barWidth} barHeight={properties.barHeight}  color='#E25959'
+                    completo='30%' image={require('../assets/Man_with_laptop_uploading_files_to_cloud.png')} text='Cronograma'   textColor={properties.textColor}
+                    fontSize={properties.fontSize}  imageWidth={properties.imageWidth} imageHeight={properties.imageHeight} imageLeft={properties.imageLeft} imageTop={properties.imageTop}/>
+                    <Atividades width={properties.with} height={properties.height} borderRadius={properties.borderRadius}  iconType={properties.iconType} 
+                 barWidth={properties.barWidth} barHeight={properties.barHeight} 
+                    completo='60%' image={require('../assets/Man_erases_the_inscription_from_the_board.png')} text='Estudo Diario' color='#EFE378'  textColor={properties.textColor}
+                    fontSize={properties.fontSize}   imageWidth={properties.imageWidth} imageHeight={properties.imageHeight} imageLeft={properties.imageLeft} imageTop={properties.imageTop}/>
                 </View>
 
                 </GestureRecognizer>

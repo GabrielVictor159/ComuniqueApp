@@ -5,7 +5,7 @@ import AprenderJogos from "./AprenderJogos";
 import { NavigationContainer } from '@react-navigation/native';
 import Jogar from "./Jogar";
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { cores } from "../estilos";
 import IconBack from "../assets/IconBack";
 import { TouchableOpacity } from "react-native";
 const Tab = createMaterialTopTabNavigator();
@@ -17,7 +17,7 @@ function MyTabs(){
         <LinearGradient style={{width:'100%', height:150, position:'absolute', top:0,
             
     }}
-        colors={['#367C5A', '#94FECB']} start={[0, 0]} end={[1, 3]}></LinearGradient>
+        colors={[cores.jogosGradientColor1, cores.jogosGradientColor2]} start={[0, 0]} end={[1, 1]}></LinearGradient>
         <Tab.Navigator 
         screenOptions={{
             tabBarStyle: {height:150, justifyContent:'flex-end', backgroundColor:'transparent', shadowColor: "green",
@@ -30,7 +30,7 @@ function MyTabs(){
             
             elevation: 11, },
             
-            tabBarLabelStyle: {textTransform:'none', color:'white'},
+            tabBarLabelStyle: {textTransform:'none', color:'white', fontSize:20},
            
             tabBarIndicatorStyle: {width:150, left:30, height:5, backgroundColor:'white'}
         }}
