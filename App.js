@@ -13,6 +13,7 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { GestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { fromLeft } from 'react-navigation-transitions';
 import PaginaInicial from './Views/PaginaInicial';
+import Chat from './Views/Chat';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,8 @@ function App(navigation) {
         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
         <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} />
         <Stack.Screen name='PaginaInicial' component={PaginaInicial} 
+         options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
+        <Stack.Screen name='Chat' component={Chat} 
          options={{ tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false  }}/>
       </Stack.Navigator>
     </NavigationContainer>
