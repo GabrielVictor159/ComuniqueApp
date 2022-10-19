@@ -8,12 +8,15 @@ import {
   ScrollView,
   TextInput,
   Button,
+  StyleSheet,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import IconBack from "../assets/IconBack";
 import CronogramaAtividade from "../componentes/CronogramaAtividade";
 import dataConvert from "../configs/dataConvert";
+import CronogramaStyle from "../estilos/Views_Estilos/CronogramaStyle";
+
 
 const cores = {
   red1: "#B75353",
@@ -27,7 +30,7 @@ const cores = {
   orange: "#E19625",
   black: "#252525",
 };
-
+let indice = 0;
 export default class Cronograma extends React.Component {
   constructor(props) {
     super(props);
@@ -89,31 +92,74 @@ export default class Cronograma extends React.Component {
   updateCor(cor) {
     this.setState({ AdicionarCor: cor });
   }
+  deleteAtividade(id) {
+    this.state.Atividades.splice(id, 1);
+  }
   atividadeReturn(callback) {
     return callback.map((value) => {
-      return (
-        <View style={{ left: "14%" }} key={value.id}>
-          <CronogramaAtividade
-            dia={value.data.substring(0, 2)}
-            mes={dataConvert(value.data.substring(3, 5))}
-            color={value.cor}
-            width={241}
-            height={106}
-            backgroundColor="#CDCDCD"
-            texto={value.text}
-            prazo={value.prazo}
-          />
-          <Text>{"\n"}</Text>
-        </View>
-      );
+      indice = value.id;
+
+      if (this.state.estado === 0) {
+        return (
+          <View style={{ left: "14%" }} key={value.id}>
+            <CronogramaAtividade
+              dia={value.data.substring(0, 2)}
+              mes={dataConvert(value.data.substring(3, 5))}
+              color={value.cor}
+              width={241}
+              height={106}
+              backgroundColor="#CDCDCD"
+              texto={value.text}
+              prazo={value.prazo}
+            />
+            <Text>{"\n"}</Text>
+          </View>
+        );
+      } else {
+        return (
+          <View style={{ left: "14%" }} key={value.id}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <CronogramaAtividade
+                dia={value.data.substring(0, 2)}
+                mes={dataConvert(value.data.substring(3, 5))}
+                color={value.cor}
+                width={220}
+                height={106}
+                backgroundColor="#CDCDCD"
+                texto={value.text}
+                prazo={value.prazo}
+              />
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  left: 20,
+                }}
+              >
+                <Button
+                  style={{ width: "100%", height: "100%" }}
+                  title="X"
+                  color={cores.red1}
+                  onPress={() => this.deleteAtividade(value.id)}
+                />
+              </View>
+            </View>
+            <Text>{"\n"}</Text>
+          </View>
+        );
+      }
     });
   }
   adicionarItem() {
     try {
       if (this.state.AdicionarDia >= 0 && this.state.AdicionarDia <= 32) {
         if (this.state.AdicionarMes > 0 && this.state.AdicionarMes <= 12) {
+          indice++;
           this.state.Atividades.push({
-            id: 6,
+            id: indice,
             data: this.state.AdicionarDia + "/" + this.state.AdicionarMes,
             cor: this.state.AdicionarCor,
             prazo: this.state.AdicionarPrazo,
@@ -136,45 +182,24 @@ export default class Cronograma extends React.Component {
             this.setState({ pop: 0 });
           }}
         >
-          <View
-            style={{ width: "100%", height: "100%", backgroundColor: "white" }}
-          >
-            <View
-              style={{
-                position: "absolute",
-                top: 130,
-                width: "100%",
-                height: "85%",
-              }}
-            >
-              <View
-                style={{
-                  width: 4,
-                  height: "100%",
-                  backgroundColor: "#626262",
-                  position: "absolute",
-                  left: "22%",
-                  opacity: 0.5,
-                }}
-              />
+          <View style={styles.CronogramaStyle.body}>
+            <View style={styles.CronogramaStyle.containerConteudo}>
+              <View style={styles.CronogramaStyle.linhaDeFundo} />
 
               {this.state.estado === 0 ? (
                 <ScrollView>
                   <Text>{"\n"}</Text>
                   {this.atividadeReturn(this.state.Atividades)}
                 </ScrollView>
-              ) : (
+              ) : this.state.estado === 1 ? (
                 <View style={{ alignItems: "center" }}>
                   <View style={{ flexDirection: "row", left: -32, top: 100 }}>
                     <View style={{ flexDirection: "column" }}>
                       <TextInput
-                        style={{
-                          color: "white",
-                          backgroundColor: this.state.AdicionarCor,
-                          textAlign: "center",
-                          width: 60,
-                          borderRadius: 15,
-                        }}
+                        style={[
+                          styles.CronogramaStyle.inputDia,
+                          { backgroundColor: this.state.AdicionarCor },
+                        ]}
                         keyboardType={"number-pad"}
                         placeholderTextColor={"white"}
                         placeholder={"Dia"}
@@ -183,14 +208,10 @@ export default class Cronograma extends React.Component {
                         }}
                       />
                       <TextInput
-                        style={{
-                          color: "white",
-                          backgroundColor: this.state.AdicionarCor,
-                          textAlign: "center",
-                          width: 60,
-                          borderRadius: 15,
-                          top: 20,
-                        }}
+                        style={[
+                          styles.CronogramaStyle.inputMes,
+                          { backgroundColor: this.state.AdicionarCor },
+                        ]}
                         keyboardType={"number-pad"}
                         placeholderTextColor={"white"}
                         placeholder={"Mes"}
@@ -200,40 +221,17 @@ export default class Cronograma extends React.Component {
                       />
                     </View>
                     <View
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 20,
-                        left: 10,
-                        backgroundColor: "black",
-                        top: 10,
-                      }}
+                      style={[
+                        styles.CronogramaStyle.atividadeAdicionarPonto,
+                        { backgroundColor: this.state.AdicionarCor },
+                      ]}
                     />
-                    <View
-                      style={{
-                        width: 241,
-                        height: 106,
-                        backgroundColor: "#CDCDCD",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        borderRadius: 15,
-                        left: 30,
-                        shadowColor: "#000",
-
-                        shadowOpacity: 1,
-                        shadowRadius: 1,
-
-                        elevation: 7,
-                      }}
-                    >
+                    <View style={styles.CronogramaStyle.atividadeAdicionar}>
                       <TextInput
-                        style={{
-                          color: "white",
-                          backgroundColor: this.state.AdicionarCor,
-                          textAlign: "center",
-                          width: "50%",
-                          borderRadius: 15,
-                        }}
+                        style={[
+                          styles.CronogramaStyle.inputPrazo,
+                          { backgroundColor: this.state.AdicionarCor },
+                        ]}
                         keyboardType={"default"}
                         placeholderTextColor={"white"}
                         placeholder={"Prazo"}
@@ -242,7 +240,6 @@ export default class Cronograma extends React.Component {
                         }}
                       />
                       <TextInput
-                        
                         keyboardType={"default"}
                         placeholder={"Mensagem"}
                         onChangeText={(text) => {
@@ -252,16 +249,7 @@ export default class Cronograma extends React.Component {
                     </View>
                   </View>
                   <TouchableOpacity
-                    style={{
-                      width: "50%",
-                      height: 40,
-                      backgroundColor: cores.red1,
-                      borderRadius: 30,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      left: 30,
-                      top: 140,
-                    }}
+                    style={styles.CronogramaStyle.botaoAdicionar}
                     onPress={() => {
                       this.adicionarItem();
                     }}
@@ -273,16 +261,7 @@ export default class Cronograma extends React.Component {
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={{
-                      width: "50%",
-                      height: 40,
-                      backgroundColor: cores.red1,
-                      borderRadius: 30,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      left: 30,
-                      top: 160,
-                    }}
+                    style={styles.CronogramaStyle.adicionarBotaoVoltar}
                     onPress={() => {
                       this.setState({ estado: 0 });
                     }}
@@ -294,17 +273,24 @@ export default class Cronograma extends React.Component {
                     </View>
                   </TouchableOpacity>
                 </View>
+              ) : this.state.estado === 2 ? (
+                <ScrollView>
+                  <Text>{"\n"}</Text>
+                  {this.atividadeReturn(this.state.Atividades)}
+                </ScrollView>
+              ) : (
+                <></>
               )}
             </View>
 
-            <View style={{ width: "100%", height: 130 }}>
+            <View style={styles.CronogramaStyle.menu}>
               <LinearGradient
                 style={{ width: "100%", height: "100%" }}
                 colors={[cores.red1, cores.red2]}
                 start={[0, 0]}
                 end={[1, 1]}
               />
-              <View style={{ position: "absolute", left: "5%", top: "25%" }}>
+              <View style={styles.CronogramaStyle.botaoVoltar}>
                 <TouchableOpacity
                   onPress={() => {
                     this.props.navigation.goBack();
@@ -314,15 +300,7 @@ export default class Cronograma extends React.Component {
                 </TouchableOpacity>
               </View>
 
-              <Text
-                style={{
-                  position: "absolute",
-                  top: "60%",
-                  left: "7%",
-                  fontSize: 22,
-                  color: "white",
-                }}
-              >
+              <Text style={styles.CronogramaStyle.tituloPagina}>
                 {"Cronograma"}
               </Text>
             </View>
@@ -330,29 +308,14 @@ export default class Cronograma extends React.Component {
         </TouchableWithoutFeedback>
 
         {this.state.estado === 1 ? (
-          <View
-            style={{
-              height: 32,
-              width: 100,
-              borderRadius: 20,
-              overflow: "hidden",
-              backgroundColor: "red",
-              position: "absolute",
-              top: 255,
-              left: '60%',
-              justifyContent:'center'
-            }}
-          >
+          <View style={styles.CronogramaStyle.adicionarContainerCorSelect}>
             <Picker
-              
               selectedValue={this.state.AdicionarCor}
               placeholder="Cor"
-              style={{
-                height: 50,
-                width: 100,
-                backgroundColor: this.state.AdicionarCor,
-                color: "white",
-              }}
+              style={[
+                styles.CronogramaStyle.adicionarCorSelect,
+                { backgroundColor: this.state.AdicionarCor },
+              ]}
               onValueChange={(itemValue, itemIndex) =>
                 this.updateCor(itemValue)
               }
@@ -361,34 +324,68 @@ export default class Cronograma extends React.Component {
                 value=""
                 label="Cor"
                 enabled={false}
-                style={{ fontSize: 14 }}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
               />
-              <Picker.Item label="Vermelho" value={cores.red1}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Verde" value={cores.green}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Azul" value={cores.blue}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Ciano" value={cores.cyan}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Laranja" value={cores.orange}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Rosa" value={cores.pink}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Roxo" value={cores.purple}  style={{ fontSize: 14 }}/>
-              <Picker.Item label="Amarelo" value={cores.yellow}  style={{ fontSize: 14 }}/>
+              <Picker.Item
+                label="Vermelho"
+                value={cores.red1}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Verde"
+                value={cores.green}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Azul"
+                value={cores.blue}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Ciano"
+                value={cores.cyan}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Laranja"
+                value={cores.orange}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Rosa"
+                value={cores.pink}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Roxo"
+                value={cores.purple}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
+              <Picker.Item
+                label="Amarelo"
+                value={cores.yellow}
+                style={styles.CronogramaStyle.adicionarCorSelectItems}
+              />
             </Picker>
+          </View>
+        ) : this.state.estado === 2 ? (
+          <View style={styles.CronogramaStyle.excluirBotaoVoltar}>
+            <Button
+              title="voltar"
+              color={cores.red1}
+              onPress={() => {
+                this.setState({ estado: 0 });
+              }}
+            />
           </View>
         ) : (
           <></>
         )}
         <View
-          style={{
-            width: this.state.pop === 0 ? 0 : 168,
-            height: 321,
-            backgroundColor: cores.red1,
-            position: "absolute",
-            borderRadius: 20,
-            left: "40%",
-            top: 40,
-            alignItems: "center",
-            overflow: "hidden",
-            justifyContent: "space-evenly",
-          }}
+          style={[
+            styles.CronogramaStyle.frameContainer,
+            { width: this.state.pop === 0 ? 0 : 168 },
+          ]}
         >
           <View
             style={{ width: "80%", flexDirection: "row", alignItems: "center" }}
@@ -421,16 +418,25 @@ export default class Cronograma extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{ width: "80%", flexDirection: "row", alignItems: "center" }}
-          >
-            <Image
-              style={{ width: 40, height: 42 }}
-              source={require("../assets/Lixeira.png")}
-            />
-            <Text style={{ color: "white", fontSize: 15, left: 10 }}>
-              {"Excluir"}
-            </Text>
+          <View style={{ width: "80%" }}>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+              onPress={() => {
+                this.setState({ estado: 2 });
+              }}
+            >
+              <Image
+                style={{ width: 40, height: 42 }}
+                source={require("../assets/Lixeira.png")}
+              />
+              <Text style={{ color: "white", fontSize: 15, left: 10 }}>
+                {"Criar"}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ position: "absolute", top: 35, left: "85%" }}>
@@ -449,3 +455,7 @@ export default class Cronograma extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  CronogramaStyle,
+});
