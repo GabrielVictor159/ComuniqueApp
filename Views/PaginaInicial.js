@@ -8,6 +8,7 @@ import Personalizar from "./Personalizar";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Comunicacao from "./Comunicacao";
 import Jogos from "./Jogos";
+import Cronograma from "./Cronograma";
 const TabBarIconsConfig = {
   sizeActive:120,
   sizeInactive:50,
@@ -100,6 +101,16 @@ function MyTabs() {
       <Tab.Screen 
         name="Jogos"
         component={Jogos}
+        options={{
+          tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false,
+        
+         
+          tabBarItemStyle:{display:'none'}
+        }}
+      />
+      <Tab.Screen 
+        name="Cronograma"
+        component={Cronograma}
         options={{
           tabBarStyle: { display: "none" }, headerShown: false, tabBarShowLabel: false,
         

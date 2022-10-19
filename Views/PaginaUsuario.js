@@ -60,7 +60,7 @@ constructor(props){
                  barWidth={properties.barWidth}  barHeight={properties.barHeight} color='#7BDAAC'
                     completo='80%' image={require('../assets/Woman_meditates_under_a_rainbow.png')} text='Jogos'   textColor={properties.textColor}
                     fontSize={properties.fontSize} imageWidth={properties.imageWidth} imageHeight={properties.imageHeight} imageLeft={properties.imageLeft} imageTop={properties.imageTop}/>
-                 <Atividades width={properties.with} height={properties.height} borderRadius={properties.borderRadius}  iconType={properties.iconType} 
+                 <Atividades navigate='Cronograma' width={properties.with} height={properties.height} borderRadius={properties.borderRadius}  iconType={properties.iconType} 
                  barWidth={properties.barWidth} barHeight={properties.barHeight}  color='#E25959'
                     completo='30%' image={require('../assets/Man_with_laptop_uploading_files_to_cloud.png')} text='Cronograma'   textColor={properties.textColor}
                     fontSize={properties.fontSize}  imageWidth={properties.imageWidth} imageHeight={properties.imageHeight} imageLeft={properties.imageLeft} imageTop={properties.imageTop}/>
