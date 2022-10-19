@@ -1,17 +1,16 @@
 const cores = {
-    red1: "#B75353",
-    red2: "#563838",
-    blue: "#539FB7",
-    green: "#3C8544",
-    pink: "#B953B2",
-    purple: "#8953B9",
-    cyan: "#53B9B5",
-    yellow: "#ECEC0C",
-    orange: "#E19625",
-    black: "#252525",
-  };
+  red1: "#B75353",
+  red2: "#563838",
+  blue: "#539FB7",
+  green: "#3C8544",
+  pink: "#B953B2",
+  purple: "#8953B9",
+  cyan: "#53B9B5",
+  yellow: "#ECEC0C",
+  orange: "#E19625",
+  black: "#252525",
+};
 const CronogramaStyle = {
-  
   menu: {
     width: "100%",
     height: 130,
@@ -50,7 +49,7 @@ const CronogramaStyle = {
   },
   inputDia: {
     color: "white",
-    
+
     textAlign: "center",
     width: 60,
     borderRadius: 15,
@@ -147,7 +146,6 @@ const CronogramaStyle = {
     overflow: "hidden",
     justifyContent: "space-evenly",
   },
-
 };
 
 export default CronogramaStyle;
