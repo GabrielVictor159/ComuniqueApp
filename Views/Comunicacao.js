@@ -113,23 +113,11 @@ export default class Comunicacao extends React.Component {
   }
   render() {
     return (
-      <GestureRecognizer
-        onSwipeRight={(state) =>
-          this.props.navigation.navigate("PaginaUsuario")
-        }
-        onSwipeLeft={(state) => this.props.navigation.navigate("Personalizar")}
-        config={swipeConfig}
-        style={{
-          width: "100%",
-          height: "100%",
-          flex: 1,
-          justifyContent: "center",
+      <>
+        <View style={{ position: "absolute", width: "100%", height: "100%",justifyContent: "center",
           flexDirection: "column",
-          overflow: "visible",
-        }}
-      >
-        <View style={{ position: "absolute", width: "100%", height: "100%" }}>
-          <BackgroundColor2 />
+          overflow: "visible", backgroundColor:'#E3E3E3'}}>
+          
         </View>
 
         <View style={styles.ComunicacaoStyle.mensagensContainer}>
@@ -164,7 +152,7 @@ export default class Comunicacao extends React.Component {
             />
           </View>
         </View>
-      </GestureRecognizer>
+        </>
     );
   }
 }

@@ -31,7 +31,7 @@ const PersonalizarOption = (props) => {
         }}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        colors={["#D3D3D3", "#FCFCFC"]}
+        colors={[props.color1, props.color2]}
       >
         <TouchableOpacity
           style={{

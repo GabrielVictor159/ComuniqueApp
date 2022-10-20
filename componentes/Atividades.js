@@ -10,7 +10,9 @@ const Atividades = (props) => {
     <TouchableNativeFeedback
       onPress={() => {
         props.navigate != null ? (
-          navigation.navigate(props.navigate)
+          navigation.navigate(props.navigate, {
+            navigation: props.navigation
+          })
         ) : props.goBack != null ? (
           navigate.goBack()
         ) : props.reset != null ? (
@@ -128,9 +130,21 @@ const Atividades = (props) => {
           >
             <PlayButton width={props.iconWidth} height={props.iconHeight} />
           </View>
-        ) : (
-          <></>
-        )}
+        ) : props.iconType === "text"?(
+          <View
+            style={{
+              width: "50%",
+              height: "20%",
+              position: "absolute",
+              justifyContent: "center",
+              left: "5%",
+              top: "65%",
+              alignItems: "center",
+            }}
+          >
+          <Text style={{color:'white', fontSize:props.textIconFontSize}}>{props.textIcon}</Text>
+          </View>
+        ): <></>}
 
         <Image
           source={props.image}

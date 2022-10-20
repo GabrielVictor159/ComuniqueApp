@@ -89,6 +89,14 @@ export default class Cronograma extends React.Component {
       AdicionarText: "",
     };
   }
+  componentDidMount(){
+    this.props.swipe(false);
+    this.props.navDisplay('none');
+  }
+  componentWillUnmount(){
+    this.props.swipe(true);
+    this.props.navDisplay('flex');
+  }
   updateCor(cor) {
     this.setState({ AdicionarCor: cor });
   }
