@@ -8,9 +8,9 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import Button1 from "../componentes/Button1";
-import { cores } from "../estilos";
-import CadastrarStyle from "../estilos/Views_Estilos/CadastrarStyle";
+import Button1 from "../../componentes/Button1";
+import { cores } from "../../estilos";
+import CadastrarStyle from "../../estilos/Views_Estilos/CadastrarStyle";
 
 export default class Cadastrar extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class Cadastrar extends React.Component {
         <Text style={styles.CadastrarStyle.textTitulo}>Registre-se</Text>
         <Image
           style={styles.CadastrarStyle.imageBackground}
-          source={require("../assets/Login-rafiki1.png")}
+          source={require("../../assets/Login-rafiki1.png")}
         />
 
         <View style={styles.CadastrarStyle.viewMiddle}>

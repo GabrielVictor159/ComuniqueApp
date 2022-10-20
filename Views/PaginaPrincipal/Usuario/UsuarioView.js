@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Animated, View, Image, StyleSheet } from "react-native";
-import Atividades from "../componentes/Atividades";
-import ImagePerfil from "../componentes/ImagePerfil";
-import PaginaUsuarioStyle from "../estilos/Views_Estilos/PaginaUsuarioStyle";
+import Atividades from "../../../componentes/Atividades";
+import ImagePerfil from "../../../componentes/ImagePerfil";
+import PaginaUsuarioStyle from "../../../estilos/Views_Estilos/PaginaUsuarioStyle";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { cores } from "../estilos";
+import { cores } from "../../../estilos";
 import GestureRecognizer from "react-native-swipe-gestures";
-import swipeConfig from "../configs/swipeConfig";
+import swipeConfig from "../../../configs/swipeConfig";
 import { useIsFocused } from '@react-navigation/native';
 const properties = {
   with: 350,
@@ -50,7 +50,7 @@ export default class UsuarioView extends React.Component {
               shadowOpacity={0.2}
               text="Felipe"
               fontSize={15}
-              imageUrl={require("../assets/PerfilImage.jpg")}
+              imageUrl={require("../../../assets/PerfilImage.jpg")}
             />
           </View>
         </View>
@@ -66,7 +66,7 @@ export default class UsuarioView extends React.Component {
             barHeight={properties.barHeight}
             color="#7BDAAC"
             completo="80%"
-            image={require("../assets/Woman_meditates_under_a_rainbow.png")}
+            image={require("../../../assets/Woman_meditates_under_a_rainbow.png")}
             text="Jogos"
             textColor={properties.textColor}
             fontSize={properties.fontSize}
@@ -85,7 +85,7 @@ export default class UsuarioView extends React.Component {
             barHeight={properties.barHeight}
             color="#E25959"
             completo="30%"
-            image={require("../assets/Man_with_laptop_uploading_files_to_cloud.png")}
+            image={require("../../../assets/Man_with_laptop_uploading_files_to_cloud.png")}
             text="Cronograma"
             textColor={properties.textColor}
             fontSize={properties.fontSize}
@@ -102,7 +102,7 @@ export default class UsuarioView extends React.Component {
             barWidth={properties.barWidth}
             barHeight={properties.barHeight}
             completo="60%"
-            image={require("../assets/Man_erases_the_inscription_from_the_board.png")}
+            image={require("../../../assets/Man_erases_the_inscription_from_the_board.png")}
             text="Estudo Diario"
             color="#EFE378"
             textColor={properties.textColor}

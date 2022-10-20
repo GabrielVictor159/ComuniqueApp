@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Text, TextInput, ScrollView } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
-import swipeConfig from "../configs/swipeConfig";
+import swipeConfig from "../../../configs/swipeConfig";
 import RadialGradient from "react-native-radial-gradient";
-import BackgroundColor2 from "../assets/BackgroundColor2";
-import { cores, geral } from "../estilos";
-import ImagePerfil from "../componentes/ImagePerfil";
-import Lupa from "../assets/Lupa";
-import Comunicacoes from "../componentes/Comunicacoes";
-import ComunicacaoStyle from "../estilos/Views_Estilos/ComunicacaoStyle";
+import BackgroundColor2 from "../../../assets/BackgroundColor2";
+import { cores, geral } from "../../../estilos";
+import ImagePerfil from "../../../componentes/ImagePerfil";
+import Lupa from "../../../assets/Lupa";
+import Comunicacoes from "../../../componentes/Comunicacoes";
+import ComunicacaoStyle from "../../../estilos/Views_Estilos/ComunicacaoStyle";
 
 export default class Comunicacao extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Comunicacao extends React.Component {
       mensagens: [
         {
           id: 1,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Gabriel",
           mensagem: "acredito",
           online: false,
@@ -26,7 +26,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 2,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Victor",
           mensagem: "acredito",
           online: true,
@@ -34,7 +34,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 3,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Pereira",
           mensagem: "acredito",
           online: false,
@@ -42,7 +42,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 4,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Borges",
           mensagem: "acredito",
           online: true,
@@ -50,7 +50,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 5,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Borges",
           mensagem: "acredito",
           online: true,
@@ -58,7 +58,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 6,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Borges",
           mensagem: "acredito",
           online: true,
@@ -66,7 +66,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 7,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Borges",
           mensagem: "acredito",
           online: true,
@@ -74,7 +74,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 8,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Borges",
           mensagem: "acredito",
           online: true,
@@ -82,7 +82,7 @@ export default class Comunicacao extends React.Component {
         },
         {
           id: 9,
-          imageUrl: "../assets/PerfilImage.jpg",
+          imageUrl: "../../../assets/PerfilImage.jpg",
           nomeUsuario: "Borges",
           mensagem: "acredito",
           online: true,
@@ -100,7 +100,7 @@ export default class Comunicacao extends React.Component {
             height={100}
             backgroundColor="white"
             tipoUsuario="Professor"
-            imageUrl={require("../assets/PerfilImage.jpg")}
+            imageUrl={require("../../../assets/PerfilImage.jpg")}
             nomeUsuario={value.nomeUsuario}
             mensagem={value.mensagem}
             online={value.online}
@@ -148,7 +148,7 @@ export default class Comunicacao extends React.Component {
               shadowColor="#5C5C5C"
               shadowOpacity={0.2}
               fontSize={15}
-              imageUrl={require("../assets/PerfilImage.jpg")}
+              imageUrl={require("../../../assets/PerfilImage.jpg")}
             />
           </View>
         </View>

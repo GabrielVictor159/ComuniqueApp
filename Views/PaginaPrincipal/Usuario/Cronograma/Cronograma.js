@@ -12,10 +12,10 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import IconBack from "../assets/IconBack";
-import CronogramaAtividade from "../componentes/CronogramaAtividade";
-import dataConvert from "../configs/dataConvert";
-import CronogramaStyle from "../estilos/Views_Estilos/CronogramaStyle";
+import IconBack from "../../../../assets/IconBack";
+import CronogramaAtividade from "../../../../componentes/CronogramaAtividade";
+import dataConvert from "../../../../configs/dataConvert";
+import CronogramaStyle from "../../../../estilos/Views_Estilos/CronogramaStyle";
 
 
 const cores = {
@@ -400,7 +400,7 @@ export default class Cronograma extends React.Component {
           >
             <Image
               style={{ width: 40, height: 42 }}
-              source={require("../assets/Lupa.png")}
+              source={require("../../../../assets/Lupa.png")}
             />
             <Text style={{ color: "white", fontSize: 15, left: 10 }}>
               {"Pesquisar"}
@@ -419,7 +419,7 @@ export default class Cronograma extends React.Component {
             >
               <Image
                 style={{ width: 40, height: 42 }}
-                source={require("../assets/AdicionarItem.png")}
+                source={require("../../../../assets/AdicionarItem.png")}
               />
               <Text style={{ color: "white", fontSize: 15, left: 10 }}>
                 {"Criar"}
@@ -439,7 +439,7 @@ export default class Cronograma extends React.Component {
             >
               <Image
                 style={{ width: 40, height: 42 }}
-                source={require("../assets/Lixeira.png")}
+                source={require("../../../../assets/Lixeira.png")}
               />
               <Text style={{ color: "white", fontSize: 15, left: 10 }}>
                 {"Criar"}
@@ -455,7 +455,7 @@ export default class Cronograma extends React.Component {
           >
             <Image
               style={{ width: 35, height: 35 }}
-              source={require("../assets/PopMenu.png")}
+              source={require("../../../../assets/PopMenu.png")}
             />
           </TouchableOpacity>
         </View>

@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { cores } from "../estilos";
-import Mensagem1Style from "../estilos/Views_Estilos/Mensagem1Style";
-import NavigationMensagens from "../componentes/NavigationMensagens";
+import { cores } from "../../estilos";
+import Mensagem1Style from "../../estilos/Views_Estilos/Mensagem1Style";
+import NavigationMensagens from "../../componentes/NavigationMensagens";
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
-import swipeConfig from "../configs/swipeConfig";
+import swipeConfig from "../../configs/swipeConfig";
 
 class Mensagem1 extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Mensagem1 extends React.Component {
       >
         <Image
           style={styles.Mensagem1Style.ImageCenter}
-          source={require("../assets/selfcare.png")}
+          source={require("../../assets/selfcare.png")}
         />
         <Text style={styles.Mensagem1Style.Title}>Comunique</Text>
         <View style={styles.Mensagem1Style.TextContainer}>

@@ -7,10 +7,10 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import Button1 from "../componentes/Button1";
+import Button1 from "../../componentes/Button1";
 import { Link } from "@react-navigation/native";
-import LogarStyle from "../estilos/Views_Estilos/LogarStyle";
-import { cores } from "../estilos";
+import LogarStyle from "../../estilos/Views_Estilos/LogarStyle";
+import { cores } from "../../estilos";
 
 // Pagina para logarmos os usuarios
 export default class Logar extends React.Component {
@@ -29,17 +29,17 @@ export default class Logar extends React.Component {
           style={styles.LogarStyle.buttonBack}
           onPress={() => this.props.navigation.goBack()}
         >
-          <Image source={require("../assets/IconBack.png")} />
+          <Image source={require("../../assets/IconBack.png")} />
         </TouchableOpacity>
         <Image
           style={styles.LogarStyle.ImageBack}
-          source={require("../assets/Autism-bro.png")}
+          source={require("../../assets/Autism-bro.png")}
         />
         <View style={styles.LogarStyle.ViewMiddle}>
           <View style={styles.LogarStyle.InputContainer1}>
             <Image
               style={styles.LogarStyle.InputIcons}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
             />
             <TextInput
               style={styles.LogarStyle.Input}
@@ -53,7 +53,7 @@ export default class Logar extends React.Component {
           <View style={styles.LogarStyle.InputContainer2}>
             <Image
               style={styles.LogarStyle.InputIcons}
-              source={require("../assets/padlock.png")}
+              source={require("../../assets/padlock.png")}
             />
             <TextInput
               style={styles.LogarStyle.Input}

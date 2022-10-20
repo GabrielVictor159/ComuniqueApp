@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
-import swipeConfig from "../configs/swipeConfig";
-import BackgroundColor2 from "../assets/BackgroundColor2";
-import ImagePerfil from "../componentes/ImagePerfil";
-import { cores, geral } from "../estilos";
-import PersonalizarOption from "../componentes/PersonalizarOption";
+import swipeConfig from "../../../configs/swipeConfig";
+import BackgroundColor2 from "../../../assets/BackgroundColor2";
+import ImagePerfil from "../../../componentes/ImagePerfil";
+import { cores, geral } from "../../../estilos";
+import PersonalizarOption from "../../../componentes/PersonalizarOption";
 import { TouchableOpacity } from "react-native";
-import PersonalizarIcons from "../assets/PersonalizarIcons";
+import PersonalizarIcons from "../../../assets/PersonalizarIcons";
 export default class Personalizar extends React.Component {
   render() {
     return (
@@ -42,7 +42,7 @@ export default class Personalizar extends React.Component {
               shadow="true"
               width={120}
               height={120}
-              imageUrl={require("../assets/PerfilImage.jpg")}
+              imageUrl={require("../../../assets/PerfilImage.jpg")}
             />
           </View>
         </View>

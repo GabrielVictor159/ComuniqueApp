@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
-import { cores } from "../estilos";
-import LoginStyle from "../estilos/Views_Estilos/LoginStyle";
-import Button1 from "../componentes/Button1";
+import { cores } from "../../estilos";
+import LoginStyle from "../../estilos/Views_Estilos/LoginStyle";
+import Button1 from "../../componentes/Button1";
 
 // Pagina anterior as paginas de login e cadastro
 class Login extends React.Component {
@@ -11,13 +11,13 @@ class Login extends React.Component {
       <View style={styles.LoginStyle.body}>
         <Image
           style={styles.LoginStyle.IconTitle}
-          source={require("../assets/selfcare(2).png")}
+          source={require("../../assets/selfcare(2).png")}
         />
         <Text style={styles.LoginStyle.Title}>Comunique</Text>
         <View style={styles.LoginStyle.ViewMiddle}>
           <Image
             style={styles.LoginStyle.ImageCenter}
-            source={require("../assets/Autism-rafiki.png")}
+            source={require("../../assets/Autism-rafiki.png")}
           />
           <View style={styles.LoginStyle.ButtonsContainer}>
             <View>
