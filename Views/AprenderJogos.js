@@ -3,10 +3,11 @@ import { View } from "react-native";
 import { cores } from "../estilos";
 import Atividades from "../componentes/Atividades";
 const properties = {
+  color:'#0F4C75',
   with: 350,
   height: 160,
   borderRadius: 35,
-  iconType: "barComplete",
+  iconType: "text",
   barWidth: "40%",
   barHeight: "10%",
   gradient: true,
@@ -41,10 +42,8 @@ export default class AprenderJogos extends React.Component {
           iconType={properties.iconType}
           barWidth={properties.barWidth}
           barHeight={properties.barHeight}
-          gradient={true}
-          color1={cores.jogosGradientColor1}
-          color2={cores.jogosGradientColor2}
-          completo="80%"
+          color={properties.color}
+          textIcon="Origem e Importancia"
           image={require("../assets/Learning-rafiki1.png")}
           text="Xadrez"
           text2="Aprendizagem 1"
@@ -62,13 +61,11 @@ export default class AprenderJogos extends React.Component {
           iconType={properties.iconType}
           barWidth={properties.barWidth}
           barHeight={properties.barHeight}
-          gradient={true}
-          color1={cores.jogosGradientColor1}
-          color2={cores.jogosGradientColor2}
-          completo="80%"
+          color={properties.color}
           image={require("../assets/Learning-bro1.png")}
           text="Xadrez"
           text2="Aprendizagem 1"
+          textIcon="Tabuleiro e Peças"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
           imageWidth={properties.imageWidth}
@@ -83,10 +80,9 @@ export default class AprenderJogos extends React.Component {
           iconType={properties.iconType}
           barWidth={properties.barWidth}
           barHeight={properties.barHeight}
-          gradient={true}
-          color1={cores.jogosGradientColor1}
-          color2={cores.jogosGradientColor2}
-          completo="80%"
+          color={properties.color}
+          textIcon='Reforçe seu conhecimento'
+          textIconFontSize={13}
           image={require("../assets/Learning-pana1.png")}
           text="Xadrez"
           text2="Aprendizagem 1"

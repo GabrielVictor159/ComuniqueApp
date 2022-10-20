@@ -5,7 +5,7 @@ const PaginaUsuarioStyle = {
     width: "100%",
     height: "100%",
     flexDirection: "column",
-    backgroundColor: cores.backgroundColor,
+    backgroundColor: '#E3E3E3',
     alignItems: "center",
   },
   menuSuperior: {

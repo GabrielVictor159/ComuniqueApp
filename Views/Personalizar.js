@@ -11,9 +11,7 @@ import PersonalizarIcons from "../assets/PersonalizarIcons";
 export default class Personalizar extends React.Component {
   render() {
     return (
-      <GestureRecognizer
-        onSwipeRight={(state) => this.props.navigation.navigate("Comunicacao")}
-        config={swipeConfig}
+      <View
         style={{
           width: "100%",
           height: "100%",
@@ -23,8 +21,8 @@ export default class Personalizar extends React.Component {
           overflow: "visible",
         }}
       >
-        <View style={{ position: "absolute", width: "100%", height: "100%" }}>
-          <BackgroundColor2 />
+        <View style={{ position: "absolute", width: "100%", height: "100%", backgroundColor:'#E3E3E3' }}>
+          
         </View>
         <View
           style={[
@@ -58,8 +56,8 @@ export default class Personalizar extends React.Component {
             borderRadius={15}
             width="85%"
             height={50}
-            color1="rgba(252, 252, 252, 1)"
-            color2="rgba(146, 146, 146, 0)"
+            color1="#FCFCFC"
+            color2="#FCFCFC"
             fontSize={20}
             texto="Alterar Nome"
             icon="Pencil"
@@ -69,8 +67,8 @@ export default class Personalizar extends React.Component {
             borderRadius={15}
             width="85%"
             height={50}
-            color1="rgba(252, 252, 252, 1)"
-            color2="rgba(146, 146, 146, 0)"
+            color1="#FCFCFC"
+            color2="#FCFCFC"
             fontSize={20}
             texto="Alterar Senha "
             icon="Padlock"
@@ -80,8 +78,8 @@ export default class Personalizar extends React.Component {
             borderRadius={15}
             width="85%"
             height={50}
-            color1="rgba(252, 252, 252, 1)"
-            color2="rgba(146, 146, 146, 0)"
+            color1="#FCFCFC"
+            color2="#FCFCFC"
             fontSize={20}
             texto="Alterar E-mail  "
             icon="Email"
@@ -91,15 +89,15 @@ export default class Personalizar extends React.Component {
             borderRadius={15}
             width="85%"
             height={50}
-            color1="rgba(252, 252, 252, 1)"
-            color2="rgba(146, 146, 146, 0)"
+            color1="#FCFCFC"
+            color2="#FCFCFC"
             fontSize={20}
             texto="Sair"
             icon="Logout"
             textColor="#BE0B16"
           />
         </View>
-      </GestureRecognizer>
+      </View>
     );
   }
 }

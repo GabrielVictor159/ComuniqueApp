@@ -9,37 +9,54 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Comunicacao from "./Comunicacao";
 import Jogos from "./Jogos";
 import Cronograma from "./Cronograma";
+import { color } from "react-native-reanimated";
 const TabBarIconsConfig = {
-  sizeActive: 120,
+  sizeActive: 50,
   sizeInactive: 50,
-  backgroundColorActive: "white",
+  backgroundColorActive: "",
   backgroundColorInactive: "",
-  topActive: -20,
+  topActive: 0,
   topInactive: 0,
 };
-
-const Tab = createBottomTabNavigator();
-
-function MyTabs() {
+const Tab = createMaterialTopTabNavigator();
+export default class PaginaInicial extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      swipeEnabled:true,
+      display:'flex'
+    }
+  }
+  setSwipeEnabled = (callback) => {
+    this.setState({swipeEnabled:callback})
+  }
+  setDisplay = (callback) =>{
+    this.setState({display:callback})
+  }
+render(){
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <NavigationContainer independent={true}>
       <Tab.Navigator
         initialRouteName="PaginaUsuario"
+        tabBarPosition="bottom"
         screenOptions={{
-          tabBarPosition: "bootom",
+          swipeEnabled:this.state.swipeEnabled,
           tabBarIndicatorStyle: {
             height: 0,
           },
-          tabBarStyle: { height: 80 },
-
+          tabBarStyle: { height: 80, display:this.state.display },
+          tabBarIconStyle:{alignItems:'center'},
           tabBarActiveTintColor: "#e91e63",
         }}
       >
         <Tab.Screen
           name="PaginaUsuario"
-          component={PaginaUsuario}
+          
+          children={()=><PaginaUsuario swipe={this.setSwipeEnabled} navDisplay={this.setDisplay}/>}
           options={{
-            tabBarShowLabel: false,
+            tabBarLabel:({focused})=>{
+              return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Principal'}</Text>
+            },
             headerShown: false,
 
             tabBarIcon: ({ focused }) => (
@@ -62,9 +79,12 @@ function MyTabs() {
           name="Comunicacao"
           component={Comunicacao}
           options={{
-            tabBarShowLabel: false,
+            
+            tabBarLabel:({focused})=>{
+              return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Conversas'}</Text>
+            },
             headerShown: false,
-
+           
             tabBarIcon: ({ focused }) => (
               <TabBarIcons
                 focused={focused}
@@ -85,7 +105,9 @@ function MyTabs() {
           name="Personalizar"
           component={Personalizar}
           options={{
-            tabBarShowLabel: false,
+            tabBarLabel:({focused})=>{
+              return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Configurações'}</Text>
+            },
             headerShown: false,
 
             tabBarIcon: ({ focused }) => (
@@ -104,37 +126,12 @@ function MyTabs() {
             ),
           }}
         />
-        <Tab.Screen
-          name="Jogos"
-          component={Jogos}
-          options={{
-            tabBarStyle: { display: "none" },
-            headerShown: false,
-            tabBarShowLabel: false,
-
-            tabBarItemStyle: { display: "none" },
-          }}
-        />
-        <Tab.Screen
-          name="Cronograma"
-          component={Cronograma}
-          options={{
-            tabBarStyle: { display: "none" },
-            headerShown: false,
-            tabBarShowLabel: false,
-
-            tabBarItemStyle: { display: "none" },
-          }}
-        />
+        
       </Tab.Navigator>
-    </SafeAreaView>
+      </NavigationContainer>
+      
   );
+        }
 }
 
-export default function PaginaInicial() {
-  return (
-    <NavigationContainer independent={true}>
-      <MyTabs />
-    </NavigationContainer>
-  );
-}
+

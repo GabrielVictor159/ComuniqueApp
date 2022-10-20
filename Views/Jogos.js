@@ -8,14 +8,16 @@ import { LinearGradient } from "expo-linear-gradient";
 import { cores } from "../estilos";
 import IconBack from "../assets/IconBack";
 import { TouchableOpacity } from "react-native";
+import { DrawerActions } from '@react-navigation/native';
+import { renderNode } from "@rneui/themed/dist/config";
+import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
-
 function MyTabs() {
   return (
     <>
       <LinearGradient
         style={{ width: "100%", height: 150, position: "absolute", top: 0 }}
-        colors={[cores.jogosGradientColor1, cores.jogosGradientColor2]}
+        colors={['#0F4C75', '#0F4C75']}
         start={[0, 0]}
         end={[1, 1]}
       ></LinearGradient>
@@ -57,14 +59,25 @@ function MyTabs() {
   );
 }
 
-export default function Jogos(props) {
+export default function Jogos (props){
+  useEffect(() => {
+    props.swipe(false);
+  props.navDisplay('none');
+  return function (){
+    props.swipe(true);
+  props.navDisplay('flex');
+  };
+  }, []);
+
+
+const navigation = useNavigation();
   return (
     <NavigationContainer independent={true}>
       <MyTabs />
       <View style={{ position: "absolute", top: 50, left: 20 }}>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.goBack();
+           navigation.goBack();
           }}
         >
           <IconBack width={28} height={29} />
@@ -72,4 +85,5 @@ export default function Jogos(props) {
       </View>
     </NavigationContainer>
   );
+        
 }

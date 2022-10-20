@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { cores } from "../estilos";
 import Atividades from "../componentes/Atividades";
 const properties = {
+  color:'#0F4C75',
   with: 350,
   height: 160,
   borderRadius: 35,
@@ -35,15 +36,14 @@ export default class Jogar extends React.Component {
         }}
       >
         <Atividades
+          
           width={properties.with}
           height={properties.height}
           borderRadius={properties.borderRadius}
           iconType={properties.iconType}
-          gradient={true}
-          color1={cores.jogosGradientColor1}
-          color2={cores.jogosGradientColor2}
           iconWidth={properties.iconWidth}
           iconHeight={properties.iconHeight}
+          color={properties.color}
           image={require("../assets/Chess-pana2.png")}
           text="Facil"
           textColor={properties.textColor}
@@ -58,11 +58,9 @@ export default class Jogar extends React.Component {
           height={properties.height}
           borderRadius={properties.borderRadius}
           iconType={properties.iconType}
-          gradient={true}
-          color1={cores.jogosGradientColor1}
-          color2={cores.jogosGradientColor2}
           iconWidth={properties.iconWidth}
           iconHeight={properties.iconHeight}
+          color={properties.color}
           image={require("../assets/Chess-amico1.png")}
           text="Médio"
           textColor={properties.textColor}
@@ -77,9 +75,7 @@ export default class Jogar extends React.Component {
           height={properties.height}
           borderRadius={properties.borderRadius}
           iconType={properties.iconType}
-          gradient={true}
-          color1={cores.jogosGradientColor1}
-          color2={cores.jogosGradientColor2}
+          color={properties.color}
           iconWidth={properties.iconWidth}
           iconHeight={properties.iconHeight}
           image={require("../assets/Chess-bro1.png")}
