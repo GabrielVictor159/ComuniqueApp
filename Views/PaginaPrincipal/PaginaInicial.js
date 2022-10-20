@@ -2,13 +2,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import PaginaUsuario from "./PaginaUsuario";
-import TabBarIcons from "../componentes/TabBarIcons";
-import Personalizar from "./Personalizar";
+import PaginaUsuario from "./Usuario/PaginaUsuario";
+import TabBarIcons from "../../componentes/TabBarIcons";
+import Personalizar from "./Configurações/Personalizar";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Comunicacao from "./Comunicacao";
-import Jogos from "./Jogos";
-import Cronograma from "./Cronograma";
+import Comunicacao from "./Mensagens/Comunicacao";
+import Jogos from "./Usuario/Jogos/Jogos";
+import Cronograma from "./Usuario/Cronograma/Cronograma";
 import { color } from "react-native-reanimated";
 const TabBarIconsConfig = {
   sizeActive: 50,

@@ -1,13 +1,15 @@
 import React from "react";
 import { View } from "react-native";
-import { cores } from "../estilos";
-import Atividades from "../componentes/Atividades";
+import { cores } from "../../../../estilos";
+import Atividades from "../../../../componentes/Atividades";
 const properties = {
   color:'#0F4C75',
   with: 350,
   height: 160,
   borderRadius: 35,
-  iconType: "playButton",
+  iconType: "text",
+  barWidth: "40%",
+  barHeight: "10%",
   gradient: true,
   textColor: "white",
   fontSize: 20,
@@ -15,10 +17,8 @@ const properties = {
   imageHeight: 180,
   imageLeft: 0,
   imageTop: -40,
-  iconWidth: 50,
-  iconHeight: 50,
 };
-export default class Jogar extends React.Component {
+export default class AprenderJogos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -36,16 +36,17 @@ export default class Jogar extends React.Component {
         }}
       >
         <Atividades
-          
           width={properties.with}
           height={properties.height}
           borderRadius={properties.borderRadius}
           iconType={properties.iconType}
-          iconWidth={properties.iconWidth}
-          iconHeight={properties.iconHeight}
+          barWidth={properties.barWidth}
+          barHeight={properties.barHeight}
           color={properties.color}
-          image={require("../assets/Chess-pana2.png")}
-          text="Facil"
+          textIcon="Origem e Importancia"
+          image={require("../../../../assets/Learning-rafiki1.png")}
+          text="Xadrez"
+          text2="Aprendizagem 1"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
           imageWidth={properties.imageWidth}
@@ -58,11 +59,13 @@ export default class Jogar extends React.Component {
           height={properties.height}
           borderRadius={properties.borderRadius}
           iconType={properties.iconType}
-          iconWidth={properties.iconWidth}
-          iconHeight={properties.iconHeight}
+          barWidth={properties.barWidth}
+          barHeight={properties.barHeight}
           color={properties.color}
-          image={require("../assets/Chess-amico1.png")}
-          text="Médio"
+          image={require("../../../../assets/Learning-bro1.png")}
+          text="Xadrez"
+          text2="Aprendizagem 1"
+          textIcon="Tabuleiro e Peças"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
           imageWidth={properties.imageWidth}
@@ -75,11 +78,14 @@ export default class Jogar extends React.Component {
           height={properties.height}
           borderRadius={properties.borderRadius}
           iconType={properties.iconType}
+          barWidth={properties.barWidth}
+          barHeight={properties.barHeight}
           color={properties.color}
-          iconWidth={properties.iconWidth}
-          iconHeight={properties.iconHeight}
-          image={require("../assets/Chess-bro1.png")}
-          text="Dificil"
+          textIcon='Reforçe seu conhecimento'
+          textIconFontSize={13}
+          image={require("../../../../assets/Learning-pana1.png")}
+          text="Xadrez"
+          text2="Aprendizagem 1"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
           imageWidth={properties.imageWidth}

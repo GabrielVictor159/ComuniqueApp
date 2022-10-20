@@ -6,8 +6,8 @@ import {
   CardStyleInterpolators,
 } from "@react-navigation/stack";
 import UsuarioView from "./UsuarioView";
-import Cronograma from "./Cronograma";
-import Jogos from "./Jogos";
+import Cronograma from "./Cronograma/Cronograma";
+import Jogos from "./Jogos/Jogos";
 
 const Stack = createStackNavigator();
 

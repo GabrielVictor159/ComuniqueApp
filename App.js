@@ -1,6 +1,6 @@
-import Mensagem1 from "./Views/Mensagem1";
-import Mensagem2 from "./Views/Mensagem2";
-import Login from "./Views/Login";
+import Mensagem1 from "./Views/MensagensIniciais/Mensagem1";
+import Mensagem2 from "./Views/MensagensIniciais/Mensagem2";
+import Login from "./Views/Login/Login";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -8,15 +8,15 @@ import {
   TransitionPresets,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
-import Logar from "./Views/Logar";
-import Cadastrar from "./Views/Cadastrar";
+import Logar from "./Views/Login/Logar";
+import Cadastrar from "./Views/Login/Cadastrar";
 import { Image, TouchableOpacity } from "react-native";
-import RecuperarSenha from "./Views/RecuperarSenha";
-import PaginaUsuario from "./Views/PaginaUsuario";
+import RecuperarSenha from "./Views/Login/RecuperarSenha";
+import PaginaUsuario from "./Views/PaginaPrincipal/Usuario/PaginaUsuario";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { GestureHandlerGestureEvent } from "react-native-gesture-handler";
 import { fromLeft } from "react-navigation-transitions";
-import PaginaInicial from "./Views/PaginaInicial";
+import PaginaInicial from "./Views/PaginaPrincipal/PaginaInicial";
 
 const Stack = createStackNavigator();
 
