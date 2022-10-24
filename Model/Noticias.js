@@ -1,3 +1,7 @@
-let Noticias =[]
+export default class Noticias {
+    noticias=[]
 
-export default Noticias;
+    constructor(){
+        
+    }
+}
