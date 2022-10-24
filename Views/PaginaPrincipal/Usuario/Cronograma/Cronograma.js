@@ -1,469 +1,118 @@
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Image,
-  ScrollView,
-  TextInput,
-  Button,
-  StyleSheet,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Text, View, Image, TouchableOpacity } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import ListaCronograma from "./ListaCronograma";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import CalendarioCronograma from "./CalendarioCronograma";
+import TabBarIcons from "../../../../componentes/TabBarIcons";
 import IconBack from "../../../../assets/IconBack";
-import CronogramaAtividade from "../../../../componentes/CronogramaAtividade";
-import dataConvert from "../../../../configs/dataConvert";
-import CronogramaStyle from "../../../../estilos/Views_Estilos/CronogramaStyle";
-
-
-const cores = {
-  red1: "#B75353",
-  red2: "#563838",
-  blue: "#539FB7",
-  green: "#3C8544",
-  pink: "#B953B2",
-  purple: "#8953B9",
-  cyan: "#53B9B5",
-  yellow: "#ECEC0C",
-  orange: "#E19625",
-  black: "#252525",
-};
-let indice = 0;
-export default class Cronograma extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      busca: "",
-      Atividades: [
-        {
-          id: 0,
-          data: "09/12/2022",
-          cor: cores.red1,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 1,
-          data: "17/03/2022",
-          cor: cores.blue,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 2,
-          data: "25/04/2022",
-          cor: cores.green,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 3,
-          data: "18/08/2022",
-          cor: cores.red1,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 4,
-          data: "20/06/2022",
-          cor: cores.green,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 5,
-          data: "28/09/2022",
-          cor: cores.blue,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-      ],
-      pop: 0,
-      estado: 0,
-      AdicionarDia: "",
-      AdicionarMes: "",
-      AdicionarCor: cores.red2,
-      AdicionarPrazo: "",
-      AdicionarText: "",
+import { useNavigation } from "@react-navigation/native";
+const Tab = createMaterialTopTabNavigator();
+let popI = 2;
+export default function Cronograma(props) {
+  useEffect(() => {
+    props.swipe(false);
+    props.navDisplay("none");
+    return function () {
+      props.swipe(true);
+      props.navDisplay("flex");
     };
-  }
-  componentDidMount(){
-    this.props.swipe(false);
-    this.props.navDisplay('none');
-  }
-  componentWillUnmount(){
-    this.props.swipe(true);
-    this.props.navDisplay('flex');
-  }
-  updateCor(cor) {
-    this.setState({ AdicionarCor: cor });
-  }
-  deleteAtividade(id) {
-    this.state.Atividades.splice(id, 1);
-  }
-  atividadeReturn(callback) {
-    return callback.map((value) => {
-      indice = value.id;
+  }, []);
 
-      if (this.state.estado === 0) {
-        return (
-          <View style={{ left: "14%" }} key={value.id}>
-            <CronogramaAtividade
-              dia={value.data.substring(0, 2)}
-              mes={dataConvert(value.data.substring(3, 5))}
-              color={value.cor}
-              width={241}
-              height={106}
-              backgroundColor="#CDCDCD"
-              texto={value.text}
-              prazo={value.prazo}
-            />
-            <Text>{"\n"}</Text>
-          </View>
-        );
-      } else {
-        return (
-          <View style={{ left: "14%" }} key={value.id}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <CronogramaAtividade
-                dia={value.data.substring(0, 2)}
-                mes={dataConvert(value.data.substring(3, 5))}
-                color={value.cor}
-                width={220}
-                height={106}
-                backgroundColor="#CDCDCD"
-                texto={value.text}
-                prazo={value.prazo}
-              />
-              <View
-                style={{
-                  width: 40,
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  left: 20,
-                }}
-              >
-                <Button
-                  style={{ width: "100%", height: "100%" }}
-                  title="X"
-                  color={cores.red1}
-                  onPress={() => this.deleteAtividade(value.id)}
-                />
-              </View>
-            </View>
-            <Text>{"\n"}</Text>
-          </View>
-        );
-      }
-    });
-  }
-  adicionarItem() {
-    try {
-      if (this.state.AdicionarDia >= 0 && this.state.AdicionarDia <= 32) {
-        if (this.state.AdicionarMes > 0 && this.state.AdicionarMes <= 12) {
-          indice++;
-          this.state.Atividades.push({
-            id: indice,
-            data: this.state.AdicionarDia + "/" + this.state.AdicionarMes,
-            cor: this.state.AdicionarCor,
-            prazo: this.state.AdicionarPrazo,
-            text: this.state.AdicionarText,
-          });
-          this.setState({ estado: 0 });
-        } else {
-          alert("Mês invalido");
-        }
-      } else {
-        alert("Dia invalido");
-      }
-    } catch {}
-  }
-  render() {
-    return (
-      <>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.setState({ pop: 0 });
+  const [popWidth, setPopWidth] = useState(0);
+  const navigation = useNavigation();
+
+  return (
+    <>
+      <NavigationContainer independent={true}>
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: 130,
+            backgroundColor: "#3282B8",
+            justifyContent: "flex-end",
           }}
         >
-          <View style={styles.CronogramaStyle.body}>
-            <View style={styles.CronogramaStyle.containerConteudo}>
-              <View style={styles.CronogramaStyle.linhaDeFundo} />
-
-              {this.state.estado === 0 ? (
-                <ScrollView>
-                  <Text>{"\n"}</Text>
-                  {this.atividadeReturn(this.state.Atividades)}
-                </ScrollView>
-              ) : this.state.estado === 1 ? (
-                <View style={{ alignItems: "center" }}>
-                  <View style={{ flexDirection: "row", left: -32, top: 100 }}>
-                    <View style={{ flexDirection: "column" }}>
-                      <TextInput
-                        style={[
-                          styles.CronogramaStyle.inputDia,
-                          { backgroundColor: this.state.AdicionarCor },
-                        ]}
-                        keyboardType={"number-pad"}
-                        placeholderTextColor={"white"}
-                        placeholder={"Dia"}
-                        onChangeText={(dia) => {
-                          this.setState({ AdicionarDia: dia });
-                        }}
-                      />
-                      <TextInput
-                        style={[
-                          styles.CronogramaStyle.inputMes,
-                          { backgroundColor: this.state.AdicionarCor },
-                        ]}
-                        keyboardType={"number-pad"}
-                        placeholderTextColor={"white"}
-                        placeholder={"Mes"}
-                        onChangeText={(mes) => {
-                          this.setState({ AdicionarMes: mes });
-                        }}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        styles.CronogramaStyle.atividadeAdicionarPonto,
-                        { backgroundColor: this.state.AdicionarCor },
-                      ]}
-                    />
-                    <View style={styles.CronogramaStyle.atividadeAdicionar}>
-                      <TextInput
-                        style={[
-                          styles.CronogramaStyle.inputPrazo,
-                          { backgroundColor: this.state.AdicionarCor },
-                        ]}
-                        keyboardType={"default"}
-                        placeholderTextColor={"white"}
-                        placeholder={"Prazo"}
-                        onChangeText={(Prazo) => {
-                          this.setState({ AdicionarPrazo: Prazo });
-                        }}
-                      />
-                      <TextInput
-                        keyboardType={"default"}
-                        placeholder={"Mensagem"}
-                        onChangeText={(text) => {
-                          this.setState({ AdicionarText: text });
-                        }}
-                      />
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.CronogramaStyle.botaoAdicionar}
-                    onPress={() => {
-                      this.adicionarItem();
-                    }}
-                  >
-                    <View>
-                      <Text style={{ fontSize: 20, color: "white" }}>
-                        {"salvar"}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.CronogramaStyle.adicionarBotaoVoltar}
-                    onPress={() => {
-                      this.setState({ estado: 0 });
-                    }}
-                  >
-                    <View>
-                      <Text style={{ fontSize: 20, color: "white" }}>
-                        {"voltar"}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ) : this.state.estado === 2 ? (
-                <ScrollView>
-                  <Text>{"\n"}</Text>
-                  {this.atividadeReturn(this.state.Atividades)}
-                </ScrollView>
-              ) : (
-                <></>
-              )}
-            </View>
-
-            <View style={styles.CronogramaStyle.menu}>
-              <LinearGradient
-                style={{ width: "100%", height: "100%" }}
-                colors={[cores.red1, cores.red2]}
-                start={[0, 0]}
-                end={[1, 1]}
-              />
-              <View style={styles.CronogramaStyle.botaoVoltar}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.goBack();
-                  }}
-                >
-                  <IconBack width={28} height={29} />
-                </TouchableOpacity>
-              </View>
-
-              <Text style={styles.CronogramaStyle.tituloPagina}>
-                {"Cronograma"}
-              </Text>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-
-        {this.state.estado === 1 ? (
-          <View style={styles.CronogramaStyle.adicionarContainerCorSelect}>
-            <Picker
-              selectedValue={this.state.AdicionarCor}
-              placeholder="Cor"
-              style={[
-                styles.CronogramaStyle.adicionarCorSelect,
-                { backgroundColor: this.state.AdicionarCor },
-              ]}
-              onValueChange={(itemValue, itemIndex) =>
-                this.updateCor(itemValue)
-              }
-            >
-              <Picker.Item
-                value=""
-                label="Cor"
-                enabled={false}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Vermelho"
-                value={cores.red1}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Verde"
-                value={cores.green}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Azul"
-                value={cores.blue}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Ciano"
-                value={cores.cyan}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Laranja"
-                value={cores.orange}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Rosa"
-                value={cores.pink}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Roxo"
-                value={cores.purple}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-              <Picker.Item
-                label="Amarelo"
-                value={cores.yellow}
-                style={styles.CronogramaStyle.adicionarCorSelectItems}
-              />
-            </Picker>
-          </View>
-        ) : this.state.estado === 2 ? (
-          <View style={styles.CronogramaStyle.excluirBotaoVoltar}>
-            <Button
-              title="voltar"
-              color={cores.red1}
-              onPress={() => {
-                this.setState({ estado: 0 });
-              }}
-            />
-          </View>
-        ) : (
-          <></>
-        )}
-        <View
-          style={[
-            styles.CronogramaStyle.frameContainer,
-            { width: this.state.pop === 0 ? 0 : 168 },
-          ]}
-        >
-          <View
-            style={{ width: "80%", flexDirection: "row", alignItems: "center" }}
-          >
-            <Image
-              style={{ width: 40, height: 42 }}
-              source={require("../../../../assets/Lupa.png")}
-            />
-            <Text style={{ color: "white", fontSize: 15, left: 10 }}>
-              {"Pesquisar"}
-            </Text>
-          </View>
-          <View style={{ width: "80%" }}>
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-              onPress={() => {
-                this.setState({ estado: 1 });
-              }}
-            >
-              <Image
-                style={{ width: 40, height: 42 }}
-                source={require("../../../../assets/AdicionarItem.png")}
-              />
-              <Text style={{ color: "white", fontSize: 15, left: 10 }}>
-                {"Criar"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: "80%" }}>
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-              onPress={() => {
-                this.setState({ estado: 2 });
-              }}
-            >
-              <Image
-                style={{ width: 40, height: 42 }}
-                source={require("../../../../assets/Lixeira.png")}
-              />
-              <Text style={{ color: "white", fontSize: 15, left: 10 }}>
-                {"Criar"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={{ top: -25, fontSize: 20, left: "5%", color: "white" }}>
+            {"Cronograma"}
+          </Text>
         </View>
-        <View style={{ position: "absolute", top: 35, left: "85%" }}>
+        <Tab.Navigator
+          initialRouteName="ListaCronograma"
+          screenOptions={{
+            tabBarStyle: {
+              height: 130,
+              backgroundColor: "#3282B8",
+              justifyContent: "flex-end",
+              width: "60%",
+              elevation: 0,
+              flexDirection: "column",
+              left: "40%",
+            },
+            tabBarActiveTintColor: "#e91e63",
+            tabBarLabelStyle: {
+              textTransform: "none",
+              color: "white",
+              fontSize: 20,
+              flexGrow: 0,
+            },
+            tabBarShowIcon: false,
+            tabBarContentContainerStyle: {
+              flexGrow: 1,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            },
+
+            tabBarIndicatorStyle: {
+              width: 100,
+              left: 15,
+              height: 5,
+              backgroundColor: "white",
+            },
+          }}
+        >
+          <Tab.Screen
+            name="ListaCronograma"
+            children={() => <ListaCronograma popWidth={popWidth} />}
+            options={{
+              tabBarLabel: "Dia",
+            }}
+          />
+          <Tab.Screen
+            name="CalendarioCronograma"
+            children={() => <CalendarioCronograma popWidth={popWidth} />}
+            options={{
+              tabBarLabel: "Mes",
+            }}
+          />
+        </Tab.Navigator>
+        <View style={{ position: "absolute", top: 45, left: "85%" }}>
           <TouchableOpacity
             onPress={() => {
-              this.setState({ pop: 1 });
+              popI % 2 === 0
+                ? [setPopWidth(250), popI++]
+                : [setPopWidth(0), popI++];
             }}
           >
             <Image
-              style={{ width: 35, height: 35 }}
+              style={{ width: 30, height: 30 }}
               source={require("../../../../assets/PopMenu.png")}
             />
           </TouchableOpacity>
         </View>
-      </>
-    );
-  }
+      </NavigationContainer>
+      <TouchableOpacity
+        style={{ position: "absolute", top: 40, left: "3%" }}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
+        <View>
+          <IconBack width={30} height={30} />
+        </View>
+      </TouchableOpacity>
+    </>
+  );
 }
-
-const styles = StyleSheet.create({
-  CronogramaStyle,
-});

@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { cores } from "../../../../estilos";
-import Atividades from "../../../../componentes/Atividades";
+import { cores } from "../../../../../estilos";
+import Atividades from "../../../../../componentes/Atividades";
 const properties = {
   color:'#0F4C75',
   with: 350,
@@ -18,7 +18,7 @@ const properties = {
   imageLeft: 0,
   imageTop: -40,
 };
-export default class AprenderJogos extends React.Component {
+export default class AprenderJogosView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -36,6 +36,7 @@ export default class AprenderJogos extends React.Component {
         }}
       >
         <Atividades
+          navigate='TextoAprendizagem1'
           width={properties.with}
           height={properties.height}
           borderRadius={properties.borderRadius}
@@ -44,7 +45,7 @@ export default class AprenderJogos extends React.Component {
           barHeight={properties.barHeight}
           color={properties.color}
           textIcon="Origem e Importancia"
-          image={require("../../../../assets/Learning-rafiki1.png")}
+          image={require("../../../../../assets/Learning-rafiki1.png")}
           text="Xadrez"
           text2="Aprendizagem 1"
           textColor={properties.textColor}
@@ -55,6 +56,7 @@ export default class AprenderJogos extends React.Component {
           imageTop={properties.imageTop}
         />
         <Atividades
+        navigate='TextoAprendizagem2'
           width={properties.with}
           height={properties.height}
           borderRadius={properties.borderRadius}
@@ -62,9 +64,9 @@ export default class AprenderJogos extends React.Component {
           barWidth={properties.barWidth}
           barHeight={properties.barHeight}
           color={properties.color}
-          image={require("../../../../assets/Learning-bro1.png")}
+          image={require("../../../../../assets/Learning-bro1.png")}
           text="Xadrez"
-          text2="Aprendizagem 1"
+          text2="Aprendizagem 2"
           textIcon="Tabuleiro e Peças"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
@@ -74,6 +76,7 @@ export default class AprenderJogos extends React.Component {
           imageTop={properties.imageTop}
         />
         <Atividades
+            navigate='Questionario'
           width={properties.with}
           height={properties.height}
           borderRadius={properties.borderRadius}
@@ -83,9 +86,9 @@ export default class AprenderJogos extends React.Component {
           color={properties.color}
           textIcon='Reforçe seu conhecimento'
           textIconFontSize={13}
-          image={require("../../../../assets/Learning-pana1.png")}
+          image={require("../../../../../assets/Learning-pana1.png")}
           text="Xadrez"
-          text2="Aprendizagem 1"
+          text2="Questionario"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
           imageWidth={properties.imageWidth}
