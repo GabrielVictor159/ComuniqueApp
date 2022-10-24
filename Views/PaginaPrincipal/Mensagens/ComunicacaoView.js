@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, StyleSheet, Text, TextInput, ScrollView } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import swipeConfig from "../../../configs/swipeConfig";
@@ -10,15 +10,34 @@ import Lupa from "../../../assets/Lupa";
 import Comunicacoes from "../../../componentes/Comunicacoes";
 import ComunicacaoStyle from "../../../estilos/Views_Estilos/ComunicacaoStyle";
 import UsuarioController from '../../../Controller/UsuarioController';
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 export default function ComunicacaoView (props) {
-    const [busca, setBusca] = useState('');
- const  usuario = new UsuarioController();
+  const navigation = useNavigation();
+ const [atualizacoes, setAtualizacoes] = useState(0);  
+ const [chats, setChats]= useState();
+ const timer = atualizacoes===0?300:4000;
+   useEffect(()=>{
    
+   
+  const interval = setInterval(()=>{
+   setChats(mapReturn(props.chats))
+  }, timer);
+  setAtualizacoes(atualizacoes+1);
+  return ()=>clearInterval(interval);
+   },[]);
   function mapReturn(callback) {
     
     return callback.map((value) => {
       return (
         <View style={{ width: "100%", alignItems: "center" }} key={value.id}>
+          <TouchableOpacity style={{width:400, alignItems:'center'}}
+          onPress={()=>{
+            navigation.navigate('Chat'),
+            props.setChatEscolhido(value.id)
+          }}
+          >
+            
           <Comunicacoes
             width="90%"
             height={100}
@@ -31,6 +50,8 @@ export default function ComunicacaoView (props) {
             horario={value.mensagens[value.mensagens.length-1].data.substring(11,16)}
           />
           <Text>{"\n"}</Text>
+          </TouchableOpacity>
+          
         </View>
       );
     });
@@ -49,8 +70,8 @@ export default function ComunicacaoView (props) {
             contentContainerStyle={styles.ComunicacaoStyle.mensagensScrool}
           >
 
-               {alert(usuario.usuario.chats[0].mensagens[usuario.usuario.chats[0].mensagens.length -1].text)}
-            {mapReturn(usuario.usuario.chats)}
+             
+             {chats} 
           </ScrollView>
         </View>
         <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
