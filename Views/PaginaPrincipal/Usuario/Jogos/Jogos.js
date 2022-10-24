@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import AprenderJogos from "./AprenderJogos";
+import AprenderJogos from "./AprenderJogos/AprenderJogos";
 import { NavigationContainer } from "@react-navigation/native";
 import Jogar from "./Jogar";
 import { LinearGradient } from "expo-linear-gradient";
@@ -13,20 +13,19 @@ import { renderNode } from "@rneui/themed/dist/config";
 import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
 function MyTabs() {
+  const [swipe, setSwipe]= useState(true);
+  const [display, setDisplay]= useState('flex');
+
   return (
     <>
-      <LinearGradient
-        style={{ width: "100%", height: 150, position: "absolute", top: 0 }}
-        colors={['#0F4C75', '#0F4C75']}
-        start={[0, 0]}
-        end={[1, 1]}
-      ></LinearGradient>
+     
       <Tab.Navigator
         screenOptions={{
+          swipeEnabled:swipe,
           tabBarStyle: {
             height: 150,
             justifyContent: "flex-end",
-            backgroundColor: "transparent",
+            backgroundColor: '#0F4C75',
             shadowColor: "green",
             shadowOffset: {
               width: 0,
@@ -34,8 +33,8 @@ function MyTabs() {
             },
             shadowOpacity: 0.36,
             shadowRadius: 6.68,
-
             elevation: 11,
+            display:display,
           },
 
           tabBarLabelStyle: {
@@ -52,7 +51,7 @@ function MyTabs() {
           },
         }}
       >
-        <Tab.Screen name="Aprenda" component={AprenderJogos} />
+        <Tab.Screen name="Aprenda" children={()=><AprenderJogos swipe={setSwipe} display={setDisplay}/>} />
         <Tab.Screen name="Jogue" component={Jogar} />
       </Tab.Navigator>
     </>

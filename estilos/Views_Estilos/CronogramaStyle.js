@@ -1,4 +1,5 @@
 const cores = {
+  background: '#3282B8',
   red1: "#B75353",
   red2: "#563838",
   blue: "#539FB7",
@@ -11,23 +12,9 @@ const cores = {
   black: "#252525",
 };
 const CronogramaStyle = {
-  menu: {
-    width: "100%",
-    height: 130,
-  },
-  botaoVoltar: {
-    position: "absolute",
-    left: "5%",
-    top: "25%",
-  },
+ 
 
-  tituloPagina: {
-    position: "absolute",
-    top: "60%",
-    left: "7%",
-    fontSize: 22,
-    color: "white",
-  },
+  
   body: {
     width: "100%",
     height: "100%",
@@ -35,9 +22,9 @@ const CronogramaStyle = {
   },
   containerConteudo: {
     position: "absolute",
-    top: 130,
+    top: 0,
     width: "100%",
-    height: "85%",
+    height: "100%",
   },
   linhaDeFundo: {
     width: 4,
@@ -92,7 +79,7 @@ const CronogramaStyle = {
   botaoAdicionar: {
     width: "50%",
     height: 40,
-    backgroundColor: cores.red1,
+    backgroundColor: cores.background,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
@@ -102,7 +89,7 @@ const CronogramaStyle = {
   adicionarBotaoVoltar: {
     width: "50%",
     height: 40,
-    backgroundColor: cores.red1,
+    backgroundColor: cores.background,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
@@ -116,7 +103,7 @@ const CronogramaStyle = {
     overflow: "hidden",
     backgroundColor: "red",
     position: "absolute",
-    top: 255,
+    top: 125,
     left: "60%",
     justifyContent: "center",
   },
@@ -131,13 +118,13 @@ const CronogramaStyle = {
   excluirBotaoVoltar: {
     position: "absolute",
     left: 20,
-    top: 170,
+    top: 40,
     borderRadius: 20,
     overflow: "hidden",
   },
   frameContainer: {
     height: 321,
-    backgroundColor: cores.red1,
+    backgroundColor: cores.background,
     position: "absolute",
     borderRadius: 20,
     left: "40%",

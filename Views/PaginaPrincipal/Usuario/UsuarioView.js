@@ -12,11 +12,13 @@ const properties = {
   with: 350,
   height: 105,
   borderRadius: 35,
-  iconType: "barComplete",
+  iconType: "text",
   barWidth: "40%",
   barHeight: "15%",
-  textColor: "black",
+  textColor: "white",
+  text2Top:10,
   fontSize: 20,
+  fontSize2:12,
   imageWidth: 140,
   imageHeight: 140,
   imageLeft: "50%",
@@ -64,12 +66,14 @@ export default class UsuarioView extends React.Component {
             iconType={properties.iconType}
             barWidth={properties.barWidth}
             barHeight={properties.barHeight}
-            color="#7BDAAC"
-            completo="80%"
+            color="#0F4C75"
             image={require("../../../assets/Woman_meditates_under_a_rainbow.png")}
             text="Jogos"
+            text2="Jogos para colocar o conhecimento em prática"
+            text2Top={properties.text2Top}
             textColor={properties.textColor}
             fontSize={properties.fontSize}
+            fontSize2={properties.fontSize2}
             imageWidth={properties.imageWidth}
             imageHeight={properties.imageHeight}
             imageLeft={properties.imageLeft}
@@ -83,12 +87,14 @@ export default class UsuarioView extends React.Component {
             iconType={properties.iconType}
             barWidth={properties.barWidth}
             barHeight={properties.barHeight}
-            color="#E25959"
-            completo="30%"
+            color="#3282B8"
+            text2="Um calendario completo com todos os afazeres "
+            text2Top={properties.text2Top}
             image={require("../../../assets/Man_with_laptop_uploading_files_to_cloud.png")}
             text="Cronograma"
             textColor={properties.textColor}
             fontSize={properties.fontSize}
+            fontSize2={properties.fontSize2}
             imageWidth={properties.imageWidth}
             imageHeight={properties.imageHeight}
             imageLeft={properties.imageLeft}
@@ -101,12 +107,14 @@ export default class UsuarioView extends React.Component {
             iconType={properties.iconType}
             barWidth={properties.barWidth}
             barHeight={properties.barHeight}
-            completo="60%"
             image={require("../../../assets/Man_erases_the_inscription_from_the_board.png")}
             text="Estudo Diario"
-            color="#EFE378"
+            color="#69B1C9"
+            text2="Notícias educacionais diárias e atualizadas"
+            text2Top={properties.text2Top}
             textColor={properties.textColor}
             fontSize={properties.fontSize}
+            fontSize2={properties.fontSize2}
             imageWidth={properties.imageWidth}
             imageHeight={properties.imageHeight}
             imageLeft={properties.imageLeft}

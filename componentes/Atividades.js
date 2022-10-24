@@ -79,7 +79,7 @@ const Atividades = (props) => {
           <Text style={{ fontSize: props.fontSize, color: props.textColor }}>
             {props.text}
           </Text>
-          <Text style={{ fontSize: props.fontSize, color: props.textColor }}>
+          <Text style={{top:props.text2Top, fontSize: props.fontSize2, color: props.textColor, textAlign:'center' }}>
             {props.text2}
           </Text>
         </View>

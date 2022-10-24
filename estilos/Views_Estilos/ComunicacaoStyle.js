@@ -51,7 +51,7 @@ const ComunicacaoStyle = {
   },
   mensagensScrool: {
     width: "100%",
-
+    top:200,
     alignItems: "center",
   },
   mensagensContainer: {
