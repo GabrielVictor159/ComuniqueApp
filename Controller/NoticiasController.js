@@ -1,7 +1,10 @@
-import Noticias from "../Model/Noticias";
 
-export default function NoticiasController (){
-    Noticias.push({
+
+export default class NoticiasController{
+   Noticias=[];
+
+   constructor(){
+    this.Noticias.push( {
         id:0,
         image:require('../assets/Noticia1.png'),
         titulo:'Maioria dos jovens vê perdas irreparáveis de aprendizado devido à pandemia, diz Datafolha',
@@ -20,4 +23,5 @@ export default function NoticiasController (){
         texto:'Uma recente pesquisa feita nos Estados Unidos pelo Center of Diseases Control and Prevention (CDC) apontou que o Transtorno do Espectro do Autismo (TEA) atinge de 1% a 2% da população mundial e, no Brasil, aproximadamente dois milhões de pessoas foram diagnosticada com autismo. Muitos desses diagnósticos são tardios, o que levam diversas implicações para a família, mas principalmente para o paciente que deveria estar em tratamento, talvez até tendo que tomar algum tipo de medicação. \n Apesar da grande quantidade de pessoas com TEA, os direitos impostos por diversas leis ainda lhes são negados.'
     }
     );
+   }
 }
