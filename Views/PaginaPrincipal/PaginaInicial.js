@@ -77,7 +77,8 @@ render(){
         />
         <Tab.Screen
           name="Comunicacao"
-          component={Comunicacao}
+          children={()=><Comunicacao swipe={this.setSwipeEnabled} navDisplay={this.setDisplay}/>}
+          
           options={{
             
             tabBarLabel:({focused})=>{

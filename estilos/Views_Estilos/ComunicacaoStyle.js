@@ -51,12 +51,12 @@ const ComunicacaoStyle = {
   },
   mensagensScrool: {
     width: "100%",
-    top:200,
+   
     alignItems: "center",
   },
   mensagensContainer: {
-    height: "80%",
-    top: 120,
+    height: '80%',
+    top:200,
   },
 };
 
