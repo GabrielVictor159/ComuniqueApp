@@ -12,8 +12,8 @@ import UsuarioController from "../../../Controller/UsuarioController";
 const Stack = createStackNavigator();
 export default function Comunicacao (props){
   const chatModel = new UsuarioController();
-  const [chats, setChats] = useState(chatModel.usuario.chats);
-  const [chatEscolhido, setChatEscolhido] = useState();
+  let [chats, setChats] = useState(chatModel.usuario.chats);
+  let [chatEscolhido, setChatEscolhido] = useState();
  
   return(
     <NavigationContainer independent={true}>
@@ -33,7 +33,7 @@ export default function Comunicacao (props){
       />
       <Stack.Screen
         name="Chat"
-        children={()=><Chat swipe={props.swipe} chat={chats[chatEscolhido]} setChats={setChats} navDisplay={props.navDisplay}/>}
+        children={()=><Chat swipe={props.swipe} chats={chats} chat={chats[chatEscolhido]} setChats={setChats} navDisplay={props.navDisplay}/>}
         
         options={{
           tabBarStyle: { display: "none" },
