@@ -50,7 +50,6 @@ export default function Chat(props) {
 
 
   function mapChat(callback) {
-
     return callback.mensagens.map((value) => {
 
       return (
@@ -88,6 +87,7 @@ export default function Chat(props) {
           </View>
       );
     });
+  
   };
 
 

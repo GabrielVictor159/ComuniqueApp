@@ -1,0 +1,51 @@
+export default class UsuariosUnidadeController{
+    UsuariosUnidade =[];
+
+    constructor(){
+        this.UsuariosUnidade.push(
+            {
+                nome:'Antonio',
+                online:false,
+                tipoUsuario:'Aluno',
+                imagePerfil:require("../assets/Examples_imagePerfil/julian-wan-WNoLnJo7tS8-unsplash.jpg")
+            },
+            {
+                nome:'Maria',
+                online:true,
+                tipoUsuario:'Professor',
+                imagePerfil:require("../assets/Examples_imagePerfil/michael-dam-mEZ3PoFGs_k-unsplash.jpg")
+            },
+            {
+                nome:'Maria',
+                online:true,
+                tipoUsuario:'Aluno',
+                imagePerfil:require("../assets/Examples_imagePerfil/michael-dam-mEZ3PoFGs_k-unsplash.jpg")
+            },
+            {
+                nome:'Ana',
+                online:false,
+                tipoUsuario:'Aluno',
+                imagePerfil:require("../assets/Examples_imagePerfil/kirill-balobanov-2rIs8OH5ng0-unsplash.jpg")
+            },
+            {
+                nome:'Roberto',
+                online:true,
+                tipoUsuario:'Professor',
+                imagePerfil:require("../assets/Examples_imagePerfil/jurica-koletic-7YVZYZeITc8-unsplash.jpg")
+            },
+            {
+                nome:'Jorge',
+                online:true,
+                tipoUsuario:'Aluno',
+                imagePerfil:require("../assets/Examples_imagePerfil/stephen-arnold-8ItNia0nMVA-unsplash.jpg")
+            },
+            {
+                nome:'Phelipe',
+                online:false,
+                tipoUsuario:'Professor',
+                imagePerfil:require("../assets/Examples_imagePerfil/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg")
+            },
+        )
+    }
+}
+
