@@ -101,6 +101,7 @@ export default class UsuarioView extends React.Component {
             imageTop={properties.imageTop}
           />
           <Atividades
+          navigate='Noticias'
             width={properties.with}
             height={properties.height}
             borderRadius={properties.borderRadius}
@@ -108,7 +109,7 @@ export default class UsuarioView extends React.Component {
             barWidth={properties.barWidth}
             barHeight={properties.barHeight}
             image={require("../../../assets/Man_erases_the_inscription_from_the_board.png")}
-            text="Estudo Diario"
+            text="Noticias"
             color="#69B1C9"
             text2="Notícias educacionais diárias e atualizadas"
             text2Top={properties.text2Top}

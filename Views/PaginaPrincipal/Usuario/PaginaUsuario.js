@@ -8,6 +8,7 @@ import {
 import UsuarioView from "./UsuarioView";
 import Cronograma from "./Cronograma/Cronograma";
 import Jogos from "./Jogos/Jogos";
+import Noticias from "./Noticias/Noticias";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,16 @@ export default class PaginaUsuario extends React.Component {
         <Stack.Screen
           name="Jogos"
           children={()=><Jogos swipe={this.props.swipe} navDisplay={this.props.navDisplay}/>}
+          options={{
+            tabBarStyle: { display: "none" },
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+         <Stack.Screen
+          name="Noticias"
+          children={()=><Noticias swipe={this.props.swipe} navDisplay={this.props.navDisplay}/>}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
