@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, StyleSheet, Text, TextInput, ScrollView } from "react-native";
+import { View, StyleSheet, Text, TextInput, ScrollView, Image } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import swipeConfig from "../../../configs/swipeConfig";
 import RadialGradient from "react-native-radial-gradient";
@@ -81,6 +81,15 @@ export default function ComunicacaoView(props) {
         </ScrollView>
       </View>
       <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
+      <View style={{position:'absolute', top:'62%', left:'75%'}}>
+        <TouchableOpacity 
+        onPress={()=>{
+            navigation.navigate('ContatosDaUnidade')
+        }}
+        >
+            <Image style={{width:40, height:40}} source={require('../../../assets/AdicionarContatos.png')}/>
+        </TouchableOpacity>
+        </View>
         <Text style={styles.ComunicacaoStyle.menuText}>Mensagens</Text>
         <TextInput
           style={[styles.ComunicacaoStyle.menuInput, geral.shadow]}

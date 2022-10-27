@@ -9,6 +9,7 @@ import { fromLeft } from "react-navigation-transitions";
 import ComunicacaoView from "./ComunicacaoView";
 import Chat from "./Chat";
 import UsuarioController from "../../../Controller/UsuarioController";
+import ContatosDaUnidade from "./ContatosDaUnidade";
 const Stack = createStackNavigator();
 export default function Comunicacao (props){
   const chatModel = new UsuarioController();
@@ -42,7 +43,17 @@ export default function Comunicacao (props){
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
-     
+      <Stack.Screen
+        name="ContatosDaUnidade"
+        children={()=><ContatosDaUnidade swipe={props.swipe} navDisplay={props.navDisplay} chats={chats} setChats={setChats} setChatEscolhido={setChatEscolhido}/>}
+        
+        options={{
+          tabBarStyle: { display: "none" },
+          headerShown: false,
+          tabBarShowLabel: false,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
   );
