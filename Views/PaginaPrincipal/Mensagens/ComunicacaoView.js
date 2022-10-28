@@ -1,9 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, StyleSheet, Text, TextInput, ScrollView, Image } from "react-native";
-import GestureRecognizer from "react-native-swipe-gestures";
-import swipeConfig from "../../../configs/swipeConfig";
-import RadialGradient from "react-native-radial-gradient";
-import BackgroundColor2 from "../../../assets/BackgroundColor2";
 import { cores, geral } from "../../../estilos";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import Lupa from "../../../assets/Lupa";
@@ -15,24 +11,24 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ComunicacaoView(props) {
   const navigation = useNavigation();
-  let [atualizacoes, setAtualizacoes] = useState(0);
-  let [chats, setChats] = useState();
-  let timer = atualizacoes === 0 ? 300 : 4000;
-  useEffect(() => {
+  let [busca, setBusca] = useState('');
 
+ 
 
-    setInterval(() => {
-      setChats(mapReturn(props.chats))
-    }, timer);
-    setAtualizacoes(atualizacoes + 1);
-
-  }, []);
   function mapReturn(callback) {
-
-    return callback.map((value) => {
+   
+     
+    return callback.filter(post => {
+        if(busca === ''){
+          return post;
+        }
+        else if(post.destinatario.toLowerCase().includes(busca.toLowerCase())){
+          return post;
+        }
+    }).map((value, index) => {
       return (
       
-        <View style={{ width: "100%", alignItems: "center" }} key={value.id}>
+        <View style={{ width: "100%", alignItems: "center" }} key={index}>
           <TouchableOpacity style={{ width: 400, alignItems: 'center' }}
             onPress={() => {
               navigation.navigate('Chat'),
@@ -59,6 +55,8 @@ export default function ComunicacaoView(props) {
         
       );
     });
+  
+ 
   };
 
   return (
@@ -77,7 +75,7 @@ export default function ComunicacaoView(props) {
         >
 
 
-          {chats}
+          {mapReturn(props.chats)}
         </ScrollView>
       </View>
       <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
