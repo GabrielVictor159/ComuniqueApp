@@ -13,16 +13,11 @@ export default function ContatosDaUnidade (props){
     const navigation = useNavigation()
    const contatosDaUnidade = new UsuariosUnidadeController();
    const [contatos, setContatos] = useState()
-   const [atualizacoes, setAtualizacoes] = useState(0);
-   const timer = atualizacoes === 0 ? 300 : 2000;
+   let [busca, setBusca] = useState('');
     useEffect(() => {
         props.swipe(false);
         props.navDisplay("none");
-        setInterval(() => {
-            setContatos(mapContatosDaUnidade(contatosDaUnidade.UsuariosUnidade))
-            setAtualizacoes(+1)
-          }, timer);
-       
+        
         return () => {
     
           props.swipe(true);
@@ -61,7 +56,14 @@ export default function ContatosDaUnidade (props){
      function mapContatosDaUnidade(callback){
         const vetor=[]
         let i=0;
-       return callback.map(function (value, index){
+       return callback.filter(post => {
+        if(busca === ''){
+          return post;
+        }
+        else if(post.nome.toLowerCase().includes(busca.toLowerCase())){
+          return post;
+        }
+    }).map(function (value, index){
             for(let z=0; z<props.chats.length; z++){
                 if(value.nome===props.chats[z].destinatario){
                     vetor[index]=1
@@ -111,6 +113,9 @@ export default function ContatosDaUnidade (props){
             <View style={styles.inputContainer}>
             <TextInput style={styles.input}
             placeholder={'Pesquisar Contatos'}
+            onChangeText={(busca) => {
+                setBusca(busca)
+              }}
             />
             <View style={styles.lupaContainer}>
             <Lupa width={30} height={30}/>
@@ -122,7 +127,7 @@ export default function ContatosDaUnidade (props){
             <View style={styles.contatos}>
 
             <ScrollView>
-                {contatos}
+                {mapContatosDaUnidade(contatosDaUnidade.UsuariosUnidade)}
             </ScrollView>
             </View>
             <View style={{position:'absolute', top:'5%', left:'85%'}}>
