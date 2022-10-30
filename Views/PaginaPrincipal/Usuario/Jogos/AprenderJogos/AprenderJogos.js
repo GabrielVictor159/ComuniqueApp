@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import Atividades from "../../../../../componentes/Atividades";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,16 +10,17 @@ import {
 import AprenderJogosView from "./AprenderJogosView";
 import TextoAprendizagem1 from "./TextoAprendizagem1";
 import TextoAprendizagem2 from "./TextoAprendizagem2";
-import Questionario from "./Questionario";
+import Questionario from "./Questionario/Questionario";
+import { useNavigation } from "@react-navigation/native";
+import IconBack from "../../../../../assets/IconBack";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const Stack = createStackNavigator();
-export default class AprenderJogos extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
+export default function AprenderJogos(props) {
+  const navigation = useNavigation();
+  
+  
     return (
+      <>
       <NavigationContainer independent={true}>
         <Stack.Navigator
           initialRouteName="AprenderJogosView"
@@ -27,7 +28,7 @@ export default class AprenderJogos extends React.Component {
         >
           <Stack.Screen
             name="AprenderJogosView"
-            component={AprenderJogosView}
+            children={()=><AprenderJogosView setIconBackDisplay={props.setIconBackDisplay}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -37,7 +38,7 @@ export default class AprenderJogos extends React.Component {
           />
           <Stack.Screen
             name="TextoAprendizagem1"
-            children={()=><TextoAprendizagem1 swipe={this.props.swipe} display={this.props.display}/>}
+            children={()=><TextoAprendizagem1 setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -47,7 +48,7 @@ export default class AprenderJogos extends React.Component {
           />
           <Stack.Screen
             name="TextoAprendizagem2"
-            children={()=><TextoAprendizagem2 swipe={this.props.swipe} display={this.props.display}/>}
+            children={()=><TextoAprendizagem2 setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -57,7 +58,7 @@ export default class AprenderJogos extends React.Component {
           />
           <Stack.Screen
             name="Questionario"
-            component={Questionario}
+            children={()=><Questionario setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -67,6 +68,9 @@ export default class AprenderJogos extends React.Component {
           />
         </Stack.Navigator>
       </NavigationContainer>
+     
+      
+      </>
     );
-  }
+  
 }

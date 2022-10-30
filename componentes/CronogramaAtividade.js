@@ -4,9 +4,10 @@ import { View, Text } from "react-native";
 const CronogramaAtividade = (props) => {
   return (
     <View style={{ flexDirection: "row" }}>
-      <View style={{ flexDirection: "column" }}>
+      <View style={{ flexDirection: "column", alignItems:'center', left:-10}}>
         <Text style={{ fontSize: 15 }}>{props.dia}</Text>
         <Text style={{ color: "#626262", fontSize: 15 }}>{props.mes}</Text>
+        <Text style={{ color: "#626262", fontSize: 15}}>{props.ano}</Text>
       </View>
       <View
         style={{

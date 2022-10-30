@@ -12,14 +12,25 @@ import { DrawerActions } from '@react-navigation/native';
 import { renderNode } from "@rneui/themed/dist/config";
 import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
-function MyTabs() {
-  const [swipe, setSwipe]= useState(true);
-  const [display, setDisplay]= useState('flex');
 
+export default function Jogos (props){
+  useEffect(() => {
+    props.swipe(false);
+  props.navDisplay('none');
+  return function (){
+    props.swipe(true);
+  props.navDisplay('flex');
+  };
+  }, []);
+const [iconBackDisplay, setIconBackDisplay] = useState('flex')
+
+const [swipe, setSwipe]= useState(true);
+  const [display, setDisplay]= useState('flex');
+const navigation = useNavigation();
   return (
     <>
-     
-      <Tab.Navigator
+    <NavigationContainer independent={true}>
+    <Tab.Navigator
         screenOptions={{
           swipeEnabled:swipe,
           tabBarStyle: {
@@ -51,29 +62,12 @@ function MyTabs() {
           },
         }}
       >
-        <Tab.Screen name="Aprenda" children={()=><AprenderJogos swipe={setSwipe} display={setDisplay}/>} />
+        <Tab.Screen name="Aprenda" children={()=><AprenderJogos swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay}/>} />
         <Tab.Screen name="Jogue" component={Jogar} />
       </Tab.Navigator>
-    </>
-  );
-}
-
-export default function Jogos (props){
-  useEffect(() => {
-    props.swipe(false);
-  props.navDisplay('none');
-  return function (){
-    props.swipe(true);
-  props.navDisplay('flex');
-  };
-  }, []);
-
-
-const navigation = useNavigation();
-  return (
-    <NavigationContainer independent={true}>
-      <MyTabs />
-      <View style={{ position: "absolute", top: 50, left: 20 }}>
+      
+    </NavigationContainer>
+    <View style={{ position: "absolute", top: 50, left: 20, display: iconBackDisplay}}>
         <TouchableOpacity
           onPress={() => {
            navigation.goBack();
@@ -82,7 +76,7 @@ const navigation = useNavigation();
           <IconBack width={28} height={29} />
         </TouchableOpacity>
       </View>
-    </NavigationContainer>
+    </>
   );
         
 }

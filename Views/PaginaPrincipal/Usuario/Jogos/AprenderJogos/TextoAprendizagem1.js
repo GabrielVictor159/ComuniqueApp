@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -9,14 +9,18 @@ import {
 } from "react-native";
 import { color } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import IconBack from "../../../../../assets/IconBack";
 export default function TextoAprendizagem1(props) {
   const navigation = useNavigation();
+  
   useEffect(() => {
     props.swipe(false);
     props.display("none");
+    props.setIconBackDisplay('none')
     return function () {
       props.swipe(true);
       props.display("flex");
+      props.setIconBackDisplay('flex')
     };
   });
   return (
@@ -96,6 +100,16 @@ export default function TextoAprendizagem1(props) {
         </View>
         <Text>{"\n"}</Text>
       </ScrollView>
+      <View style={{ position: "absolute", top: 50, left: 20}}>
+        <TouchableOpacity
+          onPress={() => {
+           navigation.goBack();
+          }}
+        >
+          
+          <IconBack width={28} height={29} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

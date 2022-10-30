@@ -8,8 +8,22 @@ import CalendarioCronograma from "./CalendarioCronograma";
 import TabBarIcons from "../../../../componentes/TabBarIcons";
 import IconBack from "../../../../assets/IconBack";
 import { useNavigation } from "@react-navigation/native";
+import CronogramaController from "../../../../Controller/CronogramaController";
 const Tab = createMaterialTopTabNavigator();
 let popI = 2;
+const cores = {
+  background: '#3282B8',
+  red1: "#B75353",
+  red2: "#563838",
+  blue: "#539FB7",
+  green: "#3C8544",
+  pink: "#B953B2",
+  purple: "#8953B9",
+  cyan: "#53B9B5",
+  yellow: "#ECEC0C",
+  orange: "#E19625",
+  black: "#252525",
+};
 export default function Cronograma(props) {
   useEffect(() => {
     props.swipe(false);
@@ -19,7 +33,8 @@ export default function Cronograma(props) {
       props.navDisplay("flex");
     };
   }, []);
-
+  const cronogramaController = new CronogramaController().cronograma;
+  const [cronograma, setCronograma] = useState(cronogramaController)
   const [popWidth, setPopWidth] = useState(0);
   const navigation = useNavigation();
 
@@ -75,14 +90,14 @@ export default function Cronograma(props) {
         >
           <Tab.Screen
             name="ListaCronograma"
-            children={() => <ListaCronograma popWidth={popWidth} />}
+            children={() => <ListaCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} />}
             options={{
               tabBarLabel: "Dia",
             }}
           />
           <Tab.Screen
             name="CalendarioCronograma"
-            children={() => <CalendarioCronograma popWidth={popWidth} />}
+            children={() => <CalendarioCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} />}
             options={{
               tabBarLabel: "Mes",
             }}
