@@ -48,6 +48,13 @@ const CronogramaStyle = {
     borderRadius: 15,
     top: 20,
   },
+  inputAno: {
+    color: "white",
+    textAlign: "center",
+    width: 60,
+    borderRadius: 15,
+    top: 40,
+  },
   inputPrazo: {
     color: "white",
     textAlign: "center",

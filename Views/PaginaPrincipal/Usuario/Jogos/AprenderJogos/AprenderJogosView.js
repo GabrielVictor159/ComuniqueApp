@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View } from "react-native";
 import { cores } from "../../../../../estilos";
 import Atividades from "../../../../../componentes/Atividades";
+import { useNavigation } from "@react-navigation/native";
 const properties = {
   color:'#0F4C75',
   with: 350,
@@ -18,13 +19,10 @@ const properties = {
   imageLeft: 0,
   imageTop: -40,
 };
-export default class AprenderJogosView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
+export default function AprenderJogosView(props){
+  
+    
+  
     return (
       <View
         style={{
@@ -96,7 +94,8 @@ export default class AprenderJogosView extends React.Component {
           imageLeft={properties.imageLeft}
           imageTop={properties.imageTop}
         />
+        
       </View>
     );
-  }
+  
 }

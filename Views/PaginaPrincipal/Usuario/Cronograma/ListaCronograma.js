@@ -1,5 +1,5 @@
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -11,101 +11,68 @@ import {
   StyleSheet,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import IconBack from "../../../../assets/IconBack";
+
 import CronogramaAtividade from "../../../../componentes/CronogramaAtividade";
 import dataConvert from "../../../../configs/dataConvert";
 import CronogramaStyle from "../../../../estilos/Views_Estilos/CronogramaStyle";
+let contador =0;
+export default function ListaCronograma (props) {
 
-
-const cores = {
-  background: '#3282B8',
-  red1: "#B75353",
-  red2: "#563838",
-  blue: "#539FB7",
-  green: "#3C8544",
-  pink: "#B953B2",
-  purple: "#8953B9",
-  cyan: "#53B9B5",
-  yellow: "#ECEC0C",
-  orange: "#E19625",
-  black: "#252525",
-};
-let indice = 0;
-export default class ListaCronograma extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      busca: "",
-      Atividades: [
-        {
-          id: 0,
-          data: "09/12/2022",
-          cor: cores.red1,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 1,
-          data: "17/03/2022",
-          cor: cores.blue,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 2,
-          data: "25/04/2022",
-          cor: cores.green,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 3,
-          data: "18/08/2022",
-          cor: cores.red1,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 4,
-          data: "20/06/2022",
-          cor: cores.green,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-        {
-          id: 5,
-          data: "28/09/2022",
-          cor: cores.blue,
-          prazo: "30 dias",
-          text: "terminar exercicio",
-        },
-      ],
-      test:0,
-      estado: 0,
-      AdicionarDia: "",
-      AdicionarMes: "",
-      AdicionarCor: cores.red2,
-      AdicionarPrazo: "",
-      AdicionarText: "",
-    };
-  }
- 
-  updateCor(cor) {
-    this.setState({ AdicionarCor: cor });
-  }
-  deleteAtividade(id) {
-    this.state.Atividades.splice(id, 1);
+  const cores = {
+    background: '#3282B8',
+    red1: "#B75353",
+    red2: "#563838",
+    blue: "#539FB7",
+    green: "#3C8544",
+    pink: "#B953B2",
+    purple: "#8953B9",
+    cyan: "#53B9B5",
+    yellow: "#ECEC0C",
+    orange: "#E19625",
+    black: "#252525",
+  };
+  let [busca, setBusca] = useState('');
+  let [estado, setEstado] = useState(0);
+  let [AdicionarAno, setAdicionarAno] = useState('');
+  let [AdicionarDia, setAdicionarDia] = useState('');
+  let [AdicionarMes, setAdicionarMes] = useState('');
+  let [AdicionarCor, setAdicionarCor] = useState(cores.red2);
+  let [AdicionarPrazo, setAdicionarPrazo] = useState();
+  let [AdicionarText, setAdicionarText] = useState('');
+  let [atividades, setAtividades] = useState(props.cronograma);
+  let [atualizacao, setAtualizacao]= useState(contador)
+  
+ function deleteAtividade(id) {
+    const z = props.cronograma;
+    if(z.length>1){
+    z.splice(id, 1);
+    }
+    else{
+      z.pop()
+    }
+    props.setCronograma(z);
+    contador++;
+    setAtualizacao(contador)
+    
   }
   
-  atividadeReturn(callback) {
-    return callback.map((value) => {
-      indice = value.id;
+ function atividadeReturn(callback) {
 
-      if (this.state.estado === 0) {
+    return  callback.filter(post => {
+      if(busca === ''){
+        return post;
+      }
+      else if(post.text.toLowerCase().includes(busca.toLowerCase())){
+        return post;
+      }
+  }).map((value, index) => {
+      
+
+      if (estado === 0) {
         return (
-          <View style={{ left: "14%" }} key={value.id}>
+          <View style={{ left: "14%" }} key={index}>
             <CronogramaAtividade
+              ano={value.data.substring(6,10)}
               dia={value.data.substring(0, 2)}
               mes={dataConvert(value.data.substring(3, 5))}
               color={value.cor}
@@ -120,9 +87,10 @@ export default class ListaCronograma extends React.Component {
         );
       } else {
         return (
-          <View style={{ left: "14%" }} key={value.id}>
+          <View style={{ left: "14%" }} key={index}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <CronogramaAtividade
+                ano={value.data.substring(6,10)}
                 dia={value.data.substring(0, 2)}
                 mes={dataConvert(value.data.substring(3, 5))}
                 color={value.cor}
@@ -146,7 +114,7 @@ export default class ListaCronograma extends React.Component {
                   style={{ width: "100%", height: "100%" }}
                   title="X"
                   color={cores.background}
-                  onPress={() => this.deleteAtividade(value.id)}
+                  onPress={() => deleteAtividade(value.id)}
                 />
               </View>
             </View>
@@ -156,19 +124,25 @@ export default class ListaCronograma extends React.Component {
       }
     });
   }
-  adicionarItem() {
+function  adicionarItem() {
     try {
-      if (this.state.AdicionarDia >= 0 && this.state.AdicionarDia <= 32) {
-        if (this.state.AdicionarMes > 0 && this.state.AdicionarMes <= 12) {
-          indice++;
-          this.state.Atividades.push({
-            id: indice,
-            data: this.state.AdicionarDia + "/" + this.state.AdicionarMes,
-            cor: this.state.AdicionarCor,
-            prazo: this.state.AdicionarPrazo,
-            text: this.state.AdicionarText,
+      if (AdicionarDia >= 0 && AdicionarDia <= 32) {
+        if (AdicionarMes > 0 && AdicionarMes <= 12) {
+          if(AdicionarAno.length==4){
+          const x = props.cronograma;
+          x.push({
+            id: props.cronograma.length,
+            data: AdicionarDia + "/" + AdicionarMes +"/" + AdicionarAno,
+            cor: AdicionarCor,
+            prazo: AdicionarPrazo,
+            text: AdicionarText,
           });
-          this.setState({ estado: 0 });
+          props.setCronograma(x)
+          setAtividades(x)
+          setEstado(0);
+        } else{
+          alert("Por favor insira um ano com 4 digitos")
+        }
         } else {
           alert("Mês invalido");
         }
@@ -177,7 +151,7 @@ export default class ListaCronograma extends React.Component {
       }
     } catch {}
   }
-  render() {
+ 
     return (
       <>
         
@@ -185,64 +159,76 @@ export default class ListaCronograma extends React.Component {
             <View style={styles.CronogramaStyle.containerConteudo}>
               <View style={styles.CronogramaStyle.linhaDeFundo} />
 
-              {this.state.estado === 0 ? (
+              {estado === 0 ? (
                 <ScrollView>
                   <Text>{"\n"}</Text>
-                  {this.atividadeReturn(this.state.Atividades)}
+                  {atividadeReturn(atividades)}
                 </ScrollView>
-              ) : this.state.estado === 1 ? (
+              ) : estado === 1 ? (
                 <View style={{ alignItems: "center" }}>
                   <View style={{ flexDirection: "row", left: -32, top: 100 }}>
                     <View style={{ flexDirection: "column" }}>
                       <TextInput
                         style={[
                           styles.CronogramaStyle.inputDia,
-                          { backgroundColor: this.state.AdicionarCor },
+                          { backgroundColor: AdicionarCor },
                         ]}
                         keyboardType={"number-pad"}
                         placeholderTextColor={"white"}
                         placeholder={"Dia"}
                         onChangeText={(dia) => {
-                          this.setState({ AdicionarDia: dia });
+                          setAdicionarDia( dia );
                         }}
                       />
                       <TextInput
                         style={[
                           styles.CronogramaStyle.inputMes,
-                          { backgroundColor: this.state.AdicionarCor },
+                          { backgroundColor: AdicionarCor },
                         ]}
                         keyboardType={"number-pad"}
                         placeholderTextColor={"white"}
                         placeholder={"Mes"}
                         onChangeText={(mes) => {
-                          this.setState({ AdicionarMes: mes });
+                         setAdicionarMes(mes);
+                        }}
+                      />
+                       <TextInput
+                        style={[
+                          styles.CronogramaStyle.inputAno,
+                          { backgroundColor: AdicionarCor },
+                        ]}
+                        keyboardType={"number-pad"}
+                        placeholderTextColor={"white"}
+                        placeholder={"Ano"}
+                        onChangeText={(Ano) => {
+                         setAdicionarAno(Ano);
                         }}
                       />
                     </View>
                     <View
                       style={[
                         styles.CronogramaStyle.atividadeAdicionarPonto,
-                        { backgroundColor: this.state.AdicionarCor },
+                        { backgroundColor: AdicionarCor },
                       ]}
                     />
                     <View style={styles.CronogramaStyle.atividadeAdicionar}>
                       <TextInput
                         style={[
                           styles.CronogramaStyle.inputPrazo,
-                          { backgroundColor: this.state.AdicionarCor },
+                          { backgroundColor: AdicionarCor },
                         ]}
-                        keyboardType={"default"}
+                        keyboardType={"number-pad"}
                         placeholderTextColor={"white"}
-                        placeholder={"Prazo"}
+                        placeholder={"Prazo Dias"}
                         onChangeText={(Prazo) => {
-                          this.setState({ AdicionarPrazo: Prazo });
+                          setAdicionarPrazo(Prazo);
                         }}
                       />
                       <TextInput
                         keyboardType={"default"}
                         placeholder={"Mensagem"}
                         onChangeText={(text) => {
-                          this.setState({ AdicionarText: text });
+                          setAdicionarText(text);
                         }}
                       />
                     </View>
@@ -250,7 +236,7 @@ export default class ListaCronograma extends React.Component {
                   <TouchableOpacity
                     style={styles.CronogramaStyle.botaoAdicionar}
                     onPress={() => {
-                      this.adicionarItem();
+                      adicionarItem();
                     }}
                   >
                     <View>
@@ -262,7 +248,7 @@ export default class ListaCronograma extends React.Component {
                   <TouchableOpacity
                     style={styles.CronogramaStyle.adicionarBotaoVoltar}
                     onPress={() => {
-                      this.setState({ estado: 0 });
+                      setEstado(0);
                     }}
                   >
                     <View>
@@ -272,10 +258,10 @@ export default class ListaCronograma extends React.Component {
                     </View>
                   </TouchableOpacity>
                 </View>
-              ) : this.state.estado === 2 ? (
+              ) : estado === 2 ? (
                 <ScrollView>
                   <Text>{"\n"}</Text>
-                  {this.atividadeReturn(this.state.Atividades)}
+                  {atividadeReturn(atividades)}
                 </ScrollView>
               ) : (
                 <></>
@@ -286,17 +272,17 @@ export default class ListaCronograma extends React.Component {
           </View>
       
 
-        {this.state.estado === 1 ? (
+        {estado === 1 ? (
           <View style={styles.CronogramaStyle.adicionarContainerCorSelect}>
             <Picker
-              selectedValue={this.state.AdicionarCor}
+              selectedValue={AdicionarCor}
               placeholder="Cor"
               style={[
                 styles.CronogramaStyle.adicionarCorSelect,
-                { backgroundColor: this.state.AdicionarCor },
+                { backgroundColor: AdicionarCor },
               ]}
               onValueChange={(itemValue, itemIndex) =>
-                this.updateCor(itemValue)
+                setAdicionarCor(itemValue)
               }
             >
               <Picker.Item
@@ -347,13 +333,13 @@ export default class ListaCronograma extends React.Component {
               />
             </Picker>
           </View>
-        ) : this.state.estado === 2 ? (
+        ) : estado === 2 ? (
           <View style={styles.CronogramaStyle.excluirBotaoVoltar}>
             <Button
               title="voltar"
               color={cores.background}
               onPress={() => {
-                this.setState({ estado: 0 });
+                setEstado( 0 );
               }}
             />
           </View>
@@ -363,7 +349,7 @@ export default class ListaCronograma extends React.Component {
         <View
           style={[
             styles.CronogramaStyle.frameContainer,
-            { width: this.props.popWidth },
+            { width: props.popWidth },
           ]}
         >
           <View
@@ -373,9 +359,14 @@ export default class ListaCronograma extends React.Component {
               style={{ width: 40, height: 42 }}
               source={require("../../../../assets/Lupa.png")}
             />
-            <Text style={{ color: "white", fontSize: 15, left: 10 }}>
-              {"Pesquisar"}
-            </Text>
+            <TextInput style={{ color: "white", fontSize: 15, left: 10 }}
+            placeholder={'Pesquisar'}
+            placeholderTextColor={'white'}
+            onChangeText={(value)=>
+             setBusca(value)
+            }
+            />
+            
           </View>
           <View style={{ width: "80%" }}>
             <TouchableOpacity
@@ -385,7 +376,7 @@ export default class ListaCronograma extends React.Component {
                 alignItems: "center",
               }}
               onPress={() => {
-                this.setState({ estado: 1 });
+                setEstado(1);
               }}
             >
               <Image
@@ -405,7 +396,7 @@ export default class ListaCronograma extends React.Component {
                 alignItems: "center",
               }}
               onPress={() => {
-                this.setState({ estado: 2 });
+                setEstado(2);
               }}
             >
               <Image
@@ -422,7 +413,7 @@ export default class ListaCronograma extends React.Component {
       </>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   CronogramaStyle,
