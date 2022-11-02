@@ -75,7 +75,7 @@ export default function ComunicacaoView(props) {
         >
 
 
-          {mapReturn(props.chats)}
+          {mapReturn(props.usuario.chats)}
         </ScrollView>
       </View>
       <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
@@ -108,7 +108,7 @@ export default function ComunicacaoView(props) {
             shadowColor="#5C5C5C"
             shadowOpacity={0.2}
             fontSize={15}
-            imageUrl={require("../../../assets/PerfilImage.jpg")}
+            imageUrl={props.usuario.perfil.imagePerfil}
           />
         </View>
       </View>

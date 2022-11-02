@@ -4,7 +4,6 @@ import Atividades from "../../../componentes/Atividades";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import PaginaUsuarioStyle from "../../../estilos/Views_Estilos/PaginaUsuarioStyle";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { cores } from "../../../estilos";
 import GestureRecognizer from "react-native-swipe-gestures";
 import swipeConfig from "../../../configs/swipeConfig";
 import { useIsFocused } from '@react-navigation/native';
@@ -25,16 +24,10 @@ const properties = {
   imageTop: -40,
 };
 
-export default class UsuarioView extends React.Component {
-    constructor(props){
-        super(props);
-        this.state ={
-
-        }
-    }
+export default function UsuarioView (props){
+  
 
   
-    render(){
     return (
         <>
         
@@ -42,7 +35,9 @@ export default class UsuarioView extends React.Component {
         style={style.PaginaUsuarioStyle.container}
       >
         <View style={style.PaginaUsuarioStyle.menuSuperior}>
+        <Image style={style.PaginaUsuarioStyle.imageBanner} source={props.usuario.perfil.imageBanner}/>
           <View style={style.PaginaUsuarioStyle.imageMenuContainer}>
+
             <ImagePerfil
               shadow="true"
               width={80}
@@ -52,7 +47,8 @@ export default class UsuarioView extends React.Component {
               shadowOpacity={0.2}
               text="Felipe"
               fontSize={15}
-              imageUrl={require("../../../assets/PerfilImage.jpg")}
+              fontColor='white'
+              imageUrl={props.usuario.perfil.imagePerfil}
             />
           </View>
         </View>
@@ -125,7 +121,7 @@ export default class UsuarioView extends React.Component {
       </View>
       </>
     );
-    }
+    
 }
 
 const style = StyleSheet.create({

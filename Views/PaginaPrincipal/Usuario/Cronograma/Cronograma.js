@@ -34,11 +34,14 @@ export default function Cronograma(props) {
     };
   }, []);
   const [busca, setBusca] = useState('')
-  const cronogramaController = new CronogramaController().cronograma;
-  const [cronograma, setCronograma] = useState(cronogramaController)
+  const cronograma = props.usuario.cronograma;
   const [popWidth, setPopWidth] = useState(0);
   const navigation = useNavigation();
-
+  function setCronograma (callback){
+    let z = props.usuario
+    z.cronograma = callback
+    props.setUsuario(z)
+  }
   return (
     <>
       <NavigationContainer independent={true}>

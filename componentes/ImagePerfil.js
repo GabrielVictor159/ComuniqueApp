@@ -34,7 +34,7 @@ const ImagePerfil = (props) => {
           style={{ width: "100%", height: "100%", resizeMode: "cover" }}
         />
       </View>
-      <Text style={{ top: +15, fontSize: props.fontSize }}>
+      <Text style={{ top: +15, fontSize: props.fontSize, color:props.fontColor }}>
         {props.text != null ? props.text : ""}
       </Text>
     </>
