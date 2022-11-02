@@ -18,6 +18,12 @@ const PaginaUsuarioStyle = {
     borderBottomRightRadius: 50,
     borderBottomLeftRadius: 50,
   },
+  imageBanner:{
+    width:'100%',
+    height:'100%',
+    position:'absolute',
+    opacity:0.7
+  },
   imageMenuContainer: {
     alignItems: "center",
     top: 10,

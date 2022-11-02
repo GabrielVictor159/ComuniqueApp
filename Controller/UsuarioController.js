@@ -1,4 +1,4 @@
-
+import cores from "../estilos/Views_Estilos/CronogramaCores";
 import Usuario from "../Model/Usuario";
 class UsuarioController {
     constructor(){
@@ -6,50 +6,52 @@ class UsuarioController {
         this.usuario.perfil.nome='Gabriel';
         this.usuario.perfil.email='babydobaby@gmail.com';
         this.usuario.perfil.senha='159487';
-        this.usuario.perfil.imagePerfil='../../../assets/PerfilImage.jpg';
-        this.usuario.perfil.imageBanner='../../../assets/Banner.png';
-        this.usuario.cronograma=[{
-                    id: 0,
-                    data: "09/12/2022",
-                    cor: 'white',
-                    prazo: 30,
-                    text: "terminar exercicio",
-                  },
-                  {
-                    id: 1,
-                    data: "17/03/2022",
-                    cor: 'white',
-                    prazo: 30,
-                    text: "terminar exercicio",
-                  },
-                  {
-                    id: 2,
-                    data: "25/04/2022",
-                    cor:'white',
-                    prazo: 30,
-                    text: "terminar exercicio",
-                  },
-                  {
-                    id: 3,
-                    data: "18/08/2022",
-                    cor: 'white',
-                    prazo: 30,
-                    text: "terminar exercicio",
-                  },
-                  {
-                    id: 4,
-                    data: "20/06/2022",
-                    cor: 'white',
-                    prazo: 30,
-                    text: "terminar exercicio",
-                  },
-                  {
-                    id: 5,
-                    data: "28/09/2022",
-                    cor: 'white',
-                    prazo: 30,
-                    text: "terminar exercicio",
-                  }];
+        this.usuario.perfil.imagePerfil=require('../assets/PerfilImage.jpg');
+        this.usuario.perfil.imageBanner=require('../assets/Banner.png');
+        this.usuario.cronograma.push(
+          {
+              id: 0,
+              data: "2022-12-09",
+              cor: cores.red1,
+              prazo: "3 dias",
+              text: "terminar exercicio",
+            },
+            {
+              id: 1,
+              data: "2022-03-17",
+              cor: cores.blue,
+              prazo: "3 dias",
+              text: "terminar exercicio",
+            },
+            {
+              id: 2,
+              data: "2022-04-25",
+              cor: cores.green,
+              prazo: "3 dias",
+              text: "Fazer Tarefa",
+            },
+            {
+              id: 3,
+              data: "2022-08-18",
+              cor: cores.red1,
+              prazo: "3 dias",
+              text: "estudar",
+            },
+            {
+              id: 4,
+              data: "2022-06-20",
+              cor: cores.green,
+              prazo: "3 dias",
+              text: "terminar exercicio",
+            },
+            {
+              id: 5,
+              data: "2022-09-20",
+              cor: cores.blue,
+              prazo: "3 dias",
+              text: "terminar exercicio",
+            },
+      );
         
         this.usuario.chats=[
             {

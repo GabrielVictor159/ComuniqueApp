@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,6 +10,7 @@ import Comunicacao from "./Mensagens/Comunicacao";
 import Jogos from "./Usuario/Jogos/Jogos";
 import Cronograma from "./Usuario/Cronograma/Cronograma";
 import { color } from "react-native-reanimated";
+import UsuarioController from "../../Controller/UsuarioController";
 const TabBarIconsConfig = {
   sizeActive: 50,
   sizeInactive: 50,
@@ -19,32 +20,25 @@ const TabBarIconsConfig = {
   topInactive: 0,
 };
 const Tab = createMaterialTopTabNavigator();
-export default class PaginaInicial extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      swipeEnabled:true,
-      display:'flex'
-    }
-  }
-  setSwipeEnabled = (callback) => {
-    this.setState({swipeEnabled:callback})
-  }
-  setDisplay = (callback) =>{
-    this.setState({display:callback})
-  }
-render(){
+export default function PaginaInicial (props) {
+      const usuarioController = new UsuarioController()
+   const [usuario, setUsuario] = useState(usuarioController.usuario) 
+  const [swipeEnabled, setSwipeEnabled] = useState(true);
+  const [display, setDisplay] = useState('flex');
+
+  
+
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
         initialRouteName="PaginaUsuario"
         tabBarPosition="bottom"
         screenOptions={{
-          swipeEnabled:this.state.swipeEnabled,
+          swipeEnabled:swipeEnabled,
           tabBarIndicatorStyle: {
             height: 0,
           },
-          tabBarStyle: { height: 80, display:this.state.display },
+          tabBarStyle: { height: 80, display:display },
           tabBarIconStyle:{alignItems:'center'},
           tabBarActiveTintColor: "#e91e63",
         }}
@@ -52,7 +46,7 @@ render(){
         <Tab.Screen
           name="PaginaUsuario"
           
-          children={()=><PaginaUsuario swipe={this.setSwipeEnabled} navDisplay={this.setDisplay}/>}
+          children={()=><PaginaUsuario usuario={usuario} setUsuario={setUsuario} swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
           options={{
             tabBarLabel:({focused})=>{
               return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Principal'}</Text>
@@ -77,7 +71,7 @@ render(){
         />
         <Tab.Screen
           name="Comunicacao"
-          children={()=><Comunicacao swipe={this.setSwipeEnabled} navDisplay={this.setDisplay}/>}
+          children={()=><Comunicacao usuario={usuario} chats={usuario.chats} setUsuario={setUsuario}  swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
           
           options={{
             
@@ -104,7 +98,7 @@ render(){
         />
         <Tab.Screen
           name="Personalizar"
-          component={Personalizar}
+          children={()=><Personalizar usuario={usuario} setUsuario={setUsuario} />}
           options={{
             tabBarLabel:({focused})=>{
               return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Configurações'}</Text>
@@ -132,7 +126,7 @@ render(){
       </NavigationContainer>
       
   );
-        }
+        
 }
 
 

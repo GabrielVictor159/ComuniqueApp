@@ -12,16 +12,10 @@ import Noticias from "./Noticias/Noticias";
 
 const Stack = createStackNavigator();
 
-export default class PaginaUsuario extends React.Component {
-  constructor(props){
-    super(props);
-    this.state ={
-     
-    }
-  }
+export default function PaginaUsuario(props)  {
+  
  
 
- render(){
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator
@@ -30,7 +24,7 @@ export default class PaginaUsuario extends React.Component {
       >
         <Stack.Screen
           name="UsuarioView"
-          children={()=><UsuarioView swipe={this.props.swipe} navDisplay={this.props.navDisplay}/>}
+          children={()=><UsuarioView usuario={props.usuario} setUsuario={props.setUsuario}  swipe={props.swipe} navDisplay={props.navDisplay}/>}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -40,7 +34,7 @@ export default class PaginaUsuario extends React.Component {
         />
         <Stack.Screen
           name="Cronograma"
-          children={()=><Cronograma swipe={this.props.swipe} navDisplay={this.props.navDisplay}/>}
+          children={()=><Cronograma usuario={props.usuario} setUsuario={props.setUsuario}    swipe={props.swipe} navDisplay={props.navDisplay}/>}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -50,7 +44,7 @@ export default class PaginaUsuario extends React.Component {
         />
         <Stack.Screen
           name="Jogos"
-          children={()=><Jogos swipe={this.props.swipe} navDisplay={this.props.navDisplay}/>}
+          children={()=><Jogos usuario={props.usuario} setUsuario={props.setUsuario}   swipe={props.swipe} navDisplay={props.navDisplay}/>}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -60,7 +54,7 @@ export default class PaginaUsuario extends React.Component {
         />
          <Stack.Screen
           name="Noticias"
-          children={()=><Noticias swipe={this.props.swipe} navDisplay={this.props.navDisplay}/>}
+          children={()=><Noticias  swipe={props.swipe} navDisplay={props.navDisplay}/>}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -72,5 +66,5 @@ export default class PaginaUsuario extends React.Component {
       </Stack.Navigator>
     </NavigationContainer>
   );
-        }
+        
 }
