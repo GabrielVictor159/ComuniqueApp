@@ -21,6 +21,7 @@ import PaginaInicial from "./Views/PaginaPrincipal/PaginaInicial";
 const Stack = createStackNavigator();
 
 function App(navigation) {
+  
   return (
     <NavigationContainer>
       <Stack.Navigator

@@ -2,9 +2,9 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import ListaCronograma from "./ListaCronograma";
+import ListaCronograma from "./Lista/ListaCronograma";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import CalendarioCronograma from "./CalendarioCronograma";
+import CalendarioCronograma from "./Calendario/CalendarioCronograma";
 import TabBarIcons from "../../../../componentes/TabBarIcons";
 import IconBack from "../../../../assets/IconBack";
 import { useNavigation } from "@react-navigation/native";
@@ -33,6 +33,7 @@ export default function Cronograma(props) {
       props.navDisplay("flex");
     };
   }, []);
+  const [busca, setBusca] = useState('')
   const cronogramaController = new CronogramaController().cronograma;
   const [cronograma, setCronograma] = useState(cronogramaController)
   const [popWidth, setPopWidth] = useState(0);
@@ -90,14 +91,14 @@ export default function Cronograma(props) {
         >
           <Tab.Screen
             name="ListaCronograma"
-            children={() => <ListaCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} />}
+            children={() => <ListaCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} busca={busca} setBusca={setBusca}/>}
             options={{
               tabBarLabel: "Dia",
             }}
           />
           <Tab.Screen
             name="CalendarioCronograma"
-            children={() => <CalendarioCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} />}
+            children={() => <CalendarioCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} busca={busca} setBusca={setBusca} />}
             options={{
               tabBarLabel: "Mes",
             }}

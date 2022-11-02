@@ -22,18 +22,11 @@ const CronogramaStyle = {
   },
   containerConteudo: {
     position: "absolute",
-    top: 0,
+    top: 400,
     width: "100%",
-    height: "100%",
+    height: "50%",
   },
-  linhaDeFundo: {
-    width: 4,
-    height: "100%",
-    backgroundColor: "#626262",
-    position: "absolute",
-    left: "24.5%",
-    opacity: 0.5,
-  },
+  
   inputDia: {
     color: "white",
 
@@ -110,7 +103,7 @@ const CronogramaStyle = {
     overflow: "hidden",
     backgroundColor: "red",
     position: "absolute",
-    top: 125,
+    top: '66.8%',
     left: "60%",
     justifyContent: "center",
   },
