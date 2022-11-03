@@ -68,7 +68,7 @@ return(
               secureTextEntry={props.SecureText3}
               placeholder={props.Placeholder3}
               onChangeText={(value) => {
-                props.onChangeText1(value)
+                props.onChangeText3(value)
               }}
             />
           </View>

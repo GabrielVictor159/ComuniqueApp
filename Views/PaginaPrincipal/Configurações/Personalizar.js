@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Keyboard } from "react-native";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import PersonalizarOption from "../../../componentes/PersonalizarOption";
 import { TouchableOpacity } from "react-native";
@@ -8,18 +8,47 @@ import InputsOverlay from "../../../componentes/InputsOverlay";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 import SucessoOverlay from "../../../componentes/SucessoOverlay";
+import { useEffect } from "react";
 export default function Personalizar(props) {
   const [alterarSenha, setAlterarSenha] = useState(false);
   const [alterarEmail, setAlterarEmail] = useState(false);
   const [alterarNome, setAlterarNome] = useState(false);
   const [alterarEmailInputAntigo, setAlterarEmailInputAntigo] = useState('');
   const [alterarEmailInputNovo, setAlterarEmailInputNovo] = useState('');
-  const [alterarEmailSucesso, setAlterarEmailSucesso] = useState(false)
+  const [alterarEmailSucesso, setAlterarEmailSucesso] = useState(false);
+  const [alterarSenhaInputAntigo, setAlterarSenhaInputAntigo] = useState('');
+  const [alterarSenhaInputNovo, setAlterarSenhaInputNovo] = useState('');
+  const [alterarSenhaInputConfirma, setAlterarSenhaInputConfirma] = useState('');
+  const [alterarSenhaSucesso, setAlterarSenhaSucesso] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [alterarNomeInput, setAlterarNomeInput] = useState('');
+  const [alterarNomeSucesso, setAlterarNomeSucesso] = useState('')
+ useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
   const toggleOverlay = () => {
    setAlterarSenha(false);
    setAlterarEmail(false)
    setAlterarNome(false)
    setAlterarEmailSucesso(false)
+   setAlterarSenhaSucesso(false)
+   setAlterarNomeSucesso(false)
   };
 
   
@@ -88,6 +117,7 @@ export default function Personalizar(props) {
           fontSize={20}
           texto="Alterar Nome"
           icon="Pencil"
+          action={setAlterarNome}
         />
         <Text>{"\n"}</Text>
         <PersonalizarOption
@@ -99,6 +129,7 @@ export default function Personalizar(props) {
           fontSize={20}
           texto="Alterar Senha "
           icon="Padlock"
+          action={setAlterarSenha}
         />
         <Text>{"\n"}</Text>
         <PersonalizarOption
@@ -123,12 +154,14 @@ export default function Personalizar(props) {
           texto="Sair"
           icon="Logout"
           textColor="#BE0B16"
+          reset='Logar'
+          navigation={props.navigationReset}
         />
       </View>
       <InputsOverlay 
       isVisible={alterarEmail}
       onBackdropPress={toggleOverlay}
-      overlayStyle={styles.overlayStyles}
+      overlayStyle={[styles.overlayStyles,{height: isKeyboardVisible===false ? '50%' :500, top:isKeyboardVisible===false ? '50%' : 50}]}
       titulo={'Alterar Email'}
       tituloStyle={styles.overlayTitulo}
       iconInput1={require("../../../assets/user.png")}
@@ -165,34 +198,74 @@ export default function Personalizar(props) {
         <InputsOverlay 
       isVisible={alterarSenha}
       onBackdropPress={toggleOverlay}
-      overlayStyle={styles.overlayStyles}
+      overlayStyle={[styles.overlayStyles,{height: isKeyboardVisible===false ? '50%' :500, top:isKeyboardVisible===false ? '50%' : 50}]}
       titulo={'Alterar Senha'}
       tituloStyle={styles.overlayTitulo}
       iconInput1={require("../../../assets/padlock.png")}
       InputStyle1={styles.overlayInput}
       KeyboardType1={'default'}
-      Placeholder1={'Digite seu email antigo'}
-      onChangeText1={setAlterarEmailInputAntigo}
+      Placeholder1={'Digite sua senha antiga'}
+      SecureText1={true}
+      onChangeText1={setAlterarSenhaInputAntigo}
       iconInput2={require("../../../assets/padlock.png")}
       InputStyle2={styles.overlayInput}
-      KeyboardType2={'email-address'}
-      Placeholder2={'Digite seu Novo email'}
-      onChangeText2={setAlterarEmailInputNovo}
+      KeyboardType2={'default'}
+      Placeholder2={'Digite sua nova senha'}
+      SecureText2={true}
+      onChangeText2={setAlterarSenhaInputNovo}
+      iconInput3={require("../../../assets/padlock.png")}
+      InputStyle3={styles.overlayInput}
+      KeyboardType3={'default'}
+      Placeholder3={'confirme sua nova senha'}
+      SecureText3={true}
+      onChangeText3={setAlterarSenhaInputConfirma}
       buttonWidth={"60%"}
       buttonHeight={70}
       buttonColor={"#0D5692"}
       buttonText={'Alterar'}
-      buttonAction={props.usuario.AlterarEmail}
-      actionParam1={alterarEmailInputAntigo}
-      actionParam2={alterarEmailInputNovo}
-      overlaySucesso={setAlterarEmailSucesso}
+      buttonAction={props.usuario.AlterarSenha}
+      actionParam1={alterarSenhaInputAntigo}
+      actionParam2={alterarSenhaInputNovo}
+      actionParam3={alterarSenhaInputConfirma}
+      overlaySucesso={setAlterarSenhaSucesso}
       />
       <SucessoOverlay
           overlayStyle={styles.overlaySucessoStyle}
-          isVisible={alterarEmailSucesso}
+          isVisible={alterarSenhaSucesso}
           onBackdropPress={toggleOverlay}
-          titulo={"Seu E-mail foi alterado!"}
-          texto={"Agora utilize esse novo email para acessar! "}
+          titulo={"Sua senha foi alterado!"}
+          texto={"Agora utilize essa nova senha para acessar!"}
+          buttonWidth={"60%"}
+          buttonHeight={70}
+          buttonColor={"#0D5692"}
+          buttonText={'voltar'}
+          buttonAction={toggleOverlay}
+        />
+        <InputsOverlay 
+      isVisible={alterarNome}
+      onBackdropPress={toggleOverlay}
+      overlayStyle={[styles.overlayStyles,{height: isKeyboardVisible===false ? '50%' :500, top:isKeyboardVisible===false ? '50%' : 50}]}
+      titulo={'Alterar nome'}
+      tituloStyle={styles.overlayTitulo}
+      iconInput1={require("../../../assets/user.png")}
+      InputStyle1={styles.overlayInput}
+      KeyboardType1={'default'}
+      Placeholder1={'Digite seu novo nome'}
+      onChangeText1={setAlterarNomeInput}
+      buttonWidth={"60%"}
+      buttonHeight={70}
+      buttonColor={"#0D5692"}
+      buttonText={'Alterar'}
+      buttonAction={props.usuario.AlterarNome}
+      actionParam1={alterarNomeInput}
+      overlaySucesso={setAlterarNomeSucesso}
+      />
+      <SucessoOverlay
+          overlayStyle={styles.overlaySucessoStyle}
+          isVisible={alterarNomeSucesso}
+          onBackdropPress={toggleOverlay}
+          titulo={"Seu nome foi alterado!"}
+          texto={"Agora utilize esse novo nome! "}
           buttonWidth={"60%"}
           buttonHeight={70}
           buttonColor={"#0D5692"}
@@ -202,15 +275,14 @@ export default function Personalizar(props) {
     </View>
     
   );
+  
 }
-
-
 const styles = StyleSheet.create({
   overlayStyles:{
     width: "100%",
-    height: "50%",
+    
     position: "absolute",
-    top: "50%",
+    
   },
   overlayTitulo:{
     fontSize:18
@@ -230,3 +302,6 @@ const styles = StyleSheet.create({
     top: "40%",
   },
 })
+
+
+

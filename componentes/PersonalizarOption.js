@@ -1,11 +1,9 @@
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
 import PersonalizarIcons from "../assets/PersonalizarIcons";
 // botão com gradiente reutilizado no codigo
 const PersonalizarOption = (props) => {
-  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -41,7 +39,14 @@ const PersonalizarOption = (props) => {
             alignItems: "center",
           }}
           onPress={() =>
-            {props.action(true)}
+            props.reset != undefined
+          
+              ? props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: props.reset }],
+                })
+              : 
+            props.action(true)
           }
         >
           <View style={{ left: 20 }}>

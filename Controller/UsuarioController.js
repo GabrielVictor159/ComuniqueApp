@@ -25,7 +25,7 @@ class UsuarioController {
       return true
     }
   }
- AlterarSenha = (SenhaAntiga, SenhaNova, repetiçãoSenhaNova)=>{
+ AlterarSenha = (SenhaAntiga, SenhaNova, repeticaoSenhaNova)=>{
     if(SenhaAntiga === ''){
       alert('Por favor informe um valor na senha antiga')
       return false
@@ -35,8 +35,9 @@ class UsuarioController {
       alert('Por favor informe um valor na nova senha')
       return false
     }
-    else if(SenhaNova !== repetiçãoSenhaNova){
+    else if(SenhaNova !=  repeticaoSenhaNova){
       alert('Por favor verifique a confirmaçao da senha')
+     
       return false
     }
     else if(SenhaAntiga !== this.usuario.perfil.senha){
@@ -48,19 +49,15 @@ class UsuarioController {
       return true
     }
   }
-AlterarNome=(NomeAntigo,NomeNovo)=>{
-    if(NomeAntigo === ''){
-      alert('Por favor informe um valor no nome antigo')
+AlterarNome=(NomeNovo)=>{
     
-    }
-    else if(NomeNovo ===''){
+   if(NomeNovo ===''){
       alert('Por favor informe um novo nome')
-    }
-    else if(NomeAntigo !== this.usuario.perfil.nome){
-      alert('Nome antigo errado')
+      return false
     }
     else{
       this.usuario.perfil.nome=NomeNovo;
+      return true
     }
   }
  AlterarImagePerfil=(NovaImagePerfil)=>{

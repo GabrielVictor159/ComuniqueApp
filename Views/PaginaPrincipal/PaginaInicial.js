@@ -12,6 +12,7 @@ import Cronograma from "./Usuario/Cronograma/Cronograma";
 import { color } from "react-native-reanimated";
 import UsuarioController from "../../Controller/UsuarioController";
 import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 const TabBarIconsConfig = {
   sizeActive: 50,
   sizeInactive: 50,
@@ -26,7 +27,7 @@ export default function PaginaInicial (props) {
    const [usuario, setUsuario] = useState(usuarioController.usuario) 
   const [swipeEnabled, setSwipeEnabled] = useState(true);
   const [display, setDisplay] = useState('flex');
-
+  const navigation = useNavigation();
   
   useEffect(()=>{
     setInterval(()=>{
@@ -103,7 +104,7 @@ export default function PaginaInicial (props) {
         />
         <Tab.Screen
           name="Personalizar"
-          children={()=><Personalizar  usuario={usuarioController} setUsuario={setUsuario} />}
+          children={()=><Personalizar navigationReset={navigation}  usuario={usuarioController} setUsuario={setUsuario} />}
           options={{
             tabBarLabel:({focused})=>{
               return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Configurações'}</Text>

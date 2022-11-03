@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import GestureRecognizer from "react-native-swipe-gestures";
 import swipeConfig from "../../../configs/swipeConfig";
 import { useIsFocused } from '@react-navigation/native';
+import { useEffect } from "react";
 const properties = {
   with: 350,
   height: 105,
@@ -26,7 +27,11 @@ const properties = {
 
 export default function UsuarioView (props){
   
-
+    useEffect(()=>{
+      setInterval(()=>{
+        props.setUsuario(props.usuarioController.usuario)
+      },1000)
+    },[])
   
     return (
         <>
@@ -45,7 +50,7 @@ export default function UsuarioView (props){
               shadowTop={10}
               shadowColor="#5C5C5C"
               shadowOpacity={0.2}
-              text="Felipe"
+              text={props.usuario.perfil.nome}
               fontSize={15}
               fontColor='white'
               imageUrl={props.usuario.perfil.imagePerfil}
