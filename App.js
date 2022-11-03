@@ -11,7 +11,6 @@ import {
 import Logar from "./Views/Login/Logar";
 import Cadastrar from "./Views/Login/Cadastrar";
 import { Image, TouchableOpacity } from "react-native";
-import RecuperarSenha from "./Views/Login/RecuperarSenha";
 import PaginaUsuario from "./Views/PaginaPrincipal/Usuario/PaginaUsuario";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { GestureHandlerGestureEvent } from "react-native-gesture-handler";
@@ -74,9 +73,10 @@ function App(navigation) {
             tabBarStyle: { display: "none" },
             headerShown: false,
             tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}
         />
-        <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} />
+        
         <Stack.Screen
           name="PaginaInicial"
           component={PaginaInicial}
@@ -84,6 +84,7 @@ function App(navigation) {
             tabBarStyle: { display: "none" },
             headerShown: false,
             tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}
         />
       </Stack.Navigator>

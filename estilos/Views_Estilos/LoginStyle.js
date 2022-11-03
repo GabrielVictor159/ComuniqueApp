@@ -17,7 +17,7 @@ const LoginStyle = {
   Title: {
     color: "white",
     fontWeight: "normal",
-    fontSize: 40,
+    fontSize: 30,
     position: "absolute",
     left: 120,
     top: 100,

@@ -7,27 +7,35 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+
 import Button1 from "../../componentes/Button1";
 import { Link } from "@react-navigation/native";
 import LogarStyle from "../../estilos/Views_Estilos/LogarStyle";
 import { cores } from "../../estilos";
+import { Overlay } from "@rneui/themed";
+import { useState } from "react";
+import { useEffect } from "react";
+import SucessoOverlay from "../../componentes/SucessoOverlay";
 
 // Pagina para logarmos os usuarios
-export default class Logar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      //    atributos que serão armazenados do input
-      Usuario: "",
-      Senha: "",
-    };
-  }
-  render() {
-    return (
+export default function Logar(props) {
+  //    atributos que serão armazenados do input
+
+  const [Usuario, setUsuario] = useState("");
+  const [Senha, setSenha] = useState("");
+  const [EsqueceuSenha, setEsqueceuSenha] = useState(false);
+  const [EsqueceuSenhaSucesso, setEsqueceuSenhaSucesso] = useState(false);
+  const toggleOverlay = () => {
+    setEsqueceuSenha(false);
+    setEsqueceuSenhaSucesso(false);
+  };
+
+  return (
+    <>
       <View style={styles.LogarStyle.body}>
         <TouchableOpacity
           style={styles.LogarStyle.buttonBack}
-          onPress={() => this.props.navigation.goBack()}
+          onPress={() => props.navigation.goBack()}
         >
           <Image source={require("../../assets/IconBack.png")} />
         </TouchableOpacity>
@@ -46,7 +54,7 @@ export default class Logar extends React.Component {
               keyboardType={"email-address"}
               placeholder={"E-mail"}
               onChangeText={(Usuario) => {
-                this.setState({ Usuario });
+                setUsuario(Usuario);
               }}
             />
           </View>
@@ -60,7 +68,7 @@ export default class Logar extends React.Component {
               placeholder={"Senha"}
               secureTextEntry={true}
               onChangeText={(Senha) => {
-                this.setState({ Senha });
+                setSenha(Senha);
               }}
             />
           </View>
@@ -76,22 +84,106 @@ export default class Logar extends React.Component {
               color1={cores.buttonGradientColor1}
               color2={cores.buttonGradientColor2}
             />
-            <Link
-              style={styles.LogarStyle.Link1}
-              to={{ screen: "RecuperarSenha" }}
+            <TouchableOpacity
+              onPress={() => {
+                setEsqueceuSenha(true);
+              }}
             >
-              Esqueceu a senha?
-            </Link>
+              <Text style={styles.LogarStyle.Link1}>{"Esqueceu a senha?"}</Text>
+            </TouchableOpacity>
+
             <Link style={styles.LogarStyle.Link2} to={{ screen: "Cadastrar" }}>
               Cadastrar-se
             </Link>
           </View>
         </View>
+
+        <Overlay
+          fullScreen={false}
+          onBackdropPress={toggleOverlay}
+          isVisible={EsqueceuSenha}
+          overlayStyle={[
+            styles.overlayStyle,
+            {
+              alignItems: "center",
+            },
+          ]}
+        >
+          <Text>{"\n\n"}</Text>
+          <View style={{ height: "35%", width: "90%" }}>
+            <Text style={{ fontSize: 19 }}>{"Redefinir senha "}</Text>
+            <Text>
+              {
+                "Insira o e-mail associado à sua conta e enviaremos uma nova senha provisória para seu E-mail "
+              }
+            </Text>
+          </View>
+          <View style={{ height: 50 }}>
+            <Image
+              style={{ top: "35%" }}
+              source={require("../../assets/user.png")}
+            />
+            <TextInput
+              style={styles.LogarStyle.Input}
+              keyboardType={"email-address"}
+              placeholder={"E-mail"}
+              onChangeText={(Usuario) => {
+                setUsuario(Usuario);
+              }}
+            />
+          </View>
+          <Text>{"\n\n"}</Text>
+          <TouchableOpacity style={{ width: "60%", height: 70, elevation: 10,
+                backgroundColor: "#0D5692",
+                borderRadius: 25, }}
+          onPress={()=>{
+            setEsqueceuSenha(false)
+            setEsqueceuSenhaSucesso(true)
+          }}
+          >
+            <View
+              style={{
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {"Redefinir"}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </Overlay>
+        <SucessoOverlay
+          overlayStyle={styles.overlaySucessoStyle}
+          isVisible={EsqueceuSenhaSucesso}
+          onBackdropPress={toggleOverlay}
+          titulo={"Verifique seu E-mail"}
+          texto={"enviamos uma nova senha provisória para seu E-mail "}
+          buttonWidth={"60%"}
+          buttonHeight={70}
+          buttonColor={"#0D5692"}
+          buttonText={'voltar'}
+          buttonAction={toggleOverlay}
+        />
       </View>
-    );
-  }
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
   LogarStyle,
+  overlayStyle: {
+    width: "100%",
+    height: "50%",
+    position: "absolute",
+    top: "50%",
+  },
+  overlaySucessoStyle: {
+    width: "100%",
+    height: "60%",
+    position: "absolute",
+    top: "40%",
+  },
 });
