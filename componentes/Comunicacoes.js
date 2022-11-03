@@ -7,7 +7,7 @@ const Comunicacoes = (props) => {
   return (
     <View
       style={[
-        geral.shadow,
+       
         {
           width: props.width,
           height: props.height,

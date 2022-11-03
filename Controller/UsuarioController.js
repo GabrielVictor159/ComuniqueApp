@@ -1,189 +1,90 @@
 import cores from "../estilos/Views_Estilos/CronogramaCores";
 import Usuario from "../Model/Usuario";
 class UsuarioController {
-    constructor(){
-        this.usuario = new Usuario();
-        this.usuario.perfil.nome='Gabriel';
-        this.usuario.perfil.email='babydobaby@gmail.com';
-        this.usuario.perfil.senha='159487';
-        this.usuario.perfil.imagePerfil=require('../assets/PerfilImage.jpg');
-        this.usuario.perfil.imageBanner=require('../assets/Banner.png');
-        this.usuario.cronograma.push(
-          {
-              id: 0,
-              data: "2022-12-09",
-              cor: cores.red1,
-              prazo: "3 dias",
-              text: "terminar exercicio",
-            },
-            {
-              id: 1,
-              data: "2022-03-17",
-              cor: cores.blue,
-              prazo: "3 dias",
-              text: "terminar exercicio",
-            },
-            {
-              id: 2,
-              data: "2022-04-25",
-              cor: cores.green,
-              prazo: "3 dias",
-              text: "Fazer Tarefa",
-            },
-            {
-              id: 3,
-              data: "2022-08-18",
-              cor: cores.red1,
-              prazo: "3 dias",
-              text: "estudar",
-            },
-            {
-              id: 4,
-              data: "2022-06-20",
-              cor: cores.green,
-              prazo: "3 dias",
-              text: "terminar exercicio",
-            },
-            {
-              id: 5,
-              data: "2022-09-20",
-              cor: cores.blue,
-              prazo: "3 dias",
-              text: "terminar exercicio",
-            },
-      );
-        
-        this.usuario.chats=[
-            {
-                    id:0,
-                    destinatario:'jubileu',
-                    online:true,
-                    imageUrl:require("../assets/PerfilImage.jpg"),
-                    tipoUsuario:'Professor',
-                    mensagens:[
-                        {
-                          id:0,
-                            text:'Ola amigo!',
-                            data:'14/08/2022-18:13:40',
-                            origem:'jubileu'
-                        },
-                        {
-                          id:1,
-                            text:'Fala ai',
-                            data:'14/08/2022-19:13:40',
-                            origem:'Gabriel'
-                        }
-                        
-                    ]
-                  },
-                  {
-                    id:1,
-                    destinatario:'jubilado',
-                    online:true,
-                    imageUrl:require("../assets/PerfilImage.jpg"),
-                    tipoUsuario:'Aluno',
-                    mensagens:[
-                        {
-                          id:0,
-                            text:'Ola amigo!',
-                            data:'14/08/2022-18:13:40',
-                            origem:'jubileu'
-                        },
-                        {
-                          id:1,
-                            text:'to puto',
-                            data:'14/08/2022-19:13:40',
-                            origem:'Gabriel'
-                        }
-                    ]
-                  },
-                  {
-                    id:2,
-                    destinatario:'jubilado',
-                    online:true,
-                    imageUrl:require("../assets/PerfilImage.jpg"),
-                    tipoUsuario:'Aluno',
-                    mensagens:[
-                        {
-                          id:0,
-                            text:'Ola amigo!',
-                            data:'14/08/2022-18:13:40',
-                            origem:'jubileu'
-                        },
-                        {
-                          id:2,
-                            text:'to puto',
-                            data:'14/08/2022-19:13:40',
-                            origem:'Gabriel'
-                        }
-                    ]
-                  },
-                  {
-                    id:3,
-                    destinatario:'jubilado',
-                    online:true,
-                    imageUrl:require("../assets/PerfilImage.jpg"),
-                    tipoUsuario:'Aluno',
-                    mensagens:[
-                        {
-                          id:0,
-                            text:'Ola amigo!',
-                            data:'14/08/2022-18:13:40',
-                            origem:'jubileu'
-                        },
-                        {
-                          id:1,
-                            text:'to puto',
-                            data:'14/08/2022-19:13:40',
-                            origem:'Gabriel'
-                        }
-                    ]
-                  },
-                  {
-                    id:4,
-                    destinatario:'jubilado',
-                    online:true,
-                    imageUrl:require("../assets/PerfilImage.jpg"),
-                    tipoUsuario:'Aluno',
-                    mensagens:[
-                        {
-                          id:0,
-                            text:'Ola amigo!',
-                            data:'14/08/2022-18:13:40',
-                            origem:'jubileu'
-                        },
-                        {
-                          id:1,
-                            text:'to puto',
-                            data:'14/08/2022-19:13:40',
-                            origem:'Gabriel'
-                        }
-                    ]
-                  },
-                  {
-                    id:5,
-                    destinatario:'teste',
-                    online:true,
-                    imageUrl:require("../assets/PerfilImage.jpg"),
-                    tipoUsuario:'Aluno',
-                    mensagens:[
-                        {
-                          id:0,
-                            text:'Ola amigo!',
-                            data:'14/08/2022-18:13:40',
-                            origem:'jubileu'
-                        },
-                        {
-                          id:1,
-                            text:'to puto',
-                            data:'14/08/2022-19:13:40',
-                            origem:'Gabriel'
-                        }
-                    ]
-                  }
-                ]
-        
+  constructor(){
+    this.usuario = new Usuario()
+  }
+  
+  
+ AlterarEmail=(EmailAntigo, EmailNovo)=>{
+    if(EmailAntigo === ''){
+      alert('Por favor informe um valor no email antigo')
+      return false
     }
+    else if(EmailNovo ===''){
+      alert('Por favor informe um novo email')
+      return false
+    }
+    else if(EmailAntigo !== this.usuario.perfil.email){
+      alert('Email antigo errado')
+      return false
+    }
+    else{
+      this.usuario.perfil.email=EmailNovo;
+      
+      return true
+    }
+  }
+ AlterarSenha = (SenhaAntiga, SenhaNova, repetiçãoSenhaNova)=>{
+    if(SenhaAntiga === ''){
+      alert('Por favor informe um valor na senha antiga')
+      return false
+    
+    }
+    else if(SenhaNova ===''){
+      alert('Por favor informe um valor na nova senha')
+      return false
+    }
+    else if(SenhaNova !== repetiçãoSenhaNova){
+      alert('Por favor verifique a confirmaçao da senha')
+      return false
+    }
+    else if(SenhaAntiga !== this.usuario.perfil.senha){
+      alert('Senha antiga errada')
+      return false
+    }
+    else{
+      this.usuario.perfil.senha=SenhaNova;
+      return true
+    }
+  }
+AlterarNome=(NomeAntigo,NomeNovo)=>{
+    if(NomeAntigo === ''){
+      alert('Por favor informe um valor no nome antigo')
+    
+    }
+    else if(NomeNovo ===''){
+      alert('Por favor informe um novo nome')
+    }
+    else if(NomeAntigo !== this.usuario.perfil.nome){
+      alert('Nome antigo errado')
+    }
+    else{
+      this.usuario.perfil.nome=NomeNovo;
+    }
+  }
+ AlterarImagePerfil=(NovaImagePerfil)=>{
+    if(NovaImagePerfil===null){
+      alert('Por favor forneça uma imagem')
+    }
+    else{
+      this.usuario.perfil.imagePerfil=NovaImagePerfil;
+       }
+  }
+ AlterarImageBanner=(NovaImageBanner)=>{
+    if(NovaImageBanner===null){
+      alert('Por favor forneça uma imagem')
+    }
+    else{
+      this.usuario.perfil.imageBanner=NovaImageBanner;
+    }
+  }
+  AdicionarChat=(NovoChat)=>{
+   
+    this.usuario.chats.push(NovoChat);
+   alert(this.usuario.chats[this.usuario.chats.length-1])
+  } 
+ 
 
 }
 

@@ -41,20 +41,7 @@ const PersonalizarOption = (props) => {
             alignItems: "center",
           }}
           onPress={() =>
-            props.tipoNavegacao === "navigate"
-              ? navigation.navigate(props.navegacao)
-              : props.tipoNavegacao === "push"
-              ? navigation.push(props.navegacao)
-              : props.tipoNavegacao === "popToPop"
-              ? navigation.popToPop()
-              : props.tipoNavegacao === "dispatch"
-              ? navigation.dispatch(props.navegacao)
-              : props.tipoNavegacao === "reset"
-              ? navigation.reset({
-                  index: 0,
-                  routes: [{ name: props.navegacao }],
-                })
-              : navigation.goBack()
+            {props.action(true)}
           }
         >
           <View style={{ left: 20 }}>

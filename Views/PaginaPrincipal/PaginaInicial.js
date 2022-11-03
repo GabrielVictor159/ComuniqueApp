@@ -11,6 +11,7 @@ import Jogos from "./Usuario/Jogos/Jogos";
 import Cronograma from "./Usuario/Cronograma/Cronograma";
 import { color } from "react-native-reanimated";
 import UsuarioController from "../../Controller/UsuarioController";
+import { useEffect } from "react";
 const TabBarIconsConfig = {
   sizeActive: 50,
   sizeInactive: 50,
@@ -27,7 +28,11 @@ export default function PaginaInicial (props) {
   const [display, setDisplay] = useState('flex');
 
   
-
+  useEffect(()=>{
+    setInterval(()=>{
+      setUsuario(usuarioController.usuario)
+    },1000)
+  }, [])
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
@@ -46,7 +51,7 @@ export default function PaginaInicial (props) {
         <Tab.Screen
           name="PaginaUsuario"
           
-          children={()=><PaginaUsuario usuario={usuario} setUsuario={setUsuario} swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
+          children={()=><PaginaUsuario usuarioController={usuarioController} usuario={usuario} setUsuario={setUsuario} swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
           options={{
             tabBarLabel:({focused})=>{
               return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Principal'}</Text>
@@ -71,7 +76,7 @@ export default function PaginaInicial (props) {
         />
         <Tab.Screen
           name="Comunicacao"
-          children={()=><Comunicacao usuario={usuario} chats={usuario.chats} setUsuario={setUsuario}  swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
+          children={()=><Comunicacao usuarioController={usuarioController} usuario={usuario} chats={usuario.chats} setUsuario={setUsuario}  swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
           
           options={{
             
@@ -98,7 +103,7 @@ export default function PaginaInicial (props) {
         />
         <Tab.Screen
           name="Personalizar"
-          children={()=><Personalizar usuario={usuario} setUsuario={setUsuario} />}
+          children={()=><Personalizar  usuario={usuarioController} setUsuario={setUsuario} />}
           options={{
             tabBarLabel:({focused})=>{
               return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Configurações'}</Text>
@@ -128,5 +133,4 @@ export default function PaginaInicial (props) {
   );
         
 }
-
 
