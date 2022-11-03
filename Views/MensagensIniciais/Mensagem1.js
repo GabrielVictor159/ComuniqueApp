@@ -25,7 +25,7 @@ class Mensagem1 extends React.Component {
           style={styles.Mensagem1Style.ImageCenter}
           source={require("../../assets/selfcare.png")}
         />
-        <Text style={styles.Mensagem1Style.Title}>Comunique</Text>
+        <Text style={styles.Mensagem1Style.Title}>Comunique-CEM</Text>
         <View style={styles.Mensagem1Style.TextContainer}>
           <Text style={styles.Mensagem1Style.Mensagem}>
             Um app de comunicação para ajudar alunos com autismo a se

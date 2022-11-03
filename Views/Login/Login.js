@@ -13,7 +13,7 @@ class Login extends React.Component {
           style={styles.LoginStyle.IconTitle}
           source={require("../../assets/selfcare(2).png")}
         />
-        <Text style={styles.LoginStyle.Title}>Comunique</Text>
+        <Text style={styles.LoginStyle.Title}>Comunique-CEM</Text>
         <View style={styles.LoginStyle.ViewMiddle}>
           <Image
             style={styles.LoginStyle.ImageCenter}
