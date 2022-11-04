@@ -9,6 +9,13 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import SucessoOverlay from "../../../componentes/SucessoOverlay";
 import { useEffect } from "react";
+import * as ImagePicker from 'expo-image-picker';
+import InputImagesPerfil from "../../../componentes/InputImagesPerfil";
+import InputImagePerfil from "../../../componentes/InputImagePerfil";
+
+
+
+
 export default function Personalizar(props) {
   const [alterarSenha, setAlterarSenha] = useState(false);
   const [alterarEmail, setAlterarEmail] = useState(false);
@@ -23,6 +30,12 @@ export default function Personalizar(props) {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [alterarNomeInput, setAlterarNomeInput] = useState('');
   const [alterarNomeSucesso, setAlterarNomeSucesso] = useState('')
+  const [alterarImages, setAlterarImage] = useState(false)
+  const [pickerImagePerfil, setPickerImagePerfil] = useState(false)
+      const [pickerBanner, setPickerBanner] = useState(false)
+      const [imageBanner, setImageBanner] = useState(require('../../../assets/BannerSubmit.png'))
+      const [imagePerfil, setImagePerfil] = useState(require('../../../assets/BannerSubmit.png'))
+
  useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -49,9 +62,33 @@ export default function Personalizar(props) {
    setAlterarEmailSucesso(false)
    setAlterarSenhaSucesso(false)
    setAlterarNomeSucesso(false)
+   setAlterarImage(false)
   };
 
-  
+  function alterarImagensPerfil(banner, perfil){
+    let bannerPadrao = require('../../../assets/BannerSubmit.png')
+    let perfilPadrao = require('../../../assets/BannerSubmit.png')
+    if(banner !== bannerPadrao){
+      if(perfil!==perfilPadrao){
+        props.usuario.usuario.perfil.imageBanner=banner
+        props.usuario.usuario.perfil.imagePerfil=perfil
+        return false
+      }
+      else{
+        props.usuario.usuario.perfil.imageBanner=banner
+        return false
+      }
+    }
+    else{
+      if(perfil!==perfilPadrao){
+        props.usuario.usuario.perfil.imagePerfil=perfil
+        return false
+      }
+      else{
+        return false
+      }
+    }
+  }
   return (
     <View
       style={{
@@ -103,7 +140,11 @@ export default function Personalizar(props) {
         </View>
       </View>
       <View style={{ position: "absolute", top: 280, left: "85%" }}>
-        <TouchableOpacity>
+        <TouchableOpacity 
+        onPress={()=>
+        setAlterarImage(true)
+        }
+        >
           <PersonalizarIcons icon="Pencil" width={29} height={29} />
         </TouchableOpacity>
       </View>
@@ -272,6 +313,41 @@ export default function Personalizar(props) {
           buttonText={'voltar'}
           buttonAction={toggleOverlay}
         />
+        <InputImagesPerfil 
+        isVisible={alterarImages}
+        setIsVisible={setAlterarImage}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={styles.overlayImagesInput}
+        styleTituloImage1={{fontSize:20}}
+        tituloImage1={'Adicione as imagens'}
+        pickerImagePerfil={pickerImagePerfil}
+        setPickerImagePerfil={setPickerImagePerfil}
+        pickerBanner={pickerBanner}
+        setPickerBanner={setPickerBanner}
+        imageBanner={imageBanner}
+        setImageBanner={setImageBanner}
+        imagePerfil={imagePerfil}
+        setImagePerfil={setImagePerfil}
+        buttonWidth={"60%"}
+          buttonHeight={70}
+          buttonColor={"#0D5692"}
+          buttonText={'Confirmar'}
+          buttonAction={alterarImagensPerfil}  
+        />
+        <InputImagePerfil 
+        isVisible={pickerImagePerfil}
+        onBackdropPress={setPickerImagePerfil}
+        overlayStyle={styles.overlayInputStyle}
+        setIsVisible={setPickerImagePerfil}
+        setImage={setImagePerfil}
+        />
+        <InputImagePerfil 
+        isVisible={pickerBanner}
+        onBackdropPress={setPickerBanner}
+        overlayStyle={styles.overlayInputStyle}
+        setIsVisible={setPickerBanner}
+        setImage={setImageBanner}
+        />
     </View>
     
   );
@@ -283,6 +359,16 @@ const styles = StyleSheet.create({
     
     position: "absolute",
     
+  },
+  overlayInputStyle:{
+    width: "100%",
+    height:500,
+    position: "absolute",
+  },
+  overlayImagesInput:{
+    width: "100%",
+    
+    position: "absolute",
   },
   overlayTitulo:{
     fontSize:18
