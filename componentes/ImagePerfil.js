@@ -8,7 +8,7 @@ const ImagePerfil = (props) => {
       width: props.width,
       height: props.height,
       resizeMode: "cover",
-      borderRadius: radius,
+      borderRadius: 100,
       overflow: "hidden",
       justifyContent: "center",
       alignItems: "center",

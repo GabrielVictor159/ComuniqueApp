@@ -13,7 +13,12 @@ export default function ComunicacaoView(props) {
   const navigation = useNavigation();
   let [busca, setBusca] = useState('');
 
- 
+  useEffect(()=>{
+    setInterval(()=>{
+      props.setUsuario(props.usuarioController.usuario)
+     
+    },3000)
+  },[])
 
   function mapReturn(callback) {
    

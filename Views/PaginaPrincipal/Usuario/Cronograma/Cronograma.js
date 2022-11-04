@@ -8,7 +8,6 @@ import CalendarioCronograma from "./Calendario/CalendarioCronograma";
 import TabBarIcons from "../../../../componentes/TabBarIcons";
 import IconBack from "../../../../assets/IconBack";
 import { useNavigation } from "@react-navigation/native";
-import CronogramaController from "../../../../Controller/CronogramaController";
 const Tab = createMaterialTopTabNavigator();
 let popI = 2;
 const cores = {

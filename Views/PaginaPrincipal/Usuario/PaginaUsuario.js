@@ -24,7 +24,7 @@ export default function PaginaUsuario(props)  {
       >
         <Stack.Screen
           name="UsuarioView"
-          children={()=><UsuarioView usuario={props.usuario} setUsuario={props.setUsuario}  swipe={props.swipe} navDisplay={props.navDisplay}/>}
+          children={()=><UsuarioView usuarioController={props.usuarioController} usuario={props.usuario} setUsuario={props.setUsuario}  swipe={props.swipe} navDisplay={props.navDisplay}/>}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,

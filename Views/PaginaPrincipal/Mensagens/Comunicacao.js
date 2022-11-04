@@ -27,7 +27,7 @@ export default function Comunicacao (props){
     >
       <Stack.Screen
         name="ComunicacaoView"
-        children={()=><ComunicacaoView usuario={props.usuario} setUsario={props.setUsario}  setChatEscolhido={setChatEscolhido}/>}
+        children={()=><ComunicacaoView usuarioController={props.usuarioController} usuario={props.usuario} setUsuario={props.setUsuario}  setChatEscolhido={setChatEscolhido}/>}
         options={{
           tabBarStyle: { display: "none" },
           headerShown: false,
@@ -37,7 +37,7 @@ export default function Comunicacao (props){
       />
       <Stack.Screen
         name="Chat"
-        children={()=><Chat usuario={props.usuario} swipe={props.swipe} chats={props.chats} chat={props.chats[chatEscolhido]} setChats={setChats} navDisplay={props.navDisplay}/>}
+        children={()=><Chat usuarioController={props.usuarioController} usuario={props.usuario} swipe={props.swipe} chats={props.chats} chat={props.chats[chatEscolhido]} setChats={setChats} navDisplay={props.navDisplay}/>}
         
         options={{
           tabBarStyle: { display: "none" },
