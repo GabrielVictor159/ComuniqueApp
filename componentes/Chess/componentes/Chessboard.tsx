@@ -446,10 +446,10 @@ export default function Chessboard(props) {
          </TouchableOpacity>
          <TouchableOpacity style={{width:60, height:60, borderRadius:15, backgroundColor:'white', elevation:10, alignItems:'center', justifyContent:'center'}}
          onPress={()=>{
-          reset();
+          navigation.goBack();
          }}
          >
-          <Image style={{width:'60%', height:'60%'}} source={require('../assets/reloadIcon.png')}/>
+          <Image style={{width:'77%', height:'60%'}} source={require('../assets/Icon_Exit.png')}/>
          </TouchableOpacity>
         </View>
       </View>
