@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import AprenderJogos from "./AprenderJogos/AprenderJogos";
 import { NavigationContainer } from "@react-navigation/native";
-import Jogar from "./Jogar";
+import Jogar from "./Jogar/Jogar";
 import { LinearGradient } from "expo-linear-gradient";
 import { cores } from "../../../../estilos";
 import IconBack from "../../../../assets/IconBack";
@@ -63,7 +63,7 @@ const navigation = useNavigation();
         }}
       >
         <Tab.Screen name="Aprenda" children={()=><AprenderJogos swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay}/>} />
-        <Tab.Screen name="Jogue" component={Jogar} />
+        <Tab.Screen name="Jogue" children={()=><Jogar swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay}/>} />
       </Tab.Navigator>
       
     </NavigationContainer>

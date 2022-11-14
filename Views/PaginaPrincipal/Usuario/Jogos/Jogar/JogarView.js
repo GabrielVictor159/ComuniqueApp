@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { cores } from "../../../../estilos";
-import Atividades from "../../../../componentes/Atividades";
+import { cores } from "../../../../../estilos";
+import Atividades from "../../../../../componentes/Atividades";
 const properties = {
   color:'#0F4C75',
   with: 350,
@@ -18,13 +18,7 @@ const properties = {
   iconWidth: 50,
   iconHeight: 50,
 };
-export default class Jogar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
+export default function JogarView(props) {
     return (
       <View
         style={{
@@ -44,7 +38,7 @@ export default class Jogar extends React.Component {
           iconWidth={properties.iconWidth}
           iconHeight={properties.iconHeight}
           color={properties.color}
-          image={require("../../../../assets/Chess-pana2.png")}
+          image={require("../../../../../assets/Chess-pana2.png")}
           text="Facil"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
@@ -52,6 +46,7 @@ export default class Jogar extends React.Component {
           imageHeight={properties.imageHeight}
           imageLeft={properties.imageLeft}
           imageTop={properties.imageTop}
+          navigate={'ChessEasy'}
         />
         <Atividades
           width={properties.with}
@@ -61,7 +56,7 @@ export default class Jogar extends React.Component {
           iconWidth={properties.iconWidth}
           iconHeight={properties.iconHeight}
           color={properties.color}
-          image={require("../../../../assets/Chess-amico1.png")}
+          image={require("../../../../../assets/Chess-amico1.png")}
           text="Médio"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
@@ -69,6 +64,7 @@ export default class Jogar extends React.Component {
           imageHeight={properties.imageHeight}
           imageLeft={properties.imageLeft}
           imageTop={properties.imageTop}
+          navigate={'ChessMedium'}
         />
         <Atividades
           width={properties.with}
@@ -78,7 +74,7 @@ export default class Jogar extends React.Component {
           color={properties.color}
           iconWidth={properties.iconWidth}
           iconHeight={properties.iconHeight}
-          image={require("../../../../assets/Chess-bro1.png")}
+          image={require("../../../../../assets/Chess-bro1.png")}
           text="Dificil"
           textColor={properties.textColor}
           fontSize={properties.fontSize}
@@ -86,8 +82,9 @@ export default class Jogar extends React.Component {
           imageHeight={properties.imageHeight}
           imageLeft={properties.imageLeft}
           imageTop={properties.imageTop}
+          navigate={'ChessHard'}
         />
       </View>
     );
-  }
+  
 }
