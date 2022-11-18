@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  StyleSheet
 } from "react-native";
 import Tile from "./Tile";
 import MovementType from "../Controller/MovementType";
@@ -20,11 +19,8 @@ import MovementFylter from "../Controller/MovementFylter";
 import randomMove from "../Controller/IA/randomMove";
 import moveBasedRelativeStrength from "../Controller/IA/moveBasedRelativeStrength";
 import miniMax from "../Controller/IA/miniMax";
-import { useNavigation } from "@react-navigation/native";
 import { Overlay } from "@rneui/themed";
-
 export default function Chessboard(props) {
-  const navigation = useNavigation();
   const verticalAxis = [1, 2, 3, 4, 5, 6, 7, 8];
   const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
   const [pieces, setPieces] = useState<Piece[]>(InitialPieces());
@@ -36,17 +32,6 @@ export default function Chessboard(props) {
   const [checkMatteBlack, setCheckMatteBlack] = useState(false)
   const [checkMatteWhite, setCheckMatteWhite] = useState(false)
  
-  useEffect(() => {
-    props.swipe(false);
-    props.display("none");
-    props.setIconBackDisplay('none')
-    return function () {
-      props.swipe(true);
-      props.display("flex");
-      props.setIconBackDisplay('flex')
-    };
-  });
-
   useEffect(() => {
     if (blackPeriod === true && CheckMatte("b", pieces) !== true) {
       try {
@@ -287,8 +272,7 @@ export default function Chessboard(props) {
   }
 
   return (
-    <View style={styles.container}>
-    
+    <>
       <View
         style={{
           position: "absolute",
@@ -444,27 +428,10 @@ export default function Chessboard(props) {
          >
           <Image style={{width:'60%', height:'60%'}} source={require('../assets/reloadIcon.png')}/>
          </TouchableOpacity>
-         <TouchableOpacity style={{width:60, height:60, borderRadius:15, backgroundColor:'white', elevation:10, alignItems:'center', justifyContent:'center'}}
-         onPress={()=>{
-          navigation.goBack();
-         }}
-         >
-          <Image style={{width:'77%', height:'60%'}} source={require('../assets/Icon_Exit.png')}/>
-         </TouchableOpacity>
         </View>
       </View>
       </View>
       
-    
-  </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
