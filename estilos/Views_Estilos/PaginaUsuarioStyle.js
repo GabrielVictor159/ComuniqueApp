@@ -17,6 +17,7 @@ const PaginaUsuarioStyle = {
     backgroundColor: "white",
     borderBottomRightRadius: 50,
     borderBottomLeftRadius: 50,
+    elevation:15
   },
   imageBanner:{
     width:'100%',

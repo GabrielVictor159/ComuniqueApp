@@ -27,7 +27,7 @@ export default function Jogar(props){
           />
            <Stack.Screen
             name="ChessEasy"
-            children={()=><Chessboard dificulty={'easy'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay}/>}
+            children={()=><Chessboard usuario={props.usuario} dificulty={'easy'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -37,7 +37,7 @@ export default function Jogar(props){
           />
           <Stack.Screen
             name="ChessMedium"
-            children={()=><Chessboard dificulty={'medium'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay}/>}
+            children={()=><Chessboard usuario={props.usuario} dificulty={'medium'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -47,7 +47,7 @@ export default function Jogar(props){
           />
           <Stack.Screen
             name="ChessHard"
-            children={()=><Chessboard dificulty={'hard'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay}/>}
+            children={()=><Chessboard usuario={props.usuario} dificulty={'hard'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay}/>}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,

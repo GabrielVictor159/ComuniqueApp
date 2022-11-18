@@ -63,7 +63,7 @@ const navigation = useNavigation();
         }}
       >
         <Tab.Screen name="Aprenda" children={()=><AprenderJogos swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay}/>} />
-        <Tab.Screen name="Jogue" children={()=><Jogar swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay}/>} />
+        <Tab.Screen name="Jogue" children={()=><Jogar usuario={props.usuario} swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay}/>} />
       </Tab.Navigator>
       
     </NavigationContainer>

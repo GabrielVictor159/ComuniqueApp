@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  StyleSheet,
 } from "react-native";
 import Tile from "./Tile";
 import MovementType from "../Controller/MovementType";
@@ -19,8 +20,11 @@ import MovementFylter from "../Controller/MovementFylter";
 import randomMove from "../Controller/IA/randomMove";
 import moveBasedRelativeStrength from "../Controller/IA/moveBasedRelativeStrength";
 import miniMax from "../Controller/IA/miniMax";
+import { useNavigation } from "@react-navigation/native";
 import { Overlay } from "@rneui/themed";
+
 export default function Chessboard(props) {
+  const navigation = useNavigation();
   const verticalAxis = [1, 2, 3, 4, 5, 6, 7, 8];
   const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
   const [pieces, setPieces] = useState<Piece[]>(InitialPieces());
@@ -28,65 +32,71 @@ export default function Chessboard(props) {
   const [blackPeriod, setBlackPeriod] = useState(false);
   const [movement, setMovement] = useState<Movement[]>([]);
   const [pawnTransition, setPawnTransition] = useState<Piece>();
-  const [gameOver, setGameOver] = useState(false)
-  const [checkMatteBlack, setCheckMatteBlack] = useState(false)
-  const [checkMatteWhite, setCheckMatteWhite] = useState(false)
- 
+  const [gameOver, setGameOver] = useState(false);
+  const [checkMatteBlack, setCheckMatteBlack] = useState(false);
+  const [checkMatteWhite, setCheckMatteWhite] = useState(false);
+
+  useEffect(() => {
+    props.swipe(false);
+    props.display("none");
+    props.setIconBackDisplay("none");
+    return function () {
+      props.swipe(true);
+      props.display("flex");
+      props.setIconBackDisplay("flex");
+    };
+  });
+
   useEffect(() => {
     if (blackPeriod === true && CheckMatte("b", pieces) !== true) {
       try {
         moveBlack();
-      } 
-      catch{
-
-      }
-    }
-    else if(CheckMatte("b", pieces) === true){
-      setGameOver(true)
-      setCheckMatteBlack(true)
-      setBlackPeriod(false)
-      setWhitePeriod(false)
+      } catch {}
+    } else if (CheckMatte("b", pieces) === true) {
+      setGameOver(true);
+      setCheckMatteBlack(true);
+      setBlackPeriod(false);
+      setWhitePeriod(false);
     }
     if (Check("w", pieces)) {
       if (CheckMatte("w", pieces)) {
-        setGameOver(true)
+        setGameOver(true);
         setCheckMatteWhite(true);
         setBlackPeriod(false);
         setWhitePeriod(false);
-      } 
+      }
     }
-    
-   
   });
-  function reset(){
-    setCheckMatteBlack(false)
-    setCheckMatteWhite(false)
-    setGameOver(false)
-    setWhitePeriod(true)
-    setBlackPeriod(false)
-    setPieces(InitialPieces())
-    setMovement([])
+  function reset() {
+    setCheckMatteBlack(false);
+    setCheckMatteWhite(false);
+    setGameOver(false);
+    setWhitePeriod(true);
+    setBlackPeriod(false);
+    setPieces(InitialPieces());
+    setMovement([]);
   }
   function moveBlack() {
     let loop = true;
     let newBoard;
-    if(props.dificulty==='easy'){
-      newBoard = randomMove('b',pieces)
-    }
-    else if(props.dificulty==='medium'){
-      newBoard = moveBasedRelativeStrength('b',pieces)
-    }
-    else{
-    newBoard = miniMax("b", "w", pieces);
+    if (props.dificulty === "easy") {
+      newBoard = randomMove("b", pieces);
+    } else if (props.dificulty === "medium") {
+      newBoard = moveBasedRelativeStrength("b", pieces);
+    } else {
+      newBoard = miniMax("b", "w", pieces);
     }
     if (newBoard != false) {
       setPieces(newBoard);
     }
     let t = newBoard === false ? pieces : newBoard;
-    let pawnTransitionIndex = t.findIndex(value => value.y === 7 && value.type === "Pawn" && value.color === "b")
-    if(pawnTransitionIndex>-1){
-      t[pawnTransitionIndex].type='Queen'
-      setPieces(t)
+    let pawnTransitionIndex = t.findIndex(
+      (value) => value.y === 7 && value.type === "Pawn" && value.color === "b"
+    );
+    if (pawnTransitionIndex > -1) {
+      t[pawnTransitionIndex].type = "Queen";
+      t[pawnTransitionIndex].image = Images.QueenBlack;
+      setPieces(t);
     }
     setBlackPeriod(false);
     setWhitePeriod(true);
@@ -94,7 +104,9 @@ export default function Chessboard(props) {
   function mov(movement) {
     let movimento = MovementAction(movement, pieces);
     let t = movimento === false ? pieces : movimento;
-    let pawnTransitionIndex = t.findIndex(value => value.y === 7 && value.type === "Pawn" && value.color === "b")
+    let pawnTransitionIndex = t.findIndex(
+      (value) => value.y === 7 && value.type === "Pawn" && value.color === "b"
+    );
     if (pawnTransitionIndex > -1) {
       setWhitePeriod(false);
       setBlackPeriod(false);
@@ -107,9 +119,14 @@ export default function Chessboard(props) {
       setMovement([]);
       if (movement.piece.color === "w") {
         setWhitePeriod(false);
-        setTimeout(() => {
-          setBlackPeriod(true);
-        }, props.dificulty==='medium'|| props.dificulty==='easy'?1000:200);
+        setTimeout(
+          () => {
+            setBlackPeriod(true);
+          },
+          props.dificulty === "medium" || props.dificulty === "easy"
+            ? 1000
+            : 200
+        );
       } else {
         setBlackPeriod(false);
         setWhitePeriod(true);
@@ -124,40 +141,45 @@ export default function Chessboard(props) {
   function alterPawn(selectPawnType) {
     let pieceIndex = pieces.findIndex(
       (value) =>
-        value.x == pawnTransition.x && value.y == pawnTransition.y && value.type==pawnTransition.type
+        value.x == pawnTransition.x &&
+        value.y == pawnTransition.y &&
+        value.type == pawnTransition.type
     );
-    let z: Piece[] =[]
-     pieces.map((value,id)=>{
-      z.push(value)
-     })
+    let z: Piece[] = [];
+    pieces.map((value, id) => {
+      z.push(value);
+    });
     switch (selectPawnType) {
       case "Queen":
-      z[pieceIndex].image=z[pieceIndex].color==='w'?Images.QueenWhite:Images.QueenBlack
-      z[pieceIndex].type="Queen"
+        z[pieceIndex].image =
+          z[pieceIndex].color === "w" ? Images.QueenWhite : Images.QueenBlack;
+        z[pieceIndex].type = "Queen";
         break;
       case "Horse":
-        z[pieceIndex].image=z[pieceIndex].color==='w'?Images.HorseWhite:Images.HorseBlack
-        z[pieceIndex].type="Horse"
+        z[pieceIndex].image =
+          z[pieceIndex].color === "w" ? Images.HorseWhite : Images.HorseBlack;
+        z[pieceIndex].type = "Horse";
         break;
       case "Tower":
-        z[pieceIndex].image=z[pieceIndex].color==='w'?Images.TowerWhite:Images.TowerBlack
-        z[pieceIndex].type="Tower"
+        z[pieceIndex].image =
+          z[pieceIndex].color === "w" ? Images.TowerWhite : Images.TowerBlack;
+        z[pieceIndex].type = "Tower";
         break;
       case "Bishop":
-        z[pieceIndex].image=z[pieceIndex].color==='w'?Images.BishopWhite:Images.BishopBlack
-        z[pieceIndex].type="Bishop"
+        z[pieceIndex].image =
+          z[pieceIndex].color === "w" ? Images.BishopWhite : Images.BishopBlack;
+        z[pieceIndex].type = "Bishop";
         break;
     }
-   setPieces(z);
-   if(pawnTransition.color==='w'){
-    setBlackPeriod(true)
-    setWhitePeriod(false)
-   }
-   else{
-    setBlackPeriod(false)
-    setWhitePeriod(true)
-   }
-   setPawnTransition(undefined)
+    setPieces(z);
+    if (pawnTransition.color === "w") {
+      setBlackPeriod(true);
+      setWhitePeriod(false);
+    } else {
+      setBlackPeriod(false);
+      setWhitePeriod(true);
+    }
+    setPawnTransition(undefined);
   }
   function map() {
     let index = 0;
@@ -272,7 +294,35 @@ export default function Chessboard(props) {
   }
 
   return (
-    <>
+    <View style={styles.container}>
+      <View
+        style={{
+          position: "absolute",
+          top: 135,
+          left: 20,
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            backgroundColor: "#D9D9D9",
+            borderRadius: 200,
+            elevation: 20,
+            shadowColor: whitePeriod !== true ? "red" : "black",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            style={{ width: "60%", height: "65%" }}
+            source={require("../../../assets/BotIcon.png")}
+          />
+        </View>
+        <Text style={{ left: 17, fontSize: 20 }}>{"Bot"}</Text>
+      </View>
       <View
         style={{
           position: "absolute",
@@ -391,47 +441,164 @@ export default function Chessboard(props) {
               }
             />
           </TouchableOpacity>
-          
         </View>
       ) : (
         <></>
       )}
-      <View style={{backgroundColor:'#0F4C75', width:'100%', height:120, position:'absolute',top:0, alignItems:'center', justifyContent:'flex-start'}}>
-        <Text style={{top:'60%', color:'white', fontSize:20}}>
-        {props.dificulty==='easy'?'Modo Facil':props.dificulty==='Modo medium'?'Medio':'Modo Dificil'}
+      <View
+        style={{
+          backgroundColor: "#0F4C75",
+          width: "100%",
+          height: 120,
+          position: "absolute",
+          top: 0,
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
+      >
+        <Text style={{ top: "60%", color: "white", fontSize: 20 }}>
+          {props.dificulty === "easy"
+            ? "Modo Facil"
+            : props.dificulty === "Modo medium"
+            ? "Medio"
+            : "Modo Dificil"}
         </Text>
       </View>
-      <Overlay isVisible={gameOver} 
-      overlayStyle={{
-        width:300,
-        height:300,
-        alignItems:'center',
-        justifyContent:'center'
-      }}
+      <Overlay
+        isVisible={gameOver}
+        overlayStyle={{
+          width: 300,
+          height: 500,
+          alignItems: "center",
+          justifyContent:'flex-start',
+        }}
       >
-        <Text style={{fontSize:30, textAlign:'center'}}>{checkMatteBlack?'Parabens voce ganhou':'Voce perdeu'}</Text>
-        <TouchableOpacity style={{width:60, height:60, borderRadius:15,borderWidth:1,top:30, backgroundColor:'white', elevation:10, alignItems:'center', justifyContent:'center'}}
-         onPress={()=>{
-          reset();
-         }}
-         >
-          <Image style={{width:'60%', height:'60%'}} source={require('../assets/reloadIcon.png')}/>
-         </TouchableOpacity>
+        <Image style={{width:200, height:200}} source={checkMatteBlack ? require('../../../assets/checkmate_Icon1.png') :require('../../../assets/checkmate_Icon2.png') }/>
+        <Text style={{fontSize:30}}>{'Checkmate!'}</Text>
+        <Text style={{  textAlign: "center" }}>
+          {checkMatteBlack ? "Você ganhou!" : "Você perdeu!"}
+        </Text>
+        <TouchableOpacity
+          style={{
+            width: 200,
+            height: 60,
+            borderRadius: 15,
+            top: 80,
+            backgroundColor: "#0D5692",
+            elevation: 10,
+            alignItems: "center",
+            justifyContent: "center",
+            
+          }}
+          onPress={() => {
+            reset();
+          }}
+        >
+          <Text style={{fontSize:16,color:'white'}}>{'Jogar Novamente'}</Text>
+        </TouchableOpacity >
+        <TouchableOpacity style={{top:90}} onPress={()=>{navigation.goBack()}}>
+          <Text style={{fontSize:16, color:'#277BC0'}}>{'Voltar ao menu'}</Text>
+        </TouchableOpacity>
       </Overlay>
-      <View style={{width:'100%', height:'100%', position:'absolute', justifyContent:'flex-end'}}>
-      <View style={{width:'100%', height:140, backgroundColor:'#0F4C75', borderTopLeftRadius:20, borderTopRightRadius:20,  justifyContent:'center'}}>
-        <View style={{width:'100%', height:100, flexDirection:'row', alignItems:'center', justifyContent:'space-around'}}>
-         <TouchableOpacity style={{width:60, height:60, borderRadius:15, backgroundColor:'white', elevation:10, alignItems:'center', justifyContent:'center'}}
-         onPress={()=>{
-          reset();
-         }}
-         >
-          <Image style={{width:'60%', height:'60%'}} source={require('../assets/reloadIcon.png')}/>
-         </TouchableOpacity>
+      <View
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          justifyContent: "flex-end",
+        }}
+      >
+        <View
+          style={{
+            width: "100%",
+            height: 180,
+            backgroundColor: "#0F4C75",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              height: 100,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 15,
+                backgroundColor: "white",
+                elevation: 10,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={() => {
+                reset();
+              }}
+            >
+              <Image
+                style={{ width: "50%", height: "50%" }}
+                source={require("../assets/reloadIcon.png")}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 15,
+                backgroundColor: "white",
+                elevation: 10,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={{ width: "62%", height: "50%" }}
+                source={require("../assets/Icon_Exit.png")}
+              />
+            </TouchableOpacity>
+            <View style={{ width: "50%", height: 100 , flexDirection:'row', justifyContent:'flex-end', alignItems:'center'}}>
+            <Text style={{left:-17, fontSize: 20, color:'white' }}>{props.usuario.perfil.nome}</Text>
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  backgroundColor: "#D9D9D9",
+                  borderRadius: 200,
+                  elevation: 15,
+                  shadowColor: whitePeriod === true ? "red" : "black",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow:'hidden',
+                }}
+              >
+                <Image
+                  style={{ width: "100%", height: "100%"}}
+                  source={props.usuario.perfil.imagePerfil}
+                />
+              </View>
+
+            </View>
+          </View>
         </View>
       </View>
-      </View>
-      
-    </>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
