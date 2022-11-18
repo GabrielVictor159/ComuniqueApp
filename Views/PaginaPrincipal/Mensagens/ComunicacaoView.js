@@ -48,9 +48,9 @@ export default function ComunicacaoView(props) {
               tipoUsuario={value.tipoUsuario}
               imageUrl={value.imageUrl}
               nomeUsuario={value.destinatario}
-              mensagem={value.mensagens[value.mensagens.length - 1].text}
+              mensagem={value.mensagens.length !==0? value.mensagens[value.mensagens.length - 1].text:''}
               online={value.online}
-              horario={value.mensagens[value.mensagens.length - 1].data.substring(11, 16)}
+              horario={value.mensagens.length !==0? value.mensagens[value.mensagens.length - 1].data.substring(11, 16):''}
             />
            <Text>{"\n"}</Text>
           </TouchableOpacity>

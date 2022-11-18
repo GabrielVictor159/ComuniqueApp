@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, TextInput, TouchableOpacity, StyleSheet, Text, DatePickerIOSBase } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import CronogramaStyle from "../../../../estilos/Views_Estilos/CronogramaStyle";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 export default function AdicionarCronograma(props){
   const cores = {
     background: '#3282B8',
@@ -18,21 +20,22 @@ export default function AdicionarCronograma(props){
     black: "#252525",
   };
     const navigation = useNavigation();
-    let [AdicionarAno, setAdicionarAno] = useState('');
-     let [AdicionarDia, setAdicionarDia] = useState('');
-     let [AdicionarMes, setAdicionarMes] = useState('');
+   
     let [AdicionarCor, setAdicionarCor] = useState(cores.red2);
      let [AdicionarPrazo, setAdicionarPrazo] = useState();
      let [AdicionarText, setAdicionarText] = useState('');
+     let [date,setDate] = useState(false);
+     let [addDate, setAddDate] = useState("");
+     const adicionardata = (event, date) =>{
+      setAddDate(date)
+     }
     function  adicionarItem() {
         try {
-          if (AdicionarDia >= 0 && AdicionarDia <= 32) {
-            if (AdicionarMes > 0 && AdicionarMes <= 12) {
-              if(AdicionarAno.length==4){
+          
               const x = props.cronograma;
               x.push({
                 id: props.cronograma.length,
-                data: AdicionarAno + "-" + AdicionarMes + "-" + AdicionarDia,
+                data: addDate.toISOString().split('T')[0],
                 cor: AdicionarCor,
                 prazo: AdicionarPrazo,
                 text: AdicionarText,
@@ -40,58 +43,28 @@ export default function AdicionarCronograma(props){
               props.setCronograma(x)
               
              return navigation.goBack();
-            } else{
-              alert("Por favor insira um ano com 4 digitos")
-            }
-            } else {
-              alert("Mês invalido");
-            }
-          } else {
-            alert("Dia invalido");
-          }
-        } catch {}
+           
+        } catch {
+         
+        }
       }
     return(
             <View>
             <View style={{ alignItems: "center" }}>
               <View style={{ flexDirection: "row", left: -32, top: 100 }}>
                 <View style={{ flexDirection: "column" }}>
-                  <TextInput
-                    style={[
+                  {
+                   date === true && addDate === "" ?  <RNDateTimePicker locale="pt-BR"   mode="date"   value={new Date()} onChange={adicionardata} />: <></>  
+                  } 
+                 
+                  <TouchableOpacity  style={[
                       styles.CronogramaStyle.inputDia,
                       { backgroundColor: AdicionarCor },
                     ]}
-                    keyboardType={"number-pad"}
-                    placeholderTextColor={"white"}
-                    placeholder={"Dia"}
-                    onChangeText={(dia) => {
-                      setAdicionarDia( dia );
-                    }}
-                  />
-                  <TextInput
-                    style={[
-                      styles.CronogramaStyle.inputMes,
-                      { backgroundColor: AdicionarCor },
-                    ]}
-                    keyboardType={"number-pad"}
-                    placeholderTextColor={"white"}
-                    placeholder={"Mes"}
-                    onChangeText={(mes) => {
-                     setAdicionarMes(mes);
-                    }}
-                  />
-                   <TextInput
-                    style={[
-                      styles.CronogramaStyle.inputAno,
-                      { backgroundColor: AdicionarCor },
-                    ]}
-                    keyboardType={"number-pad"}
-                    placeholderTextColor={"white"}
-                    placeholder={"Ano"}
-                    onChangeText={(Ano) => {
-                     setAdicionarAno(Ano);
-                    }}
-                  />
+                 onPress={()=>{setDate(!date); setAddDate("")}}
+                 >
+                  <Text style={{color:'white'}}>{addDate===''?'Dia':addDate.toISOString().substring(8,10)}</Text>
+                 </TouchableOpacity>
                 </View>
                 <View
                   style={[

@@ -38,7 +38,10 @@ const CronogramaStyle = {
     color: "white",
 
     textAlign: "center",
-    width: 60,
+    width: 50,
+    height:30,
+    alignItems:'center',
+    justifyContent:'center',
     borderRadius: 15,
   },
   inputMes: {

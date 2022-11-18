@@ -33,18 +33,7 @@ export default function ContatosDaUnidade (props){
             online:callback.online,
             imageUrl:callback.imagePerfil,
             tipoUsuario:callback.tipoUsuario,
-            mensagens:[
-                
-                    {
-                        id:0,
-                          text:'Iniciei um chat com voce',
-                          data:new Date().toLocaleString(),
-                          origem:'Gabriel'
-                      },
-                
-                     
-                
-            ]
+            mensagens:[]
         });
         props.setChatEscolhido(props.chats.length-1);
         props.setChats(chat);

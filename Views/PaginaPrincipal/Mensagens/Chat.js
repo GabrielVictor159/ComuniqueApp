@@ -18,7 +18,10 @@ export default function Chat(props) {
     props.swipe(false);
     props.navDisplay("none");
     setInterval(() => {
+      try{
       setListMessage(mapChat(conversa))
+      }
+      catch{}
       setAtualizacoes(+1)
     }, timer);
     return () => {
@@ -50,6 +53,7 @@ export default function Chat(props) {
 
 
   function mapChat(callback) {
+    try{
     return callback.mensagens.map((value) => {
 
       return (
@@ -87,7 +91,11 @@ export default function Chat(props) {
           </View>
       );
     });
-  
+    
+  }
+  catch{
+
+  }
   };
 
 
