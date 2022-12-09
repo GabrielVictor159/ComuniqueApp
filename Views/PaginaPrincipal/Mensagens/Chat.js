@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text, ScrollView, TextInput } from "react-native";
+import { View, StyleSheet, Image, Text, ScrollView, TextInput,TouchableOpacity } from "react-native";
 import ImagePerfil from "../../../componentes/ImagePerfil";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Chat(props) {
@@ -124,21 +123,23 @@ export default function Chat(props) {
         </ScrollView>
 
       </View>
-
+        <View style={{width:60, height:60, backgroundColor:'white', position:'absolute', top:'92%', left:'83%',borderRadius: 20, alignItems:'center', justifyContent:'center', elevation:15}}>
+        <TouchableOpacity style={{width:'100%', height:'100%', alignItems:'center', justifyContent:'center',  borderRadius: 20}}
+          onPress={() => {
+            SendMessage();
+          }}
+        >
+        <Image style={{ width: '60%', height: '50%' }} source={require('../../../assets/SendMessage.png')} />
+        </TouchableOpacity>
+        </View>
+      
+  
       <View style={styles.mensagemInputContainer}>
         <TextInput style={styles.mensagemInput}
           placeholder="Mensagem"
           onChangeText={setMensagemInput}
         />
-
-
-        <TouchableOpacity style={styles.buttonSend}
-          onPress={() => {
-            SendMessage();
-          }}
-        >
-          <Image style={{ width: '60%', height: '50%' }} source={require('../../../assets/SendMessage.png')} />
-        </TouchableOpacity>
+       
 
 
 
@@ -217,13 +218,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   buttonSend: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     left: 35,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'red',
+    position:'absolute',
+    left:'0%',
+    top:'0%',
     overflow: 'visible'
   },
   buttonReturn:{
