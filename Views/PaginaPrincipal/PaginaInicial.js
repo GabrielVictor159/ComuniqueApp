@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, View, SafeAreaView } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import PaginaUsuario from "./Usuario/PaginaUsuario";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Text } from "react-native";
 import TabBarIcons from "../../componentes/TabBarIcons";
 import Personalizar from "./Configurações/Personalizar";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Comunicacao from "./Mensagens/Comunicacao";
-import Jogos from "./Usuario/Jogos/Jogos";
-import Cronograma from "./Usuario/Cronograma/Cronograma";
-import { color } from "react-native-reanimated";
-import UsuarioController from "../../Controller/UsuarioController";
-import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import PaginaUsuario from "./Usuario/PaginaUsuario";
 const TabBarIconsConfig = {
   sizeActive: 50,
   sizeInactive: 50,
@@ -22,17 +15,16 @@ const TabBarIconsConfig = {
   topInactive: 0,
 };
 const Tab = createMaterialTopTabNavigator();
-export default function PaginaInicial (props) {
-      const usuarioController = new UsuarioController()
-   const [usuario, setUsuario] = useState(usuarioController.usuario) 
+export default function PaginaInicial(props) {
+
   const [swipeEnabled, setSwipeEnabled] = useState(true);
   const [display, setDisplay] = useState('flex');
   const navigation = useNavigation();
-  
-  useEffect(()=>{
-    setInterval(()=>{
+
+  useEffect(() => {
+    setInterval(() => {
       setUsuario(usuarioController.usuario)
-    },1000)
+    }, 1000)
   }, [])
   return (
     <NavigationContainer independent={true}>
@@ -40,22 +32,22 @@ export default function PaginaInicial (props) {
         initialRouteName="PaginaUsuario"
         tabBarPosition="bottom"
         screenOptions={{
-          swipeEnabled:swipeEnabled,
+          swipeEnabled: swipeEnabled,
           tabBarIndicatorStyle: {
             height: 0,
           },
-          tabBarStyle: { height: 80, display:display },
-          tabBarIconStyle:{alignItems:'center'},
+          tabBarStyle: { height: 80, display: display },
+          tabBarIconStyle: { alignItems: 'center' },
           tabBarActiveTintColor: "#e91e63",
         }}
       >
         <Tab.Screen
           name="PaginaUsuario"
-          
-          children={()=><PaginaUsuario usuarioController={usuarioController} usuario={usuario} setUsuario={setUsuario} swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
+
+          children={() => <PaginaUsuario swipe={setSwipeEnabled} navDisplay={setDisplay} />}
           options={{
-            tabBarLabel:({focused})=>{
-              return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Principal'}</Text>
+            tabBarLabel: ({ focused }) => {
+              return <Text style={{ fontSize: 14, top: 12, color: focused === true ? "#277BC0" : "black" }}>{'Principal'}</Text>
             },
             headerShown: false,
 
@@ -77,15 +69,15 @@ export default function PaginaInicial (props) {
         />
         <Tab.Screen
           name="Comunicacao"
-          children={()=><Comunicacao usuarioController={usuarioController} usuario={usuario} chats={usuario.chats} setUsuario={setUsuario}  swipe={setSwipeEnabled} navDisplay={setDisplay}/>}
-          
+          children={() => <Comunicacao swipe={setSwipeEnabled} navDisplay={setDisplay} />}
+
           options={{
-            
-            tabBarLabel:({focused})=>{
-              return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Conversas'}</Text>
+
+            tabBarLabel: ({ focused }) => {
+              return <Text style={{ fontSize: 14, top: 12, color: focused === true ? "#277BC0" : "black" }}>{'Conversas'}</Text>
             },
             headerShown: false,
-           
+
             tabBarIcon: ({ focused }) => (
               <TabBarIcons
                 focused={focused}
@@ -104,10 +96,10 @@ export default function PaginaInicial (props) {
         />
         <Tab.Screen
           name="Personalizar"
-          children={()=><Personalizar navigationReset={navigation}  usuario={usuarioController} setUsuario={setUsuario} />}
+          children={() => <Personalizar navigationReset={navigation} />}
           options={{
-            tabBarLabel:({focused})=>{
-              return <Text style={{fontSize:14, top:12, color:focused===true?"#277BC0":"black"}}>{'Configurações'}</Text>
+            tabBarLabel: ({ focused }) => {
+              return <Text style={{ fontSize: 14, top: 12, color: focused === true ? "#277BC0" : "black" }}>{'Configurações'}</Text>
             },
             headerShown: false,
 
@@ -127,11 +119,11 @@ export default function PaginaInicial (props) {
             ),
           }}
         />
-        
+
       </Tab.Navigator>
-      </NavigationContainer>
-      
+    </NavigationContainer>
+
   );
-        
+
 }
 

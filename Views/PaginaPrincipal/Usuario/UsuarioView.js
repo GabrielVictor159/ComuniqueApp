@@ -1,13 +1,9 @@
-import * as React from "react";
-import { Animated, View, Image, StyleSheet } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { Image, StyleSheet, View } from "react-native";
+import { UserContext } from "../../../App";
 import Atividades from "../../../componentes/Atividades";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import PaginaUsuarioStyle from "../../../estilos/Views_Estilos/PaginaUsuarioStyle";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import GestureRecognizer from "react-native-swipe-gestures";
-import swipeConfig from "../../../configs/swipeConfig";
-import { useIsFocused } from '@react-navigation/native';
-import { useEffect } from "react";
 const properties = {
   with: 350,
   height: 105,
@@ -16,31 +12,31 @@ const properties = {
   barWidth: "40%",
   barHeight: "15%",
   textColor: "white",
-  text2Top:10,
+  text2Top: 10,
   fontSize: 20,
-  fontSize2:12,
+  fontSize2: 12,
   imageWidth: 140,
   imageHeight: 140,
   imageLeft: "50%",
   imageTop: -40,
 };
 
-export default function UsuarioView (props){
-  
-    useEffect(()=>{
-      setInterval(()=>{
-        props.setUsuario(props.usuarioController.usuario)
-      },1000)
-    },[])
-  
-    return (
-        <>
-        
+export default function UsuarioView(props) {
+  const { user, setUser } = useContext(UserContext);
+  useEffect(() => {
+    setInterval(() => {
+
+    }, 1000)
+  }, [])
+
+  return (
+    <>
+
       <View
         style={style.PaginaUsuarioStyle.container}
       >
         <View style={style.PaginaUsuarioStyle.menuSuperior}>
-        <Image style={style.PaginaUsuarioStyle.imageBanner} source={props.usuario.perfil.imageBanner}/>
+          <Image style={style.PaginaUsuarioStyle.imageBanner} source={user.fotoBackground} />
           <View style={style.PaginaUsuarioStyle.imageMenuContainer}>
 
             <ImagePerfil
@@ -50,10 +46,10 @@ export default function UsuarioView (props){
               shadowTop={10}
               shadowColor="#5C5C5C"
               shadowOpacity={0.2}
-              text={props.usuario.perfil.nome}
+              text={user.nomeUsuario}
               fontSize={15}
               fontColor='white'
-              imageUrl={props.usuario.perfil.imagePerfil}
+              imageUrl={user.fotoPerfil}
             />
           </View>
         </View>
@@ -102,7 +98,7 @@ export default function UsuarioView (props){
             imageTop={properties.imageTop}
           />
           <Atividades
-          navigate='Noticias'
+            navigate='Noticias'
             width={properties.with}
             height={properties.height}
             borderRadius={properties.borderRadius}
@@ -124,9 +120,9 @@ export default function UsuarioView (props){
           />
         </View>
       </View>
-      </>
-    );
-    
+    </>
+  );
+
 }
 
 const style = StyleSheet.create({

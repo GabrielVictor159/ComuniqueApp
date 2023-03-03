@@ -1,26 +1,19 @@
-import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from "react-native";
-
-import Button1 from "../../componentes/Button1";
-import { Link } from "@react-navigation/native";
-import LogarStyle from "../../estilos/Views_Estilos/LogarStyle";
-import { cores } from "../../estilos";
+import { Link, useNavigation } from "@react-navigation/native";
 import { Overlay } from "@rneui/themed";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useContext, useState } from "react";
+import {
+  Image, StyleSheet, Text, TextInput, TouchableOpacity, View
+} from "react-native";
+import { UserContext } from "../../App";
+import Button1 from "../../componentes/Button1";
 import SucessoOverlay from "../../componentes/SucessoOverlay";
+import keys from "../../configs/keys";
+import { cores } from "../../estilos";
+import LogarStyle from "../../estilos/Views_Estilos/LogarStyle";
 
-// Pagina para logarmos os usuarios
 export default function Logar(props) {
-  //    atributos que serão armazenados do input
-
+  const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
   const [Usuario, setUsuario] = useState("");
   const [Senha, setSenha] = useState("");
   const [EsqueceuSenha, setEsqueceuSenha] = useState(false);
@@ -30,6 +23,20 @@ export default function Logar(props) {
     setEsqueceuSenhaSucesso(false);
   };
 
+  const LogarTest = async () => {
+    let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${Usuario}/${Senha}`)
+    if (resposta.status === 200) {
+      let data = await resposta.json();
+      setUser(data)
+      navigation.navigate("PaginaInicial")
+    }
+    else if (resposta.status === 401) {
+      alert('Email ou senha invalidos!')
+    }
+    else {
+      alert(`Houve algum erro!`)
+    }
+  }
   return (
     <>
       <View style={styles.LogarStyle.body}>
@@ -73,17 +80,20 @@ export default function Logar(props) {
             />
           </View>
           <View style={styles.LogarStyle.ViewBottons}>
+
             <Button1
               width={220}
               height={55}
               borderRadius={20}
               fontSize={20}
-              tipoNavegacao="reset"
+              tipoNavegacao="action"
               navegacao="PaginaInicial"
               texto="Logar"
+              action={LogarTest}
               color1={cores.buttonGradientColor1}
               color2={cores.buttonGradientColor2}
             />
+
             <TouchableOpacity
               onPress={() => {
                 setEsqueceuSenha(true);
@@ -95,6 +105,7 @@ export default function Logar(props) {
             <Link style={styles.LogarStyle.Link2} to={{ screen: "Cadastrar" }}>
               Cadastrar-se
             </Link>
+
           </View>
         </View>
 
@@ -133,13 +144,15 @@ export default function Logar(props) {
             />
           </View>
           <Text>{"\n\n"}</Text>
-          <TouchableOpacity style={{ width: "60%", height: 70, elevation: 10,
-                backgroundColor: "#0D5692",
-                borderRadius: 25, }}
-          onPress={()=>{
-            setEsqueceuSenha(false)
-            setEsqueceuSenhaSucesso(true)
+          <TouchableOpacity style={{
+            width: "60%", height: 70, elevation: 10,
+            backgroundColor: "#0D5692",
+            borderRadius: 25,
           }}
+            onPress={() => {
+              setEsqueceuSenha(false)
+              setEsqueceuSenhaSucesso(true)
+            }}
           >
             <View
               style={{

@@ -1,7 +1,7 @@
-import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 // botão com gradiente reutilizado no codigo
 const button1 = (props) => {
   const navigation = useNavigation();
@@ -43,17 +43,19 @@ const button1 = (props) => {
             props.tipoNavegacao === "navigate"
               ? navigation.navigate(props.navegacao)
               : props.tipoNavegacao === "push"
-              ? navigation.push(props.navegacao)
-              : props.tipoNavegacao === "popToPop"
-              ? navigation.popToPop()
-              : props.tipoNavegacao === "dispatch"
-              ? navigation.dispatch(props.navegacao)
-              : props.tipoNavegacao === "reset"
-              ? navigation.reset({
-                  index: 0,
-                  routes: [{ name: props.navegacao }],
-                })
-              : navigation.goBack()
+                ? navigation.push(props.navegacao)
+                : props.tipoNavegacao === "popToPop"
+                  ? navigation.popToPop()
+                  : props.tipoNavegacao === "dispatch"
+                    ? navigation.dispatch(props.navegacao)
+                    : props.tipoNavegacao === "reset"
+                      ? navigation.reset({
+                        index: 0,
+                        routes: [{ name: props.navegacao }],
+                      })
+                      : props.tipoNavegacao === "action"
+                        ? props.action()
+                        : navigation.goBack()
           }
         >
           <Text

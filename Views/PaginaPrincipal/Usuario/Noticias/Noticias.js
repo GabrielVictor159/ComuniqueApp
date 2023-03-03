@@ -1,58 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import {
-  createStackNavigator,
-  TransitionPresets,
-  CardStyleInterpolators,
+  CardStyleInterpolators, createStackNavigator
 } from "@react-navigation/stack";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { fromLeft } from "react-navigation-transitions";
-import NoticiasController from "../../../../Controller/NoticiasController";
-import NoticiasView from "./NoticiasView";
+import { UserContext } from "../../../../App";
+import keys from "../../../../configs/keys";
 import NoticiasOneView from "./NoticiasOneView";
-import { useNavigation } from "@react-navigation/native";
+import NoticiasView from "./NoticiasView";
 const Stack = createStackNavigator();
-export default function Noticias(props){
-    useEffect(() => {
-        props.swipe(false);
-        props.navDisplay("none");
-        return function () {
-          props.swipe(true);
-          props.navDisplay("flex");
-        };
-      }, []);
-   const Noticias = new NoticiasController();
-    const navigation = useNavigation();
-   const [noticias, setNoticias]= useState(Noticias.Noticias)
-   const [noticiaEscolha, setNoticiaEscolha]= useState();
-    return(
-        <NavigationContainer independent={true}>
-             <Stack.Navigator
-      initialRouteName="NoticiasView"
-      transitionConfig={() => fromLeft(1000)}
-    >
-      <Stack.Screen
-        name="NoticiasView"
-        children={()=><NoticiasView noticias={noticias} setNoticias={setNoticias} navigation={navigation} setNoticiaEscolha={setNoticiaEscolha}/>}
-        options={{
+export default function Noticias(props) {
+
+  const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
+  const [noticias, setNoticias] = useState([])
+  const [noticiaEscolha, setNoticiaEscolha] = useState();
+
+  useEffect(() => {
+    props.swipe(false);
+    props.navDisplay("none");
+    return function () {
+      props.swipe(true);
+      props.navDisplay("flex");
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    getNoticias()
+      .then(data => setNoticias(data))
+  }, [])
+
+  const getNoticias = async () => {
+    let resposta = await fetch(`${keys.linkBackEnd}Noticias/getAll/${user.instituicao.idInstituicao}`)
+    if (resposta.status === 200) {
+      return await resposta.json()
+    }
+    else {
+      return []
+    }
+  }
+
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator
+        initialRouteName="NoticiasView"
+        transitionConfig={() => fromLeft(1000)}
+      >
+        <Stack.Screen
+          name="NoticiasView"
+          children={() => <NoticiasView noticias={noticias} setNoticias={setNoticias} navigation={navigation} setNoticiaEscolha={setNoticiaEscolha} />}
+          options={{
             tabBarStyle: { display: "none" },
-          headerShown: false,
-          tabBarShowLabel: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
-        name="NoticiaOneView"
-        children={()=><NoticiasOneView noticia={noticiaEscolha}/>}
-        
-        options={{
-          tabBarStyle: { display: "none" },
-          headerShown: false,
-          tabBarShowLabel: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-        }}
-      />
-     
-    </Stack.Navigator>
-        </NavigationContainer>
-    );
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
+          name="NoticiaOneView"
+          children={() => <NoticiasOneView noticia={noticiaEscolha} />}
+
+          options={{
+            tabBarStyle: { display: "none" },
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+          }}
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }

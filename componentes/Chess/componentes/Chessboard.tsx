@@ -1,27 +1,27 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
-import {
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  Image,
-  StyleSheet,
-} from "react-native";
-import Tile from "./Tile";
-import MovementType from "../Controller/MovementType";
-import InitialPieces from "../Controller/InitialPieces";
-import Piece from "../Model/Piece";
-import Movement from "../Model/Movement";
-import Check from "../Controller/Check";
-import MovementAction from "../Controller/MovementAction";
-import Images from "../Model/Images";
-import CheckMatte from "../Controller/CheckMatte";
-import MovementFylter from "../Controller/MovementFylter";
-import randomMove from "../Controller/IA/randomMove";
-import moveBasedRelativeStrength from "../Controller/IA/moveBasedRelativeStrength";
-import miniMax from "../Controller/IA/miniMax";
 import { useNavigation } from "@react-navigation/native";
 import { Overlay } from "@rneui/themed";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Image,
+  StyleSheet, Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { UserContext } from "../../../App";
+import Check from "../Controller/Check";
+import CheckMatte from "../Controller/CheckMatte";
+import miniMax from "../Controller/IA/miniMax";
+import moveBasedRelativeStrength from "../Controller/IA/moveBasedRelativeStrength";
+import randomMove from "../Controller/IA/randomMove";
+import InitialPieces from "../Controller/InitialPieces";
+import MovementAction from "../Controller/MovementAction";
+import MovementFylter from "../Controller/MovementFylter";
+import MovementType from "../Controller/MovementType";
+import Images from "../Model/Images";
+import Movement from "../Model/Movement";
+import Piece from "../Model/Piece";
+import Tile from "./Tile";
 
 export default function Chessboard(props) {
   const navigation = useNavigation();
@@ -35,6 +35,7 @@ export default function Chessboard(props) {
   const [gameOver, setGameOver] = useState(false);
   const [checkMatteBlack, setCheckMatteBlack] = useState(false);
   const [checkMatteWhite, setCheckMatteWhite] = useState(false);
+  const { user, setUser } = useContext<any>(UserContext);
 
   useEffect(() => {
     props.swipe(false);
@@ -51,7 +52,7 @@ export default function Chessboard(props) {
     if (blackPeriod === true && CheckMatte("b", pieces) !== true) {
       try {
         moveBlack();
-      } catch {}
+      } catch { }
     } else if (CheckMatte("b", pieces) === true) {
       setGameOver(true);
       setCheckMatteBlack(true);
@@ -460,8 +461,8 @@ export default function Chessboard(props) {
           {props.dificulty === "easy"
             ? "Modo Facil"
             : props.dificulty === "Modo medium"
-            ? "Medio"
-            : "Modo Dificil"}
+              ? "Medio"
+              : "Modo Dificil"}
         </Text>
       </View>
       <Overlay
@@ -470,12 +471,12 @@ export default function Chessboard(props) {
           width: 300,
           height: 500,
           alignItems: "center",
-          justifyContent:'flex-start',
+          justifyContent: 'flex-start',
         }}
       >
-        <Image style={{width:200, height:200}} source={checkMatteBlack ? require('../../../assets/checkmate_Icon1.png') :require('../../../assets/checkmate_Icon2.png') }/>
-        <Text style={{fontSize:30}}>{'Checkmate!'}</Text>
-        <Text style={{  textAlign: "center" }}>
+        <Image style={{ width: 200, height: 200 }} source={checkMatteBlack ? require('../../../assets/checkmate_Icon1.png') : require('../../../assets/checkmate_Icon2.png')} />
+        <Text style={{ fontSize: 30 }}>{'Checkmate!'}</Text>
+        <Text style={{ textAlign: "center" }}>
           {checkMatteBlack ? "Você ganhou!" : "Você perdeu!"}
         </Text>
         <TouchableOpacity
@@ -488,16 +489,16 @@ export default function Chessboard(props) {
             elevation: 10,
             alignItems: "center",
             justifyContent: "center",
-            
+
           }}
           onPress={() => {
             reset();
           }}
         >
-          <Text style={{fontSize:16,color:'white'}}>{'Jogar Novamente'}</Text>
+          <Text style={{ fontSize: 16, color: 'white' }}>{'Jogar Novamente'}</Text>
         </TouchableOpacity >
-        <TouchableOpacity style={{top:90}} onPress={()=>{navigation.goBack()}}>
-          <Text style={{fontSize:16, color:'#277BC0'}}>{'Voltar ao menu'}</Text>
+        <TouchableOpacity style={{ top: 90 }} onPress={() => { navigation.goBack() }}>
+          <Text style={{ fontSize: 16, color: '#277BC0' }}>{'Voltar ao menu'}</Text>
         </TouchableOpacity>
       </Overlay>
       <View
@@ -565,8 +566,8 @@ export default function Chessboard(props) {
                 source={require("../assets/Icon_Exit.png")}
               />
             </TouchableOpacity>
-            <View style={{ width: "50%", height: 100 , flexDirection:'row', justifyContent:'flex-end', alignItems:'center'}}>
-            <Text style={{left:-17, fontSize: 20, color:'white' }}>{props.usuario.perfil.nome}</Text>
+            <View style={{ width: "50%", height: 100, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Text style={{ left: -17, fontSize: 20, color: 'white' }}>{user.fotoPerfil}</Text>
               <View
                 style={{
                   width: 100,
@@ -577,12 +578,12 @@ export default function Chessboard(props) {
                   shadowColor: whitePeriod === true ? "red" : "black",
                   alignItems: "center",
                   justifyContent: "center",
-                  overflow:'hidden',
+                  overflow: 'hidden',
                 }}
               >
                 <Image
-                  style={{ width: "100%", height: "100%"}}
-                  source={props.usuario.perfil.imagePerfil}
+                  style={{ width: "100%", height: "100%" }}
+                  source={user.fotoPerfil}
                 />
               </View>
 
