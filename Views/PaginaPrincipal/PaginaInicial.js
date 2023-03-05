@@ -1,8 +1,13 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import TabBarIcons from "../../componentes/TabBarIcons";
+import ImageStorage from '../../configs/ImageStorage';
+import keys from '../../configs/keys';
+import mensagensImmageTextConvert from '../../configs/mensagensImageTextConverts';
 import Personalizar from "./Configurações/Personalizar";
 import Comunicacao from "./Mensagens/Comunicacao";
 import PaginaUsuario from "./Usuario/PaginaUsuario";
@@ -81,6 +86,7 @@ export default function PaginaInicial(props) {
               })
           }
         })
+
       axios.get(`${keys.linkBackEnd}Mensagens/getAllUser/${user.email}/${user.senha}`)
         .then(response => {
           if (response.status === 200) {
@@ -99,6 +105,9 @@ export default function PaginaInicial(props) {
                       .catch(error => {
                         console.log(`Erro ao confirmar entrega da mensagem: ${error}`);
                       });
+                    if (novaMensagem.isFile) {
+                      ImageStorage.addImage(`${keys.linkBackEnd}images/${mensagensImmageTextConvert.getContentBetweenDelimiters(novaMensagem.mensagem, "§")}`)
+                    }
                   }
                 });
 
