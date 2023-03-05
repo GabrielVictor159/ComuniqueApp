@@ -1,24 +1,14 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import moment from "moment";
+import React, { useState } from "react";
 import {
-  View,
-  TouchableOpacity,
-  Text,
   Image,
-  ScrollView,
-  TextInput,
-  Button,
-  StyleSheet,
+  ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import { CalendarList, LocaleConfig } from "react-native-calendars";
 import CronogramaAtividade from "../../../../../componentes/CronogramaAtividade";
+import colorDegradeConvert from "../../../../../configs/colorDegradeConvert";
 import dataConvert from "../../../../../configs/dataConvert";
 import CronogramaCalendarStyle from "../../../../../estilos/Views_Estilos/CronogramaCalendarStyle";
-import { LocaleConfig } from "react-native-calendars";
-import cores from "../../../../../estilos/Views_Estilos/CronogramaCores"
-import moment from "moment";
-import PopMenu from "../PopMenu";
-import colorDegradeConvert from "../../../../../configs/colorDegradeConvert"
 LocaleConfig.locales["br"] = {
   monthNames: [
     "Janeiro",
@@ -64,54 +54,53 @@ LocaleConfig.defaultLocale = "br";
 
 let contador = 0;
 export default function CalendarioCronogramaView(props) {
-
-  let [busca, setBusca] = useState("");
-  let [estado, setEstado] = useState(0);
-
-  let [atividades, setAtividades] = useState(props.cronograma);
-  let [mesSelecionado, setMesSelecionado] = useState("");
+  const [busca, setBusca] = useState("");
+  const [estado, setEstado] = useState(0);
+  const [atividades, setAtividades] = useState(props.cronograma);
+  const [mesSelecionado, setMesSelecionado] = useState("");
 
   function mapDates(callback) {
     let map = [];
     callback.map((value, index) => {
-      map.push(
-        moment(value.data, "YYYY-MM-DD").format("YYYY-MM-DD") + "I" + value.cor
-      );
+      map.push({
+        dateString: moment(value.data, "YYYY-MM-DD").format("YYYY-MM-DD"),
+        color: value.cor,
+        endingDay: true,
+        startingDay: true,
+      });
 
       for (let i = 0; i <= parseInt(value.prazo.substring(0, 2)); i++) {
-        
-        let colorDegrade = colorDegradeConvert(value.cor)
+        let colorDegrade = colorDegradeConvert(value.cor);
         if (i === parseInt(value.prazo.substring(0, 2))) {
-          map.push(
-            moment(value.data, "YYYY-MM-DD")
+          map.push({
+            dateString: moment(value.data, "YYYY-MM-DD")
               .add(i, "days")
-              .format("YYYY-MM-DD") +
-              "F" +
-              value.cor
-          );
+              .format("YYYY-MM-DD"),
+            color: value.cor,
+            endingDay: true,
+            startingDay: false,
+          });
         } else {
-          if (i != 0) {
-
-            map.push(
-                
-              moment(value.data, "YYYY-MM-DD")
+          if (i !== 0) {
+            map.push({
+              dateString: moment(value.data, "YYYY-MM-DD")
                 .add(i, "days")
-                .format("YYYY-MM-DD") +
-                "T" +
-                colorDegrade 
-            );
+                .format("YYYY-MM-DD"),
+              color: colorDegrade,
+              endingDay: false,
+              startingDay: false,
+            });
           }
         }
       }
     });
     return map.reduce(
-      (c, v, index) =>
+      (c, v) =>
         Object.assign(c, {
-          [v.substring(0, 10)]: {
-            endingDay: v.substring(10, 11) === "F" ? true : false,
-            startingDay: v.substring(10, 11) === "I" ? true : false,
-            color: v.substring(11, 20),
-            
+          [v.dateString]: {
+            endingDay: v.endingDay,
+            startingDay: v.startingDay,
+            color: v.color,
           },
         }),
       {}
@@ -128,13 +117,15 @@ export default function CalendarioCronogramaView(props) {
           ) {
             return post;
           }
-        } else if (post.text.toLowerCase().includes(props.busca.toLowerCase())) {
-            if (
-                post.data.substring(5, 7) == mesSelecionado.month &&
-                post.data.substring(0, 4) == mesSelecionado.year
-              ) {
-                return post;
-              }
+        } else if (
+          post.text.toLowerCase().includes(props.busca.toLowerCase())
+        ) {
+          if (
+            post.data.substring(5, 7) == mesSelecionado.month &&
+            post.data.substring(0, 4) == mesSelecionado.year
+          ) {
+            return post;
+          }
         }
       })
       .map((value, index) => {
@@ -161,32 +152,21 @@ export default function CalendarioCronogramaView(props) {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <CronogramaAtividade
                   ano={value.data.substring(6, 10)}
-                  dia={value.data.substring(0, 2)}
-                  mes={dataConvert(value.data.substring(3, 5))}
+                  dia={value.data.substring(8, 10)}
+                  mes={dataConvert(value.data.substring(5, 7))}
                   color={value.cor}
-                  width={220}
-                  height={106}
-                  backgroundColor="#CDCDCD"
+                  width={120}
+                  height={53}
+                  backgroundColor="#D9D9D9"
                   texto={value.text}
                   prazo={value.prazo}
                 />
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    left: 20,
-                  }}
-                >
-                  <Button
-                    style={{ width: "100%", height: "100%" }}
-                    title="X"
-                    color={cores.background}
-                    onPress={() => deleteAtividade(value.id)}
+                <TouchableOpacity onPress={() => deleteAtividade(index)}>
+                  <Image
+                    source={require("../assets/images/delete-icon.png")}
+                    style={{ marginLeft: 10 }}
                   />
-                </View>
+                </TouchableOpacity>
               </View>
               <Text>{"\n"}</Text>
             </View>
@@ -194,41 +174,74 @@ export default function CalendarioCronogramaView(props) {
         }
       });
   }
-  
+
+
+
+  const map = mapDates(props.cronograma);
 
   return (
-    <>
-      <View style={styles.CronogramaCalendarStyle.body}>
-        <View style={{width:'100%', alignItems:'center'}}>
-        <View style={{width:'90%', top:50}}>
-        <Calendar
-        
-        hideExtraDays={true}
-          onMonthChange={(month) => {
-            setMesSelecionado(month);
-          }}
-          markingType={"period"}
-          markedDates={mapDates(props.cronograma)}
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#F2F2F2",
+        }}
+      >
+        <SearchBar
+          placeholder="Busca"
+          onChangeText={(busca) => setBusca(busca)}
+          value={busca}
+          lightTheme={true}
+          platform="ios"
+          containerStyle={{ width: "95%", backgroundColor: "white" }}
         />
-        </View>
-        </View>
-        
-        
-        <View style={styles.CronogramaCalendarStyle.containerConteudo}>
-          
-            <ScrollView>
-              <Text>{"\n"}</Text>
-              {atividadeReturn(atividades)}
-            </ScrollView>
-        
+        <Text>{"\n"}</Text>
       </View>
-      
+      <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
+        <View style={{ flex: 1 }}>
+          <CalendarList
+            current={moment().format("YYYY-MM-DD")}
+            pastScrollRange={0}
+            futureScrollRange={12}
+            showScrollIndicator={true}
+            style={{
+              borderWidth: 0.5,
+              borderColor: "gray",
+              height: "100%",
+            }}
+            onDayPress={onDayPress}
+            onMonthChange={onMonthChange}
+            markedDates={{
+              ...map,
+              [moment().format("YYYY-MM-DD")]: {
+                color: "#50cebb",
+                textColor: "white",
+              },
+            }}
+            markingType={"period"}
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <ScrollView style={{ maxHeight: 575 }}>
+            {atividadeReturn(props.cronograma)}
+          </ScrollView>
+          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <TouchableOpacity onPress={() => setEstado(estado === 1 ? 0 : 1)}>
+              <Text style={{ marginRight: 10 }}>
+                {estado === 0 ? "Editar" : "Salvar"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+              <Text style={{ marginRight: 10 }}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+          <Text>{"\n"}</Text>
+        </View>
+      </View>
     </View>
-    <PopMenu setBusca={props.setBusca} popWidth={props.popWidth}/>
-    </>
   );
-  }
-  
+}
 
 
 const styles = StyleSheet.create({

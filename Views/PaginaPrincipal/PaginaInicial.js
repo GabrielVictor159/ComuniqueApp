@@ -21,11 +21,110 @@ export default function PaginaInicial(props) {
   const [display, setDisplay] = useState('flex');
   const navigation = useNavigation();
 
+  const { user, setUser } = useContext(UserContext);
+  const [chats, setChats] = useState([]);
+  const [mensagens, setMensagens] = useState([])
+  const [mensagensNaoLidas, setMensagensNaoLidas] = useState([]);
+
   useEffect(() => {
-    setInterval(() => {
-      setUsuario(usuarioController.usuario)
-    }, 1000)
-  }, [])
+    let isMounted = true;
+
+    AsyncStorage.getItem('chats')
+      .then(chat => {
+        if (chat === null) {
+          AsyncStorage.setItem('chats', JSON.stringify([]))
+            .catch(error => console.log(error));
+        } else {
+          if (isMounted) {
+            setChats(JSON.parse(chat));
+          }
+        }
+      })
+      .catch(error => console.log(error));
+
+    AsyncStorage.getItem('mensagens')
+      .then(mensagens => {
+        if (mensagens === null) {
+          AsyncStorage.setItem('mensagens', JSON.stringify([]))
+            .catch(error => console.log(error));
+        } else {
+          if (isMounted) {
+            setMensagens(JSON.parse(mensagens));
+          }
+        }
+      })
+      .catch(error => console.log(error));
+
+    const intervalId = setInterval(() => {
+
+      axios.get(`${keys.linkBackEnd}Chat/getAll/${user.email}/${user.senha}`)
+        .then(response => {
+          if (response.status === 200) {
+            AsyncStorage.getItem('chats')
+              .then(chatsValue => {
+                const arrayChats = JSON.parse(chatsValue);
+                const chatsAtualizados = [...arrayChats];
+
+                response.data.forEach(novoChat => {
+                  if (!arrayChats.some(novoChat => novoChat.idChat === novoChat.idChat)) {
+                    chatsAtualizados.push(novoChat);
+                  }
+                });
+
+                AsyncStorage.setItem('chats', JSON.stringify(chatsAtualizados))
+                  .then(() => {
+                    if (isMounted) {
+                      setChats(chatsAtualizados)
+                    }
+                  })
+                  .catch(error => console.log(error));
+              })
+          }
+        })
+      axios.get(`${keys.linkBackEnd}Mensagens/getAllUser/${user.email}/${user.senha}`)
+        .then(response => {
+          if (response.status === 200) {
+            AsyncStorage.getItem('mensagens')
+              .then(mensagensValue => {
+                const arrayMensagens = JSON.parse(mensagensValue);
+                const mensagensAtualizadas = [...arrayMensagens];
+
+                response.data.forEach(novaMensagem => {
+                  if (!arrayMensagens.some(mensagem => mensagem.idMensagem === novaMensagem.idMensagem)) {
+                    mensagensAtualizadas.push(novaMensagem);
+                    axios.put(`${keys.linkBackEnd}Mensagens/confirmarEntrega/${user.email}/${user.senha}/${novaMensagem.idMensagem}`)
+                      .then(response => {
+                        console.log('Mensagem entregue com sucesso!');
+                      })
+                      .catch(error => {
+                        console.log(`Erro ao confirmar entrega da mensagem: ${error}`);
+                      });
+                  }
+                });
+
+                AsyncStorage.setItem('mensagens', JSON.stringify(mensagensAtualizadas))
+                  .then(() => {
+                    if (isMounted) {
+                      setMensagens(mensagensAtualizadas);
+                    }
+                  })
+                  .catch(error => console.log(error));
+              })
+          }
+        })
+    }, 60000);
+
+    return () => {
+      clearInterval(intervalId);
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const naoLidas = mensagens.filter(mensagem => !mensagem.lida);
+    setMensagensNaoLidas(naoLidas);
+  }, [mensagens]);
+
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator

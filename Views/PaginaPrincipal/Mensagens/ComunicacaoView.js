@@ -1,38 +1,30 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, StyleSheet, Text, TextInput, ScrollView, Image } from "react-native";
-import { cores, geral } from "../../../estilos";
-import ImagePerfil from "../../../componentes/ImagePerfil";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Lupa from "../../../assets/Lupa";
 import Comunicacoes from "../../../componentes/Comunicacoes";
+import ImagePerfil from "../../../componentes/ImagePerfil";
+import { geral } from "../../../estilos";
 import ComunicacaoStyle from "../../../estilos/Views_Estilos/ComunicacaoStyle";
-import UsuarioController from '../../../Controller/UsuarioController';
-import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
 
 export default function ComunicacaoView(props) {
   const navigation = useNavigation();
   let [busca, setBusca] = useState('');
 
-  useEffect(()=>{
-    setInterval(()=>{
-      props.setUsuario(props.usuarioController.usuario)
-     
-    },3000)
-  },[])
-
   function mapReturn(callback) {
-   
-     
+
+
     return callback.filter(post => {
-        if(busca === ''){
-          return post;
-        }
-        else if(post.destinatario.toLowerCase().includes(busca.toLowerCase())){
-          return post;
-        }
+      if (busca === '') {
+        return post;
+      }
+      else if (post.destinatario.toLowerCase().includes(busca.toLowerCase())) {
+        return post;
+      }
     }).map((value, index) => {
       return (
-      
+
         <View style={{ width: "100%", alignItems: "center" }} key={index}>
           <TouchableOpacity style={{ width: 400, alignItems: 'center' }}
             onPress={() => {
@@ -40,7 +32,7 @@ export default function ComunicacaoView(props) {
                 props.setChatEscolhido(value.id)
             }}
           >
-           
+
             <Comunicacoes
               width="90%"
               height={100}
@@ -48,20 +40,20 @@ export default function ComunicacaoView(props) {
               tipoUsuario={value.tipoUsuario}
               imageUrl={value.imageUrl}
               nomeUsuario={value.destinatario}
-              mensagem={value.mensagens.length !==0? value.mensagens[value.mensagens.length - 1].text:''}
+              mensagem={value.mensagens.length !== 0 ? value.mensagens[value.mensagens.length - 1].text : ''}
               online={value.online}
-              horario={value.mensagens.length !==0? value.mensagens[value.mensagens.length - 1].data.substring(11, 16):''}
+              horario={value.mensagens.length !== 0 ? value.mensagens[value.mensagens.length - 1].data.substring(11, 16) : ''}
             />
-           <Text>{"\n"}</Text>
+            <Text>{"\n"}</Text>
           </TouchableOpacity>
-         
+
         </View>
-       
-        
+
+
       );
     });
-  
- 
+
+
   };
 
   return (
@@ -84,14 +76,14 @@ export default function ComunicacaoView(props) {
         </ScrollView>
       </View>
       <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
-      <View style={{position:'absolute', top:'62%', left:'75%'}}>
-        <TouchableOpacity 
-        onPress={()=>{
-            navigation.navigate('ContatosDaUnidade')
-        }}
-        >
-            <Image style={{width:40, height:40}} source={require('../../../assets/AdicionarContatos.png')}/>
-        </TouchableOpacity>
+        <View style={{ position: 'absolute', top: '62%', left: '75%' }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ContatosDaUnidade')
+            }}
+          >
+            <Image style={{ width: 40, height: 40 }} source={require('../../../assets/AdicionarContatos.png')} />
+          </TouchableOpacity>
         </View>
         <Text style={styles.ComunicacaoStyle.menuText}>Mensagens</Text>
         <TextInput

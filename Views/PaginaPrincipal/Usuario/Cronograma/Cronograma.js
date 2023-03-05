@@ -1,13 +1,14 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import ListaCronograma from "./Lista/ListaCronograma";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import CalendarioCronograma from "./Calendario/CalendarioCronograma";
-import TabBarIcons from "../../../../componentes/TabBarIcons";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { UserContext } from "../../../../App";
 import IconBack from "../../../../assets/IconBack";
-import { useNavigation } from "@react-navigation/native";
+import keys from "../../../../configs/keys";
+import CalendarioCronograma from "./Calendario/CalendarioCronograma";
+import ListaCronograma from "./Lista/ListaCronograma";
+
 const Tab = createMaterialTopTabNavigator();
 let popI = 2;
 const cores = {
@@ -33,14 +34,52 @@ export default function Cronograma(props) {
     };
   }, []);
   const [busca, setBusca] = useState('')
-  const cronograma = props.usuario.cronograma;
+  const { user, setUser } = useContext(UserContext)
+  const [cronograma, setCronograma] = useState([])
+
+  useLayoutEffect(() => {
+    AsyncStorage.getItem('cronogramas')
+      .then(cronogramas => {
+        if (cronogramas === null) {
+          AsyncStorage.setItem('cronogramas', JSON.stringify([]))
+            .catch(error => console.log(error));
+        } else {
+          setCronograma(JSON.parse(cronogramas));
+        }
+      })
+      .catch(error => console.log(error));
+
+    fetch(`${keys.linkBackEnd}Cronograma/${user.email}/${user.senha}`)
+      .then(response => {
+        if (response.ok) {
+          response.json().then(novosCronogramas => {
+            AsyncStorage.getItem('cronogramas')
+              .then(cronogramas => {
+                const arrayCronogramas = JSON.parse(cronogramas);
+                const cronogramasAtualizados = [...arrayCronogramas];
+
+                novosCronogramas.forEach(novoCronograma => {
+                  if (!arrayCronogramas.some(cronograma => cronograma.idCronograma === novoCronograma.idCronograma)) {
+                    cronogramasAtualizados.push(novoCronograma);
+                  }
+                });
+
+                AsyncStorage.setItem('cronogramas', JSON.stringify(cronogramasAtualizados))
+                  .then(() => setCronograma(cronogramasAtualizados))
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          });
+        }
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+
+
   const [popWidth, setPopWidth] = useState(0);
   const navigation = useNavigation();
-  function setCronograma (callback){
-    let z = props.usuario
-    z.cronograma = callback
-    props.setUsuario(z)
-  }
+
   return (
     <>
       <NavigationContainer independent={true}>
@@ -93,7 +132,7 @@ export default function Cronograma(props) {
         >
           <Tab.Screen
             name="ListaCronograma"
-            children={() => <ListaCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} busca={busca} setBusca={setBusca}/>}
+            children={() => <ListaCronograma cronograma={cronograma} setCronograma={setCronograma} popWidth={popWidth} busca={busca} setBusca={setBusca} />}
             options={{
               tabBarLabel: "Dia",
             }}

@@ -1,63 +1,58 @@
-import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
-  createStackNavigator,
-  TransitionPresets,
-  CardStyleInterpolators,
+  CardStyleInterpolators, createStackNavigator
 } from "@react-navigation/stack";
+import React, { useState } from "react";
 import { fromLeft } from "react-navigation-transitions";
-import ComunicacaoView from "./ComunicacaoView";
 import Chat from "./Chat";
-import UsuarioController from "../../../Controller/UsuarioController";
+import ComunicacaoView from "./ComunicacaoView";
 import ContatosDaUnidade from "./ContatosDaUnidade";
 const Stack = createStackNavigator();
-export default function Comunicacao (props){
-  
+export default function Comunicacao(props) {
+
   let [chatEscolhido, setChatEscolhido] = useState();
- function setChats(callback){
-  let z = props.usuario
-  z.chats = callback
-  props.setUsuario(z)
- }
-  return(
+
+
+
+  return (
     <NavigationContainer independent={true}>
-    <Stack.Navigator
-      initialRouteName="ComunicacaoView"
-      transitionConfig={() => fromLeft(1000)}
-    >
-      <Stack.Screen
-        name="ComunicacaoView"
-        children={()=><ComunicacaoView usuarioController={props.usuarioController} usuario={props.usuario} setUsuario={props.setUsuario}  setChatEscolhido={setChatEscolhido}/>}
-        options={{
-          tabBarStyle: { display: "none" },
-          headerShown: false,
-          tabBarShowLabel: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
-        name="Chat"
-        children={()=><Chat usuarioController={props.usuarioController} usuario={props.usuario} swipe={props.swipe} chats={props.chats} chat={props.chats[chatEscolhido]} setChats={setChats} navDisplay={props.navDisplay}/>}
-        
-        options={{
-          tabBarStyle: { display: "none" },
-          headerShown: false,
-          tabBarShowLabel: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
-        name="ContatosDaUnidade"
-        children={()=><ContatosDaUnidade swipe={props.swipe} navDisplay={props.navDisplay} chats={props.chats} setChats={setChats} setChatEscolhido={setChatEscolhido}/>}
-        
-        options={{
-          tabBarStyle: { display: "none" },
-          headerShown: false,
-          tabBarShowLabel: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-        }}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="ComunicacaoView"
+        transitionConfig={() => fromLeft(1000)}
+      >
+        <Stack.Screen
+          name="ComunicacaoView"
+          children={() => <ComunicacaoView setChatEscolhido={setChatEscolhido} />}
+          options={{
+            tabBarStyle: { display: "none" },
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
+          name="Chat"
+          children={() => <Chat swipe={props.swipe} navDisplay={props.navDisplay} />}
+
+          options={{
+            tabBarStyle: { display: "none" },
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
+          name="ContatosDaUnidade"
+          children={() => <ContatosDaUnidade swipe={props.swipe} navDisplay={props.navDisplay} setChatEscolhido={setChatEscolhido} />}
+
+          options={{
+            tabBarStyle: { display: "none" },
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

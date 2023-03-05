@@ -27,6 +27,7 @@ export default function Logar(props) {
     let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${Usuario}/${Senha}`)
     if (resposta.status === 200) {
       let data = await resposta.json();
+      data.senha = Senha;
       setUser(data)
       navigation.navigate("PaginaInicial")
     }

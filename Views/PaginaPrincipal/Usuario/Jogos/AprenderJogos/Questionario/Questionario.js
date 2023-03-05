@@ -1,28 +1,24 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
-import { View, TouchableOpacity } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import {
-  createStackNavigator,
-  TransitionPresets,
-  CardStyleInterpolators,
+  CardStyleInterpolators, createStackNavigator
 } from "@react-navigation/stack";
-import QuestoesComponente from "./QuestoesComponente";
-import QuestionarioController from "../../../../../../Controller/QuestionarioController";
-import Resultado from "./Resultado";
-import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { UserContext } from "../../../../../../App";
 import IconBack from "../../../../../../assets/IconBack";
-import { Text } from "react-native";
-import { Value } from "react-native-reanimated";
+import keys from "../../../../../../configs/keys";
+import QuestoesComponente from "./QuestoesComponente";
+import Resultado from "./Resultado";
 const Stack = createStackNavigator();
 export default function Questionario(props) {
   const navigation = useNavigation();
-  const questoes = new QuestionarioController();
   const [respostas, setRespostas] = useState(0);
-  const [questions, setQuestions] = useState(shuffleArray(questoes.Questionario));
-  
+  const [questions, setQuestions] = useState([]);
+  const { user, setUser } = useContext(UserContext)
+
   useEffect(() => {
     props.swipe(false);
-   
+
     props.display("none");
     props.setIconBackDisplay("none");
     return function () {
@@ -31,46 +27,52 @@ export default function Questionario(props) {
       props.setIconBackDisplay("flex");
     };
   });
-  function shuffleArray (arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
+
+  useEffect(() => {
+    fetch(`${keys.linkBackEnd}Questoes/LimitRange/${user.instituicao.idInstituicao}/10`)
+      .then((response) => {
+        if (response.status === 200) {
+          setQuestions(response.json())
+        }
+        else {
+          alert("Houve um problema na busca das questões!")
+          navigation.goBack()
+        }
+      })
+  }, [])
 
   function mapQuestion() {
-  
-     
+
+
     return questions.map((value, i) => {
-     return( 
-      <Stack.Screen
-     key={i}
-      name={""+i}
-      children={() => (
-        <QuestoesComponente
-          RC={value.RC}
-          R1={value.R1}
-          R2={value.R2}
-          R3={value.R3}
-          R4={value.R4}
-          titulo={value.titulo}
-          buttonText={ i==9 ?'Resultado' : 'Proxima questão'}
-          respostas={respostas}
-          setRespostas={setRespostas}
-          navigate={i==9?'resultado':''+(i+1)}
+      return (
+        <Stack.Screen
+          key={value.idQuestao}
+          name={"" + i}
+          children={() => (
+            <QuestoesComponente
+              RC={value.RespostaCorreta}
+              R1={value.Resposta1}
+              R2={value.Resposta2}
+              R3={value.Resposta3}
+              R4={value.Resposta4}
+              titulo={value.Titulo}
+              buttonText={i == 9 ? 'Resultado' : 'Proxima questão'}
+              respostas={respostas}
+              setRespostas={setRespostas}
+              navigate={i == 9 ? 'resultado' : '' + (i + 1)}
+            />
+          )}
+          options={{
+            tabBarStyle: { display: "none" },
+            headerShown: false,
+            tabBarShowLabel: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
         />
-      )}
-      options={{
-        tabBarStyle: { display: "none" },
-        headerShown: false,
-        tabBarShowLabel: false,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}
-    />
-     );
-  });
-     
+      );
+    });
+
   }
 
   return (
@@ -80,8 +82,8 @@ export default function Questionario(props) {
           initialRouteName="0"
           transitionConfig={() => fromLeft(1000)}
         >
-          
-       
+
+
           {mapQuestion()}
           <Stack.Screen
             name={"resultado"}
