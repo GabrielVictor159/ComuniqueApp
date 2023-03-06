@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { Image, View } from "react-native";
 
 const TabBarIcons = (props) => {
   if (props.name === "Home") {
@@ -115,6 +115,12 @@ const TabBarIcons = (props) => {
             top: props.topInactive,
           }}
         >
+          {props.mensagensNaoLidas != undefined && props.mensagensNaoLidas > 0 ?
+            <View style={{ width: 20, height: 20, backgroundColor: "#277BC0", borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Text>{props.mensagensNaoLidas}</Text>
+            </View>
+            : <></>
+          }
           <Image
             style={{ width: "65%", height: "60%" }}
             source={require("../assets/TabBarIconChatInactive.png")}

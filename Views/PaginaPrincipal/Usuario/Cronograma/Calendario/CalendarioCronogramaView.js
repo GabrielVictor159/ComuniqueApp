@@ -163,7 +163,7 @@ export default function CalendarioCronogramaView(props) {
                 />
                 <TouchableOpacity onPress={() => deleteAtividade(index)}>
                   <Image
-                    source={require("../assets/images/delete-icon.png")}
+                    source={require("../../../../../assets/icons8-close-90.png")}
                     style={{ marginLeft: 10 }}
                   />
                 </TouchableOpacity>

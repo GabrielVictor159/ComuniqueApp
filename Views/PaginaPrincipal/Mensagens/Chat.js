@@ -1,49 +1,92 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text, ScrollView, TextInput,TouchableOpacity } from "react-native";
-import ImagePerfil from "../../../componentes/ImagePerfil";
 import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { UserContext } from "../../../App";
+import ImagePerfil from "../../../componentes/ImagePerfil";
+import keys from "../../../configs/keys";
 
 export default function Chat(props) {
   const navigation = useNavigation();
   const [listMessage, setListMessage] = useState();
   const [conversa, setConversa] = useState(props.chat);
-  const [atualizacoes, setAtualizacoes] = useState(0);
   const [mensagemInput, setMensagemInput] = useState('');
-  const chats = props.chats;
-  const timer = atualizacoes === 0 ? 300 : 2000;
-
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     props.swipe(false);
     props.navDisplay("none");
-    setInterval(() => {
-      try{
-      setListMessage(mapChat(conversa))
-      }
-      catch{}
-      setAtualizacoes(+1)
-    }, timer);
     return () => {
-
       props.swipe(true);
       props.navDisplay("flex");
     };
   }, []);
+  useEffect(() => {
+    try {
+      fetch(`${keys.linkBackEnd}Mensagens/confirmarLidaChat/${user.email}/${user.senha}/${props.chatEscolhido.idChat}`, {
+        method: 'PUT',
 
-
-
-  function SendMessage() {
-    if (mensagemInput != '') {
-
-      chats[props.chat.id].mensagens.push({
-        id: chats[props.chat.id].mensagens.length,
-        text: mensagemInput,
-        data: new Date().toLocaleString(),
-        origem: 'Gabriel',
       })
-      props.setChats(chats)
+        .then(response => {
+          if (response.ok) {
+            let novoVetor = [];
+            props.mensagensNaoLidas.map(value => {
+              if (value.chat.idChat != chatEscolhido.idChat) {
+                novoVetor.push(value)
+              }
+            })
+            props.setMensagensNaoLidas(novoVetor)
+          }
+        })
+    }
+    catch { }
 
-      setConversa(props.chat)
+  }, [props.mensagens])
+
+  useEffect(() => {
+    try {
+      let novoVetor = []
+      props.mensagens.map(value => {
+        if (value.chat.idChat === chatEscolhido.idChat) {
+          novoVetor.push(value)
+        }
+      })
+      setConversa(novoVetor)
+    }
+    catch { }
+  }, [props.mensagens])
+
+  useEffect(() => {
+    try {
+      setListMessage(mapChat(conversa))
+    }
+    catch { }
+  }, [conversa])
+
+  async function SendMessage() {
+    let a = {
+      usuarioEnviou: user.idUsuario,
+      mensagem: mensagemInput,
+      lida: false,
+      entregue: false,
+      isFile: false
+    }
+    if (mensagemInput != '') {
+      try {
+        const response = await fetch(`${keys.linkBackEnd}Mensagens/${user.email}/${user.senha}/${props.chatEscolhido.idChat}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(a)
+        })
+
+        if (response.ok) {
+          const novaMensagem = await response.json();
+          props.setMensagens([...props.mensagens, novaMensagem]);
+        }
+      }
+
+      catch { }
 
     }
 
@@ -52,49 +95,49 @@ export default function Chat(props) {
 
 
   function mapChat(callback) {
-    try{
-    return callback.mensagens.map((value) => {
+    try {
+      return callback.mensagens.map((value) => {
 
-      return (
+        return (
 
-        value.origem === callback.destinatario ?
-          <View key={value.id}>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', left: 20 }}  >
-              <ImagePerfil
-                width={70}
-                height={70}
-                imageUrl={callback.imageUrl}
-              />
+          value.origem === callback.destinatario ?
+            <View key={value.id}>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', left: 20 }}  >
+                <ImagePerfil
+                  width={70}
+                  height={70}
+                  imageUrl={callback.imageUrl}
+                />
 
 
 
-              <View >
-                <Text style={{ backgroundColor: 'white', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: 15 }}>{value.text}</Text>
+                <View >
+                  <Text style={{ backgroundColor: 'white', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: 15 }}>{value.text}</Text>
+                </View>
               </View>
+              <Text>{'\n'}</Text>
             </View>
-            <Text>{'\n'}</Text>
-          </View>
-          :
-          <View key={value.id}>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}  >
+            :
+            <View key={value.id}>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}  >
 
 
 
-              <View >
-                <Text style={{ backgroundColor: '#34B82933', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: -20 }}>{value.text}</Text>
+                <View >
+                  <Text style={{ backgroundColor: '#34B82933', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: -20 }}>{value.text}</Text>
+                </View>
+
+
               </View>
-
-
+              <Text>{'\n'}</Text>
             </View>
-            <Text>{'\n'}</Text>
-          </View>
-      );
-    });
-    
-  }
-  catch{
+        );
+      });
 
-  }
+    }
+    catch {
+
+    }
   };
 
 
@@ -123,37 +166,37 @@ export default function Chat(props) {
         </ScrollView>
 
       </View>
-        <View style={{width:60, height:60, backgroundColor:'white', position:'absolute', top:'92%', left:'83%',borderRadius: 20, alignItems:'center', justifyContent:'center', elevation:15}}>
-        <TouchableOpacity style={{width:'100%', height:'100%', alignItems:'center', justifyContent:'center',  borderRadius: 20}}
+      <View style={{ width: 60, height: 60, backgroundColor: 'white', position: 'absolute', top: '92%', left: '83%', borderRadius: 20, alignItems: 'center', justifyContent: 'center', elevation: 15 }}>
+        <TouchableOpacity style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}
           onPress={() => {
             SendMessage();
           }}
         >
-        <Image style={{ width: '60%', height: '50%' }} source={require('../../../assets/SendMessage.png')} />
+          <Image style={{ width: '60%', height: '50%' }} source={require('../../../assets/SendMessage.png')} />
         </TouchableOpacity>
-        </View>
-      
-  
+      </View>
+
+
       <View style={styles.mensagemInputContainer}>
         <TextInput style={styles.mensagemInput}
           placeholder="Mensagem"
           onChangeText={setMensagemInput}
         />
-       
+
 
 
 
       </View>
       <View style={styles.buttonReturnContainer}>
-      <TouchableOpacity style={styles.buttonReturn}
-      onPress={()=>{
-        navigation.goBack();
-      }}
-      >
-        <Image style={{width:'80%', height:'80%'}} source={require('../../../assets/buttonReturn_Blue.png')}/>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonReturn}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Image style={{ width: '80%', height: '80%' }} source={require('../../../assets/buttonReturn_Blue.png')} />
+        </TouchableOpacity>
       </View>
-      
+
     </View>
 
   );
@@ -194,10 +237,10 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   mensagensContainer: {
-    top:20,
+    top: 20,
     width: '100%',
     height: '72%',
-   
+
 
   },
   mensagemInputContainer: {
@@ -225,21 +268,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'red',
-    position:'absolute',
-    left:'0%',
-    top:'0%',
+    position: 'absolute',
+    left: '0%',
+    top: '0%',
     overflow: 'visible'
   },
-  buttonReturn:{
-    width:30,
-    height:30,
-    
-    alignItems:'center',
-    justifyContent:'center'
+  buttonReturn: {
+    width: 30,
+    height: 30,
+
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  buttonReturnContainer:{
-    position:'absolute',
-    left:'2%',
-    top:'5%'
+  buttonReturnContainer: {
+    position: 'absolute',
+    left: '2%',
+    top: '5%'
   }
 })

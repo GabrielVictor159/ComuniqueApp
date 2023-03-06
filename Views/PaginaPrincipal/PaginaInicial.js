@@ -2,8 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import axios from 'axios';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text } from "react-native";
+import { UserContext } from '../../App';
 import TabBarIcons from "../../componentes/TabBarIcons";
 import ImageStorage from '../../configs/ImageStorage';
 import keys from '../../configs/keys';
@@ -177,7 +178,7 @@ export default function PaginaInicial(props) {
         />
         <Tab.Screen
           name="Comunicacao"
-          children={() => <Comunicacao swipe={setSwipeEnabled} navDisplay={setDisplay} />}
+          children={() => <Comunicacao mensagens={mensagens} setMensagens={setMensagens} chats={chats} setChats={setChats} mensagensNaoLidas={mensagensNaoLidas} setMensagensNaoLidas={setMensagensNaoLidas} swipe={setSwipeEnabled} navDisplay={setDisplay} />}
 
           options={{
 
@@ -190,6 +191,7 @@ export default function PaginaInicial(props) {
               <TabBarIcons
                 focused={focused}
                 name="Chat"
+                mensagensNaoLidas={mensagensNaoLidas.length}
                 sizeActive={TabBarIconsConfig.sizeActive}
                 sizeInactive={TabBarIconsConfig.sizeInactive}
                 backgroundColorActive={TabBarIconsConfig.backgroundColorActive}

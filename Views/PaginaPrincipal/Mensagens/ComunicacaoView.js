@@ -1,16 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { UserContext } from "../../../App";
 import Lupa from "../../../assets/Lupa";
 import Comunicacoes from "../../../componentes/Comunicacoes";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import { geral } from "../../../estilos";
 import ComunicacaoStyle from "../../../estilos/Views_Estilos/ComunicacaoStyle";
-
 export default function ComunicacaoView(props) {
   const navigation = useNavigation();
   let [busca, setBusca] = useState('');
+  const { user, setUser } = useContext(UserContext);
+
 
   function mapReturn(callback) {
 
@@ -29,7 +31,7 @@ export default function ComunicacaoView(props) {
           <TouchableOpacity style={{ width: 400, alignItems: 'center' }}
             onPress={() => {
               navigation.navigate('Chat'),
-                props.setChatEscolhido(value.id)
+                props.setChatEscolhido(value)
             }}
           >
 
@@ -37,12 +39,12 @@ export default function ComunicacaoView(props) {
               width="90%"
               height={100}
               backgroundColor="white"
-              tipoUsuario={value.tipoUsuario}
-              imageUrl={value.imageUrl}
-              nomeUsuario={value.destinatario}
-              mensagem={value.mensagens.length !== 0 ? value.mensagens[value.mensagens.length - 1].text : ''}
-              online={value.online}
-              horario={value.mensagens.length !== 0 ? value.mensagens[value.mensagens.length - 1].data.substring(11, 16) : ''}
+              tipoUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.tipoUsuario : value.usuario1.tipoUsuario}
+              imageUrl={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.fotoPerfil : value.usuario1.fotoPerfil}
+              nomeUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.nomeUsuario : value.usuario1.nomeUsuario}
+              mensagem={value.ultimaMensagem}
+              online={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.usuarioOnline : value.usuario1.usuarioOnline}
+              horario={value.ultimaMensagem.dataMensagem}
             />
             <Text>{"\n"}</Text>
           </TouchableOpacity>
