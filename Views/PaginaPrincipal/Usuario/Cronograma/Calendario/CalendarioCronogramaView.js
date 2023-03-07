@@ -1,3 +1,4 @@
+import { SearchBar } from "@rneui/themed";
 import moment from "moment";
 import React, { useState } from "react";
 import {
@@ -196,10 +197,12 @@ export default function CalendarioCronogramaView(props) {
           platform="ios"
           containerStyle={{ width: "95%", backgroundColor: "white" }}
         />
+
         <Text>{"\n"}</Text>
       </View>
       <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
         <View style={{ flex: 1 }}>
+
           <CalendarList
             current={moment().format("YYYY-MM-DD")}
             pastScrollRange={0}
@@ -210,8 +213,6 @@ export default function CalendarioCronogramaView(props) {
               borderColor: "gray",
               height: "100%",
             }}
-            onDayPress={onDayPress}
-            onMonthChange={onMonthChange}
             markedDates={{
               ...map,
               [moment().format("YYYY-MM-DD")]: {

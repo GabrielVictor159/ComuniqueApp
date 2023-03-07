@@ -1,17 +1,5 @@
-import React from "react";
-import { View, Text, Image, Keyboard } from "react-native";
-import ImagePerfil from "../../../componentes/ImagePerfil";
-import PersonalizarOption from "../../../componentes/PersonalizarOption";
-import { TouchableOpacity } from "react-native";
-import PersonalizarIcons from "../../../assets/PersonalizarIcons";
-import InputsOverlay from "../../../componentes/InputsOverlay";
-import { useState } from "react";
-import { StyleSheet } from "react-native";
-import SucessoOverlay from "../../../componentes/SucessoOverlay";
-import { useEffect } from "react";
-import * as ImagePicker from 'expo-image-picker';
-import InputImagesPerfil from "../../../componentes/InputImagesPerfil";
-import InputImagePerfil from "../../../componentes/InputImagePerfil";
+import React, { useEffect, useState } from "react";
+import { Keyboard, StyleSheet, View } from "react-native";
 
 
 
@@ -32,11 +20,11 @@ export default function Personalizar(props) {
   const [alterarNomeSucesso, setAlterarNomeSucesso] = useState('')
   const [alterarImages, setAlterarImage] = useState(false)
   const [pickerImagePerfil, setPickerImagePerfil] = useState(false)
-      const [pickerBanner, setPickerBanner] = useState(false)
-      const [imageBanner, setImageBanner] = useState(require('../../../assets/BannerSubmit.png'))
-      const [imagePerfil, setImagePerfil] = useState(require('../../../assets/BannerSubmit.png'))
+  const [pickerBanner, setPickerBanner] = useState(false)
+  const [imageBanner, setImageBanner] = useState(require('../../../assets/BannerSubmit.png'))
+  const [imagePerfil, setImagePerfil] = useState(require('../../../assets/BannerSubmit.png'))
 
- useEffect(() => {
+  useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -56,35 +44,35 @@ export default function Personalizar(props) {
     };
   }, []);
   const toggleOverlay = () => {
-   setAlterarSenha(false);
-   setAlterarEmail(false)
-   setAlterarNome(false)
-   setAlterarEmailSucesso(false)
-   setAlterarSenhaSucesso(false)
-   setAlterarNomeSucesso(false)
-   setAlterarImage(false)
+    setAlterarSenha(false);
+    setAlterarEmail(false)
+    setAlterarNome(false)
+    setAlterarEmailSucesso(false)
+    setAlterarSenhaSucesso(false)
+    setAlterarNomeSucesso(false)
+    setAlterarImage(false)
   };
 
-  function alterarImagensPerfil(banner, perfil){
+  function alterarImagensPerfil(banner, perfil) {
     let bannerPadrao = require('../../../assets/BannerSubmit.png')
     let perfilPadrao = require('../../../assets/BannerSubmit.png')
-    if(banner !== bannerPadrao){
-      if(perfil!==perfilPadrao){
-        props.usuario.usuario.perfil.imageBanner=banner
-        props.usuario.usuario.perfil.imagePerfil=perfil
+    if (banner !== bannerPadrao) {
+      if (perfil !== perfilPadrao) {
+        props.usuario.usuario.perfil.imageBanner = banner
+        props.usuario.usuario.perfil.imagePerfil = perfil
         return false
       }
-      else{
-        props.usuario.usuario.perfil.imageBanner=banner
+      else {
+        props.usuario.usuario.perfil.imageBanner = banner
         return false
       }
     }
-    else{
-      if(perfil!==perfilPadrao){
-        props.usuario.usuario.perfil.imagePerfil=perfil
+    else {
+      if (perfil !== perfilPadrao) {
+        props.usuario.usuario.perfil.imagePerfil = perfil
         return false
       }
-      else{
+      else {
         return false
       }
     }
@@ -100,7 +88,7 @@ export default function Personalizar(props) {
         overflow: "visible",
       }}
     >
-      <View
+      {/* <View
         style={{
           position: "absolute",
           width: "100%",
@@ -347,38 +335,38 @@ export default function Personalizar(props) {
         overlayStyle={styles.overlayInputStyle}
         setIsVisible={setPickerBanner}
         setImage={setImageBanner}
-        />
+        /> */}
     </View>
-    
+
   );
-  
+
 }
 const styles = StyleSheet.create({
-  overlayStyles:{
+  overlayStyles: {
     width: "100%",
-    
+
     position: "absolute",
-    
+
   },
-  overlayInputStyle:{
+  overlayInputStyle: {
     width: "100%",
-    height:500,
-    position: "absolute",
-  },
-  overlayImagesInput:{
-    width: "100%",
-    
+    height: 500,
     position: "absolute",
   },
-  overlayTitulo:{
-    fontSize:18
+  overlayImagesInput: {
+    width: "100%",
+
+    position: "absolute",
   },
-  overlayInput:{
-    width:300,
-    height:40,
-    textAlign:'center',
-    borderWidth:1,
-    borderRadius:30,
+  overlayTitulo: {
+    fontSize: 18
+  },
+  overlayInput: {
+    width: 300,
+    height: 40,
+    textAlign: 'center',
+    borderWidth: 1,
+    borderRadius: 30,
 
   },
   overlaySucessoStyle: {

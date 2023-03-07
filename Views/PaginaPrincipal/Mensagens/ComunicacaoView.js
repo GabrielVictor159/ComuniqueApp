@@ -1,13 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../../../App";
-import Lupa from "../../../assets/Lupa";
 import Comunicacoes from "../../../componentes/Comunicacoes";
-import ImagePerfil from "../../../componentes/ImagePerfil";
 import keys from "../../../configs/keys";
-import { geral } from "../../../estilos";
 import ComunicacaoStyle from "../../../estilos/Views_Estilos/ComunicacaoStyle";
 export default function ComunicacaoView(props) {
   const navigation = useNavigation();
@@ -59,61 +56,66 @@ export default function ComunicacaoView(props) {
 
   };
 
+
   return (
     <>
-      <View style={{
-        position: "absolute", width: "100%", height: "100%", justifyContent: "center",
-        flexDirection: "column",
-        overflow: "visible", backgroundColor: '#E3E3E3'
-      }}>
 
-      </View>
+      {/* <View style={{
+          position: "absolute", width: "100%", height: "100%", justifyContent: "center",
+          flexDirection: "column",
+          overflow: "visible", backgroundColor: '#E3E3E3'
+        }}>
 
-      <View style={styles.ComunicacaoStyle.mensagensContainer}>
-        <ScrollView
-          contentContainerStyle={styles.ComunicacaoStyle.mensagensScrool}
-        >
+        </View>
 
-
-          {mapReturn(props.usuario.chats)}
-        </ScrollView>
-      </View>
-      <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
-        <View style={{ position: 'absolute', top: '62%', left: '75%' }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ContatosDaUnidade')
-            }}
+        <View style={styles.ComunicacaoStyle.mensagensContainer}>
+          <ScrollView
+            contentContainerStyle={styles.ComunicacaoStyle.mensagensScrool}
           >
-            <Image style={{ width: 40, height: 40 }} source={require('../../../assets/AdicionarContatos.png')} />
-          </TouchableOpacity>
+
+
+            {mapReturn(props.chats)}
+          </ScrollView>
         </View>
-        <Text style={styles.ComunicacaoStyle.menuText}>Mensagens</Text>
-        <TextInput
-          style={[styles.ComunicacaoStyle.menuInput, geral.shadow]}
-          placeholder={"procurar contatos"}
-          onChangeText={(busca) => {
-            setBusca(busca)
-          }}
-        />
-        <View style={styles.ComunicacaoStyle.lupaContainer}>
-          <Lupa width={30} height={30} />
-        </View>
-        <View style={styles.ComunicacaoStyle.imagePerfilContainer}>
-          <ImagePerfil
-            shadow="true"
-            width={50}
-            height={50}
-            shadowTop={10}
-            shadowColor="#5C5C5C"
-            shadowOpacity={0.2}
-            fontSize={15}
-            imageUrl={props.usuario.perfil.imagePerfil}
+        <View style={[styles.ComunicacaoStyle.menuSuperior, geral.shadow]}>
+          <View style={{ position: 'absolute', top: '62%', left: '75%' }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ContatosDaUnidade')
+              }}
+            >
+              <Image style={{ width: 40, height: 40 }} source={require('../../../assets/AdicionarContatos.png')} />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.ComunicacaoStyle.menuText}>Mensagens</Text>
+          <TextInput
+            style={[styles.ComunicacaoStyle.menuInput, geral.shadow]}
+            placeholder={"procurar contatos"}
+            onChangeText={(busca) => {
+              setBusca(busca)
+            }}
           />
-        </View>
-      </View>
+          <View style={styles.ComunicacaoStyle.lupaContainer}>
+            <Lupa width={30} height={30} />
+          </View>
+          <View style={styles.ComunicacaoStyle.imagePerfilContainer}>
+            <ImagePerfil
+              shadow="true"
+              width={50}
+              height={50}
+              shadowTop={10}
+              shadowColor="#5C5C5C"
+              shadowOpacity={0.2}
+              fontSize={15}
+              imageUrl={`${keys.linkBackEnd}images/${user.fotoPerfil}`}
+            />
+          </View>
+        </View> */}
     </>
   );
+
+
+
 }
 
 
