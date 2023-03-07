@@ -6,6 +6,7 @@ import { UserContext } from "../../../App";
 import Lupa from "../../../assets/Lupa";
 import Comunicacoes from "../../../componentes/Comunicacoes";
 import ImagePerfil from "../../../componentes/ImagePerfil";
+import keys from "../../../configs/keys";
 import { geral } from "../../../estilos";
 import ComunicacaoStyle from "../../../estilos/Views_Estilos/ComunicacaoStyle";
 export default function ComunicacaoView(props) {
@@ -40,7 +41,7 @@ export default function ComunicacaoView(props) {
               height={100}
               backgroundColor="white"
               tipoUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.tipoUsuario : value.usuario1.tipoUsuario}
-              imageUrl={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.fotoPerfil : value.usuario1.fotoPerfil}
+              imageUrl={`${keys.linkBackEnd}images/${value.usuario1.idUsuario === user.idUsuario ? value.usuario2.fotoPerfil : value.usuario1.fotoPerfil}`}
               nomeUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.nomeUsuario : value.usuario1.nomeUsuario}
               mensagem={value.ultimaMensagem}
               online={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.usuarioOnline : value.usuario1.usuarioOnline}

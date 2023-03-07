@@ -21,6 +21,7 @@ export default function Chat(props) {
     };
   }, []);
   useEffect(() => {
+    if(props.chatEscolhido.idChat!=undefined){
     try {
       fetch(`${keys.linkBackEnd}Mensagens/confirmarLidaChat/${user.email}/${user.senha}/${props.chatEscolhido.idChat}`, {
         method: 'PUT',
@@ -39,6 +40,7 @@ export default function Chat(props) {
         })
     }
     catch { }
+  }
 
   }, [props.mensagens])
 
@@ -71,6 +73,31 @@ export default function Chat(props) {
       isFile: false
     }
     if (mensagemInput != '') {
+      if(props.chatEscolhido.idChat===undefined){
+        try{
+          const response = await fetch(`${keys.linkBackEnd}Chat/${user.email}/${user.senha}/${props.chatEscolhido.usuario1.idUsuario===user.idUsuario?props.chatEscolhido.usuario2.idUsuario:props.chatEscolhido.usuario1.idUsuario}`,{
+            method:'POST'
+          })
+          if(response.ok){
+            const data = await response.json()
+            props.setChatEscolhido(data)
+            const response2 = await fetch(`${keys.linkBackEnd}Mensagens/${user.email}/${user.senha}/${data.idChat}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(a)
+            })
+    
+            if (response2.ok) {
+              const novaMensagem = await response.json();
+              props.setMensagens([...props.mensagens, novaMensagem]);
+            }
+          }
+        }
+        catch{}
+      }
+      else{
       try {
         const response = await fetch(`${keys.linkBackEnd}Mensagens/${user.email}/${user.senha}/${props.chatEscolhido.idChat}`, {
           method: 'POST',
@@ -85,8 +112,8 @@ export default function Chat(props) {
           props.setMensagens([...props.mensagens, novaMensagem]);
         }
       }
-
       catch { }
+    }
 
     }
 
@@ -100,31 +127,31 @@ export default function Chat(props) {
 
         return (
 
-          value.origem === callback.destinatario ?
-            <View key={value.id}>
+          value.usuarioEnviou !== user.idUsuario?
+            <View key={value.idMensagens}>
               <View style={{ flexDirection: 'row', justifyContent: 'flex-start', left: 20 }}  >
                 <ImagePerfil
                   width={70}
                   height={70}
-                  imageUrl={callback.imageUrl}
+                  imageUrl={value.chat.usuario1.idUsuario===user.idUsuario?`${keys.linkBackEnd}images/${value.chat.usuario2.fotoPerfil}`:`${keys.linkBackEnd}images/${value.chat.usuario1.fotoPerfil}`}
                 />
 
 
 
                 <View >
-                  <Text style={{ backgroundColor: 'white', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: 15 }}>{value.text}</Text>
+                  <Text style={{ backgroundColor: 'white', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: 15 }}>{value.mensagem}</Text>
                 </View>
               </View>
               <Text>{'\n'}</Text>
             </View>
             :
-            <View key={value.id}>
+            <View key={value.idMensagens}>
               <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}  >
 
 
 
                 <View >
-                  <Text style={{ backgroundColor: '#34B82933', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: -20 }}>{value.text}</Text>
+                  <Text style={{ backgroundColor: '#34B82933', textAlign: 'center', alignItems: 'center', justifyContent: 'center', display: 'flex', padding: 10, borderRadius: 50, paddingHorizontal: 20, maxWidth: 300, top: 15, left: -20 }}>{value.mensagem}</Text>
                 </View>
 
 
@@ -154,11 +181,11 @@ export default function Chat(props) {
             shadowColor="#5C5C5C"
             shadowOpacity={0.2}
 
-            imageUrl={props.chat.imageUrl}
+            imageUrl={`${keys.linkBackEnd}images/${props.chatEscolhido.usuario1.idUsuario===user.idUsuario?props.chatEscolhido.usuario2.fotoPerfil:props.chatEscolhido.usuario1.fotoPerfil}`}
           />
-          <View style={[styles.indicadorOnline, { backgroundColor: props.chat.online === true ? 'green' : '' }]} />
+          <View style={[styles.indicadorOnline, { backgroundColor: props.chatEscolhido.usuario1.idUsuario===user.idUsuario? props.chatEscolhido.usuario2.usuarioOnline===true ? 'green' : '': props.chatEscolhido.usuario1.usuarioOnline===true ? 'green' : ''}]} />
         </View>
-        <Text style={styles.nomePerfil}>{props.chat.destinatario}</Text>
+        <Text style={styles.nomePerfil}>{props.chatEscolhido.usuario1.idUsuario===user.idUsuario?props.chatEscolhido.usuario2.nomeUsuario:props.chatEscolhido.usuario1.nomeUsuario}</Text>
       </View>
       <View style={styles.mensagensContainer}>
         <ScrollView>

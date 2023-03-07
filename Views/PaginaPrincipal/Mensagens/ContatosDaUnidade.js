@@ -1,5 +1,5 @@
 
-import React ,{useEffect, useState} from "react";
+import React ,{useContext, useEffect, useState} from "react";
 import { TextInput } from "react-native";
 import { ScrollView } from "react-native";
 import { StyleSheet } from "react-native";
@@ -9,11 +9,17 @@ import Lupa from "../../../assets/Lupa";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import UsuariosUnidadeController from "../../../Controller/UsuariosUnidadeController";
 import { useNavigation } from "@react-navigation/native";
+import keys from "../../../configs/keys";
+import {UserContext} from "../../../App";
 export default function ContatosDaUnidade (props){
     const navigation = useNavigation()
    const contatosDaUnidade = new UsuariosUnidadeController();
-   const [contatos, setContatos] = useState()
+   const [contatos, setContatos] = useState([]);
+   const {user,setUser} = useContext(UserContext);
    let [busca, setBusca] = useState('');
+   const itemsPerPage = 10;
+const [currentPage, setCurrentPage] = useState(1);
+
     useEffect(() => {
         props.swipe(false);
         props.navDisplay("none");
@@ -25,73 +31,101 @@ export default function ContatosDaUnidade (props){
         };
       }, []);
 
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${keys.linkBackEnd}Usuarios/getAllUsuariosInstitutoPaginado/${user.email}/${user.senha}?pagina=${currentPage}&tamanho=${itemsPerPage}`);
+            if (response.ok) {
+              const items = await response.json();
+              setContatos((contatos) => [...contatos, ...items]);
+            } else {
+              console.log('Erro ao carregar dados');
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, [currentPage]);
+      
+      
+
+
+      const handleScroll = (event) => {
+        const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+        const isEndReached =
+          layoutMeasurement.height + contentOffset.y >= contentSize.height;
+        if (isEndReached) {
+          setCurrentPage((prev) => prev + 1);
+        }
+      };
       function adicionarChat(callback){
-        const chat = props.chats
-        chat.push({
-            id:props.chats.length,
-            destinatario:callback.nome,
-            online:callback.online,
-            imageUrl:callback.imagePerfil,
-            tipoUsuario:callback.tipoUsuario,
-            mensagens:[]
-        });
-        props.setChatEscolhido(props.chats.length-1);
-        props.setChats(chat);
+
+        const chat = {
+            usuario1:user,
+            usuario2:callback
+        }
+        props.setChatEscolhido(chat);
         return(
             navigation.navigate('Chat')
         );
       }
 
-     function mapContatosDaUnidade(callback){
+     function mapContatosDaUnidade(){
         const vetor=[]
         let i=0;
-       return callback.filter(post => {
+        
+       return contatos.filter(post => {
         if(busca === ''){
           return post;
         }
-        else if(post.nome.toLowerCase().includes(busca.toLowerCase())){
+        else if(post.nomeUsuario.toLowerCase().includes(busca.toLowerCase())){
           return post;
         }
-    }).map(function (value, index){
-            for(let z=0; z<props.chats.length; z++){
-                if(value.nome===props.chats[z].destinatario){
-                    vetor[index]=1
-                }
-                
-            }
-            if(vetor[index]!=1){
-                return(
-                    <View style={{width:'100%', alignItems:'center'}}  key={index}>
+    }).map( (value,index) =>{
+      let a =0;
+      props.chats.map((value2,index2)=>{
+        if(value2.usuario1 === value.idUsuario || value.usuario2 ===value.idUsuario){
+          a++;
+        }
+      })
+      if(a===0){
+        return(
+            <View style={{width:'100%', alignItems:'center'}}  key={index}>
 
-                    
-                    <View style={{width:'90%', height:100, backgroundColor:'white', elevation:12, flexDirection:'row', alignItems:'center', borderRadius:20}}>
-                        <View style={{height:'100%', width:'30%',  flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                        <ImagePerfil
-                        width={60}
-                        height={60}
-                        imageUrl={value.imagePerfil}
-                     />
-                        </View>
-                    
-                    <Text style={{fontSize:20}}>{value.nome}</Text>
-                    <View style={{width:'25%', height:'35%', backgroundColor:'#277BC0', borderRadius:30, left:'70%', position:'absolute', alignItems:'center', justifyContent:'center'}}>
-                    <TouchableOpacity 
-                        onPress={()=>{
-                        adicionarChat(value);
-                    }}>
-                        <Text style={{color:'white'}}>{'Conversar'}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    
+            
+            <View style={{width:'90%', height:100, backgroundColor:'white', elevation:12, flexDirection:'row', alignItems:'center', borderRadius:20}}>
+                <View style={{height:'100%', width:'30%',  flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                <ImagePerfil
+                width={60}
+                height={60}
+                imageUrl={`${keys.linkBackEnd}images/${value.fotoPerfil}`}
+             />
                 </View>
-                <Text>{'\n'}</Text>
-                </View>
-                );
-            }
-           
-
-        } );
-        
+            
+            <Text style={{fontSize:20}}>{value.nomeUsuario}</Text>
+            <View style={{width:'25%', height:'35%', backgroundColor:'#277BC0', borderRadius:30, left:'70%', position:'absolute', alignItems:'center', justifyContent:'center'}}>
+            <TouchableOpacity 
+                onPress={()=>{
+                adicionarChat(value);
+            }}>
+                <Text style={{color:'white'}}>{'Conversar'}</Text>
+                </TouchableOpacity>
+            </View>
+            
+        </View>
+        <Text>{'\n'}</Text>
+        </View>
+        );
+          }
+          else{
+            return(
+              <></>
+            );
+          }
+    })
+               
     }    
       
     return(
@@ -115,8 +149,8 @@ export default function ContatosDaUnidade (props){
             </View>
             <View style={styles.contatos}>
 
-            <ScrollView>
-                {mapContatosDaUnidade(contatosDaUnidade.UsuariosUnidade)}
+            <ScrollView onScroll={handleScroll}>
+                {mapContatosDaUnidade()}
             </ScrollView>
             </View>
             <View style={{position:'absolute', top:'5%', left:'85%'}}>

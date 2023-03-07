@@ -43,7 +43,7 @@ export default function Comunicacao(props) {
         />
         <Stack.Screen
           name="ContatosDaUnidade"
-          children={() => <ContatosDaUnidade swipe={props.swipe} navDisplay={props.navDisplay} setChatEscolhido={setChatEscolhido} />}
+          children={() => <ContatosDaUnidade chats={props.chats} swipe={props.swipe} navDisplay={props.navDisplay} setChatEscolhido={setChatEscolhido} />}
 
           options={{
             tabBarStyle: { display: "none" },
