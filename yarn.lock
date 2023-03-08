@@ -5872,7 +5872,7 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
-"react-native-calendars@^1.1293.0":
+"react-native-calendars@^1.1275.0":
   "integrity" "sha512-/wWBlNOooHAVTCDhZptdeZEa1+DTUW1E3cI9auEPblJ56t1TXqe0gVK1UTchPDsA5d2eIXxdhTThpFD846yq7g=="
   "resolved" "https://registry.npmjs.org/react-native-calendars/-/react-native-calendars-1.1293.0.tgz"
   "version" "1.1293.0"

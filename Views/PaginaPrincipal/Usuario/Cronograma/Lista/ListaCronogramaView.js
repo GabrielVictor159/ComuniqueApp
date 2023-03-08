@@ -17,18 +17,21 @@ export default function ListaCronogramaView(props) {
   useEffect(() => {
     setMapAtividades(atividadeReturn(props.cronograma));
 
-  }, [props.cronograma]);
+  }, [props.cronograma, props.busca]);
 
   function atividadeReturn(callback) {
     if (callback.length != 0) {
       return callback
-        .filter((atividade) =>
-          props.busca === ""
-            ? true
-            : atividade.atividade
-              .toLowerCase()
-              .includes(props.busca.toLowerCase())
-        )
+        .filter((post) => {
+          if (props.busca === "") {
+            return post;
+          }
+          else if (
+            post.atividade.toLowerCase().includes(props.busca.toLowerCase())
+          ) {
+            return post;
+          }
+        })
         .map((value, index) => (
           <View style={{ left: "14%" }} key={index}>
             <CronogramaAtividade
