@@ -1,8 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import IconBack from "../../../../assets/IconBack";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Noticias from "../../../../componentes/Noticias";
 export default function NoticiasView(props) {
     const [noticiasMap, setNoticiasMap] = useState();
@@ -12,34 +10,34 @@ export default function NoticiasView(props) {
     const navigation = useNavigation();
 
     function mapNoticias(callback) {
-        if(callback.length!=0){
-        return callback.map((value) => {
+        if (callback.length != 0) {
+            return callback.map((value) => {
 
-            return (
+                return (
 
-                <TouchableOpacity style={{ width: '100%', height: 300, alignItems: 'center' }}
-                    onPress={() => {
-                        props.setNoticiaEscolha(value),
-                            navigation.navigate('NoticiaOneView')
+                    <TouchableOpacity style={{ width: '100%', height: 300, alignItems: 'center' }}
+                        onPress={() => {
+                            props.setNoticiaEscolha(value),
+                                navigation.navigate('NoticiaOneView')
 
-                    }}
-                    key={value.idNoticia}
-                >
-                    <Noticias
-                        width='100%'
-                        height='90%'
-                        borderRadius={20}
-                        Image={value.imagem}
-                        titulo={value.titulo}
-                    />
-                    <Text>{'\n'}</Text>
-                </TouchableOpacity>
+                        }}
+                        key={value.idNoticia}
+                    >
+                        <Noticias
+                            width='100%'
+                            height='90%'
+                            borderRadius={20}
+                            Image={value.imagem}
+                            titulo={value.titulo}
+                        />
+                        <Text>{'\n'}</Text>
+                    </TouchableOpacity>
 
 
 
-            );
-        });
-    }
+                );
+            });
+        }
     };
     return (
         <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignItems: 'center' }}>
@@ -59,7 +57,12 @@ export default function NoticiasView(props) {
                             props.navigation.navigate('UsuarioView');
                         }}
                     >
-                        <IconBack width={30} height={30} />
+
+                        <View>
+
+                        </View>
+
+
                     </TouchableOpacity>
                 </View>
 

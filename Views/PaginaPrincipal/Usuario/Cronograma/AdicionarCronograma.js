@@ -1,8 +1,11 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { UserContext } from "../../../../App";
+import keys from "../../../../configs/keys";
 import CronogramaStyle from "../../../../estilos/Views_Estilos/CronogramaStyle";
 export default function AdicionarCronograma(props) {
   const cores = {
@@ -25,10 +28,25 @@ export default function AdicionarCronograma(props) {
   let [AdicionarText, setAdicionarText] = useState('');
   let [date, setDate] = useState(false);
   let [addDate, setAddDate] = useState("");
+  const { user, setUser } = useContext(UserContext);
   const adicionardata = (event, date) => {
     setAddDate(date)
   }
   async function adicionarItem() {
+    if (AdicionarText === '') {
+      alert("Por favor coloque uma mensagem!")
+      return
+    }
+    if (AdicionarPrazo === undefined) {
+      alert("Por favor coloque um prazo!")
+      return
+    }
+    if (addDate === "") {
+      alert("Por favor escolha uma data valida!")
+      return
+    }
+
+
     try {
       const novoCronograma = {
         dataAtividade: addDate.toISOString().split('T')[0],

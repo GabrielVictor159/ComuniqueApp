@@ -49,7 +49,7 @@ export default function Cronograma(props) {
       })
       .catch(error => console.log(error));
 
-    fetch(`${keys.linkBackEnd}Cronograma/${user.email}/${user.senha}`)
+    fetch(`${keys.linkBackEnd}Cronograma/getAll/${user.email}/${user.senha}`)
       .then(response => {
         if (response.ok) {
           response.json().then(novosCronogramas => {
@@ -167,7 +167,7 @@ export default function Cronograma(props) {
         }}
       >
         <View>
-          <IconBack width={30} height={30} />
+
         </View>
       </TouchableOpacity>
     </>

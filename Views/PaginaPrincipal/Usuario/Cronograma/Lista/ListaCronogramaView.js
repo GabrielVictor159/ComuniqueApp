@@ -15,37 +15,36 @@ export default function ListaCronogramaView(props) {
   const [mapAtividades, setMapAtividades] = useState([]);
 
   useEffect(() => {
-    if(props.cronograma.length!=0){
     setMapAtividades(atividadeReturn(props.cronograma));
-    }
+
   }, [props.cronograma]);
 
   function atividadeReturn(callback) {
-    if(callback.length!=0){
-    return callback
-      .filter((atividade) =>
-        props.busca === ""
-          ? true
-          : atividade.atividade
-            .toLowerCase()
-            .includes(props.busca.toLowerCase())
-      )
-      .map((value, index) => (
-        <View style={{ left: "14%" }} key={index}>
-          <CronogramaAtividade
-            ano={value.dataAtividade.substring(0, 4)}
-            dia={value.dataAtividade.substring(8, 10)}
-            mes={dataConvert(value.dataAtividade.substring(5, 7))}
-            color={value.cor}
-            width={241}
-            height={106}
-            backgroundColor="#CDCDCD"
-            texto={value.atividade}
-            prazo={value.prazo}
-          />
-          <Text>{"\n"}</Text>
-        </View>
-      ));
+    if (callback.length != 0) {
+      return callback
+        .filter((atividade) =>
+          props.busca === ""
+            ? true
+            : atividade.atividade
+              .toLowerCase()
+              .includes(props.busca.toLowerCase())
+        )
+        .map((value, index) => (
+          <View style={{ left: "14%" }} key={index}>
+            <CronogramaAtividade
+              ano={value.dataAtividade.substring(0, 4)}
+              dia={value.dataAtividade.substring(8, 10)}
+              mes={dataConvert(value.dataAtividade.substring(5, 7))}
+              color={value.cor}
+              width={241}
+              height={106}
+              backgroundColor="#CDCDCD"
+              texto={value.atividade}
+              prazo={value.prazo}
+            />
+            <Text>{"\n"}</Text>
+          </View>
+        ));
     }
   }
 

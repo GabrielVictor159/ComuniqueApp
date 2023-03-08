@@ -1,16 +1,24 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import { UserContext } from "../../../../App";
 import CronogramaAtividade from "../../../../componentes/CronogramaAtividade";
 import dataConvert from "../../../../configs/dataConvert";
+import keys from "../../../../configs/keys";
 import cores from "../../../../estilos/Views_Estilos/CronogramaCores";
 import CronogramaStyle from "../../../../estilos/Views_Estilos/CronogramaStyle";
 import PopMenu from "./PopMenu";
 export default function ExcluirCronograma(props) {
   const navigation = useNavigation();
-  let [atividades, setAtividades] = useState(props.cronograma);
-  let [mapAtividades, setMapAtividades] = useState(atividadeReturn(props.cronograma));
+  let [mapAtividades, setMapAtividades] = useState([]);
+  const [atualizar, setAtualizar] = useState(0);
+  const { user, setUser } = useContext(UserContext)
+  useEffect(() => {
 
+    setMapAtividades(atividadeReturn(props.cronograma))
+
+  }, [props.cronograma])
   async function deleteAtividade(id) {
     try {
       const cronogramas = await AsyncStorage.getItem('cronogramas');
@@ -19,18 +27,20 @@ export default function ExcluirCronograma(props) {
       if (index !== -1) {
         arrayCronogramas.splice(index, 1);
         await AsyncStorage.setItem('cronogramas', JSON.stringify(arrayCronogramas));
+        console.log(arrayCronogramas.toString())
+        await props.setCronograma(arrayCronogramas)
+
+
+
       }
       const response = await fetch(`${keys.linkBackEnd}Cronograma/${user.email}/${user.senha}/${id}`, {
         method: 'DELETE'
       });
-      if (response.status === 200) {
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.log(error);
-      return false;
+
+
     }
+    catch { }
+
   }
 
   function atividadeReturn(callback) {
