@@ -13,7 +13,7 @@ export default function ComunicacaoView(props) {
 
 
   function mapReturn(callback) {
-
+    if(callback.length!==0){
 
     return callback.filter(post => {
       if (busca === '') {
@@ -53,14 +53,14 @@ export default function ComunicacaoView(props) {
       );
     });
 
-
+    }
   };
 
 
   return (
     <>
 
-      {/* <View style={{
+      <View style={{
           position: "absolute", width: "100%", height: "100%", justifyContent: "center",
           flexDirection: "column",
           overflow: "visible", backgroundColor: '#E3E3E3'
@@ -110,7 +110,7 @@ export default function ComunicacaoView(props) {
               imageUrl={`${keys.linkBackEnd}images/${user.fotoPerfil}`}
             />
           </View>
-        </View> */}
+        </View>
     </>
   );
 

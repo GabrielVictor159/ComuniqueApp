@@ -15,10 +15,13 @@ export default function ListaCronogramaView(props) {
   const [mapAtividades, setMapAtividades] = useState([]);
 
   useEffect(() => {
+    if(props.cronograma.length!=0){
     setMapAtividades(atividadeReturn(props.cronograma));
+    }
   }, [props.cronograma]);
 
   function atividadeReturn(callback) {
+    if(callback.length!=0){
     return callback
       .filter((atividade) =>
         props.busca === ""
@@ -43,6 +46,7 @@ export default function ListaCronogramaView(props) {
           <Text>{"\n"}</Text>
         </View>
       ));
+    }
   }
 
   return (

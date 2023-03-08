@@ -61,6 +61,7 @@ export default function CalendarioCronogramaView(props) {
   const [mesSelecionado, setMesSelecionado] = useState("");
 
   function mapDates(callback) {
+    if(callback.length!=0){
     let map = [];
     callback.map((value, index) => {
       map.push({
@@ -106,9 +107,11 @@ export default function CalendarioCronogramaView(props) {
         }),
       {}
     );
+      }
   }
 
   function atividadeReturn(callback) {
+    if(callback.length!=0){
     return callback
       .filter((post) => {
         if (props.busca === "") {
@@ -174,6 +177,7 @@ export default function CalendarioCronogramaView(props) {
           );
         }
       });
+    }
   }
 
 

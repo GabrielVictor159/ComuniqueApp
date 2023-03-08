@@ -8,7 +8,7 @@ import keys from "../../../configs/keys";
 export default function Chat(props) {
   const navigation = useNavigation();
   const [listMessage, setListMessage] = useState();
-  const [conversa, setConversa] = useState(props.chat);
+  const [conversa, setConversa] = useState([]);
   const [mensagemInput, setMensagemInput] = useState('');
   const { user, setUser } = useContext(UserContext);
 
@@ -45,6 +45,7 @@ export default function Chat(props) {
   }, [props.mensagens])
 
   useEffect(() => {
+    if(props.mensagens.length!=0){
     try {
       let novoVetor = []
       props.mensagens.map(value => {
@@ -55,11 +56,12 @@ export default function Chat(props) {
       setConversa(novoVetor)
     }
     catch { }
+  }
   }, [props.mensagens])
 
   useEffect(() => {
     try {
-      setListMessage(mapChat(conversa))
+      setListMessage(mapChat())
     }
     catch { }
   }, [conversa])
@@ -121,9 +123,10 @@ export default function Chat(props) {
 
 
 
-  function mapChat(callback) {
+  function mapChat() {
+    if(conversa.length!==0){
     try {
-      return callback.mensagens.map((value) => {
+      return conversa.map((value) => {
 
         return (
 
@@ -165,6 +168,7 @@ export default function Chat(props) {
     catch {
 
     }
+  }
   };
 
 

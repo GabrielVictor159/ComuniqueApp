@@ -43,7 +43,7 @@ export default function Questionario(props) {
 
   function mapQuestion() {
 
-
+    if(questions.length!=0){
     return questions.map((value, i) => {
       return (
         <Stack.Screen
@@ -72,7 +72,7 @@ export default function Questionario(props) {
         />
       );
     });
-
+  }
   }
 
   return (

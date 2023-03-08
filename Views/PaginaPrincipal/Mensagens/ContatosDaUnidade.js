@@ -75,7 +75,7 @@ const [currentPage, setCurrentPage] = useState(1);
      function mapContatosDaUnidade(){
         const vetor=[]
         let i=0;
-        
+        if(contatos.length!==0){
        return contatos.filter(post => {
         if(busca === ''){
           return post;
@@ -125,7 +125,7 @@ const [currentPage, setCurrentPage] = useState(1);
             );
           }
     })
-               
+    }
     }    
       
     return(

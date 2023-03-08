@@ -12,6 +12,7 @@ export default function NoticiasView(props) {
     const navigation = useNavigation();
 
     function mapNoticias(callback) {
+        if(callback.length!=0){
         return callback.map((value) => {
 
             return (
@@ -38,6 +39,7 @@ export default function NoticiasView(props) {
 
             );
         });
+    }
     };
     return (
         <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignItems: 'center' }}>
