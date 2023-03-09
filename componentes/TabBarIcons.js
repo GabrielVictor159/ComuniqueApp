@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 const TabBarIcons = (props) => {
   if (props.name === "Home") {
@@ -118,6 +118,7 @@ const TabBarIcons = (props) => {
           {props.mensagensNaoLidas != undefined && props.mensagensNaoLidas > 0 ?
             <View style={{ width: 20, height: 20, backgroundColor: "#277BC0", borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Text>{props.mensagensNaoLidas}</Text>
+
             </View>
             : <></>
           }

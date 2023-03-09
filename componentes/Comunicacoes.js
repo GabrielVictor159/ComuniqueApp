@@ -7,7 +7,7 @@ const Comunicacoes = (props) => {
   return (
     <View
       style={[
-       
+
         {
           width: props.width,
           height: props.height,
@@ -32,11 +32,14 @@ const Comunicacoes = (props) => {
         <Text style={{ top: -10, fontSize: 15, fontWeight: "regular" }}>
           {props.nomeUsuario}
         </Text>
-        <Text style={{ opacity: 0.4 }}>
-          {props.mensagem.length < 35
-            ? `${props.mensagem}`
-            : `${props.mensagem.substring(0, 20)}...`}
-        </Text>
+        {props.mensagem !== undefined ?
+          <Text style={{ opacity: 0.4 }}>
+            {props.mensagem.length < 35
+              ? `${props.mensagem}`
+              : `${props.mensagem.substring(0, 20)}...`}
+          </Text>
+          : <></>
+        }
       </View>
       <View
         style={[
@@ -50,27 +53,27 @@ const Comunicacoes = (props) => {
             justifyContent: "center",
             position: "absolute",
           },
-          props.tipoUsuario === "Professor"
+          props.tipoUsuario === "PROFESSOR"
             ? { backgroundColor: "rgba(184, 144, 41, 0.2)" }
             : { backgroundColor: "rgba(52, 184, 41, 0.2)" },
         ]}
       >
         <Text style={{ textAlign: "center" }}>
-          {props.tipoUsuario === "Professor" ? "Professor" : "Amigo"}
+          {props.tipoUsuario === "PROFESSOR" ? "PROFESSOR" : "ALUNO"}
         </Text>
       </View>
       <View
         style={
           props.online == true
             ? {
-                backgroundColor: "#A93232",
-                width: 18,
-                height: 18,
-                borderRadius: 10,
-                top: "10%",
-                left: "90%",
-                position: "absolute",
-              }
+              backgroundColor: "#A93232",
+              width: 18,
+              height: 18,
+              borderRadius: 10,
+              top: "10%",
+              left: "90%",
+              position: "absolute",
+            }
             : {}
         }
       />

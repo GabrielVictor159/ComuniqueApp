@@ -28,9 +28,11 @@ export default function Cronograma(props) {
   useEffect(() => {
     props.swipe(false);
     props.navDisplay("none");
+    props.setJogando(true)
     return function () {
       props.swipe(true);
       props.navDisplay("flex");
+      props.setJogando(false)
     };
   }, []);
   const [busca, setBusca] = useState('')
@@ -38,10 +40,10 @@ export default function Cronograma(props) {
   const [cronograma, setCronograma] = useState([])
 
   useLayoutEffect(() => {
-    AsyncStorage.getItem('cronogramas')
+    AsyncStorage.getItem(`${user.idUsuario}_cronogramas`)
       .then(cronogramas => {
         if (cronogramas === null) {
-          AsyncStorage.setItem('cronogramas', JSON.stringify([]))
+          AsyncStorage.setItem(`${user.idUsuario}_cronogramas`, JSON.stringify([]))
             .catch(error => console.log(error));
         } else {
           setCronograma(JSON.parse(cronogramas));
@@ -53,7 +55,7 @@ export default function Cronograma(props) {
       .then(response => {
         if (response.ok) {
           response.json().then(novosCronogramas => {
-            AsyncStorage.getItem('cronogramas')
+            AsyncStorage.getItem(`${user.idUsuario}_cronogramas`)
               .then(cronogramas => {
                 const arrayCronogramas = JSON.parse(cronogramas);
                 const cronogramasAtualizados = [...arrayCronogramas];
@@ -64,7 +66,7 @@ export default function Cronograma(props) {
                   }
                 });
 
-                AsyncStorage.setItem('cronogramas', JSON.stringify(cronogramasAtualizados))
+                AsyncStorage.setItem(`${user.idUsuario}_cronogramas`, JSON.stringify(cronogramasAtualizados))
                   .then(() => setCronograma(cronogramasAtualizados))
                   .catch(error => console.log(error));
               })
@@ -167,7 +169,7 @@ export default function Cronograma(props) {
         }}
       >
         <View>
-
+          <Image source={require("../../../../assets/IconBack.png")} />
         </View>
       </TouchableOpacity>
     </>

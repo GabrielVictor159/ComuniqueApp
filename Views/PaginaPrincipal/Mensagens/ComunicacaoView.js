@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../../../App";
@@ -12,19 +12,29 @@ export default function ComunicacaoView(props) {
   const navigation = useNavigation();
   let [busca, setBusca] = useState('');
   const { user, setUser } = useContext(UserContext);
+  const [chatsViews, setChatsViews] = useState();
+  useEffect(() => {
+    try {
+      setChatsViews(mapReturn(props.chats))
+    }
+    catch { }
+  }, [props.chats, props.mensagens, props.chatEscolhido, busca])
 
 
   function mapReturn(callback) {
+
     if (callback.length !== 0) {
 
       return callback.filter(post => {
         if (busca === '') {
           return post;
         }
-        else if (post.destinatario.toLowerCase().includes(busca.toLowerCase())) {
+        else if (post.usuario1.nomeUsuario.toLowerCase().includes(busca.toLowerCase()) || post.usuario2.nomeUsuario.toLowerCase().includes(busca.toLowerCase())) {
           return post;
         }
       }).map((value, index) => {
+        const filteredMessages = props.mensagens.filter(message => message.chat.idChat === value.idChat);
+        const dataUltimaMensagem = new Date(filteredMessages[filteredMessages.length - 1].dataMensagem)
         return (
 
           <View style={{ width: "100%", alignItems: "center" }} key={index}>
@@ -42,9 +52,9 @@ export default function ComunicacaoView(props) {
                 tipoUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.tipoUsuario : value.usuario1.tipoUsuario}
                 imageUrl={`${keys.linkBackEnd}images/${value.usuario1.idUsuario === user.idUsuario ? value.usuario2.fotoPerfil : value.usuario1.fotoPerfil}`}
                 nomeUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.nomeUsuario : value.usuario1.nomeUsuario}
-                mensagem={value.ultimaMensagem}
+                mensagem={filteredMessages[filteredMessages.length - 1].mensagem}
                 online={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.usuarioOnline : value.usuario1.usuarioOnline}
-                horario={value.ultimaMensagem.dataMensagem}
+                horario={`${dataUltimaMensagem.getHours()}:${dataUltimaMensagem.getMinutes()}`}
               />
               <Text>{"\n"}</Text>
             </TouchableOpacity>
@@ -75,7 +85,7 @@ export default function ComunicacaoView(props) {
         >
 
 
-          {mapReturn(props.chats)}
+          {chatsViews}
         </ScrollView>
 
       </View>

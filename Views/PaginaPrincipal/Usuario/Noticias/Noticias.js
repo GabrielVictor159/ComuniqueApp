@@ -19,9 +19,11 @@ export default function Noticias(props) {
   useEffect(() => {
     props.swipe(false);
     props.navDisplay("none");
+    props.setJogando(true)
     return function () {
       props.swipe(true);
       props.navDisplay("flex");
+      props.setJogando(false)
     };
   }, []);
 

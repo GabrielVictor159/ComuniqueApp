@@ -2,11 +2,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import {
   CardStyleInterpolators, createStackNavigator
 } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import Chessboard from "../../../../../componentes/Chess/componentes/Chessboard";
 import JogarView from "./JogarView";
 const Stack = createStackNavigator();
 export default function Jogar(props) {
+  const a = (value) => { }
+  useEffect(() => {
+    props.setJogando(true)
+  }, [])
 
   return (
     <NavigationContainer independent={true}>
@@ -25,7 +29,7 @@ export default function Jogar(props) {
         />
         <Stack.Screen
           name="ChessEasy"
-          children={() => <Chessboard dificulty={'easy'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay} />}
+          children={() => <Chessboard setJogando={a} dificulty={'easy'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay} />}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -35,7 +39,7 @@ export default function Jogar(props) {
         />
         <Stack.Screen
           name="ChessMedium"
-          children={() => <Chessboard dificulty={'medium'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay} />}
+          children={() => <Chessboard setJogando={a} dificulty={'medium'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay} />}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -45,7 +49,7 @@ export default function Jogar(props) {
         />
         <Stack.Screen
           name="ChessHard"
-          children={() => <Chessboard dificulty={'hard'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay} />}
+          children={() => <Chessboard setJogando={a} dificulty={'hard'} swipe={props.swipe} display={props.display} setIconBackDisplay={props.setIconBackDisplay} />}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,

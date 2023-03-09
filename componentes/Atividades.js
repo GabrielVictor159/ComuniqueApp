@@ -79,7 +79,7 @@ const Atividades = (props) => {
           <Text style={{ fontSize: props.fontSize, color: props.textColor }}>
             {props.text}
           </Text>
-          <Text style={{top:props.text2Top, fontSize: props.fontSize2, color: props.textColor, textAlign:'center' }}>
+          <Text style={{ top: props.text2Top, fontSize: props.fontSize2, color: props.textColor, textAlign: 'center' }}>
             {props.text2}
           </Text>
         </View>
@@ -128,9 +128,9 @@ const Atividades = (props) => {
               alignItems: "center",
             }}
           >
-            <PlayButton width={props.iconWidth} height={props.iconHeight} />
+            <Image style={{ width: 70, height: 70, position: 'relative', left: 5, top: -5 }} source={require("../assets/PlayButton.png")} />
           </View>
-        ) : props.iconType === "text"?(
+        ) : props.iconType === "text" ? (
           <View
             style={{
               width: "50%",
@@ -142,9 +142,9 @@ const Atividades = (props) => {
               alignItems: "center",
             }}
           >
-          <Text style={{color:'white', fontSize:props.textIconFontSize}}>{props.textIcon}</Text>
+            <Text style={{ color: 'white', fontSize: props.textIconFontSize }}>{props.textIcon}</Text>
           </View>
-        ): <></>}
+        ) : <></>}
 
         <Image
           source={props.image}

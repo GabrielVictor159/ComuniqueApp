@@ -12,15 +12,14 @@ import TextoAprendizagem1 from "./TextoAprendizagem1";
 import TextoAprendizagem2 from "./TextoAprendizagem2";
 import Questionario from "./Questionario/Questionario";
 import { useNavigation } from "@react-navigation/native";
-import IconBack from "../../../../../assets/IconBack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 const Stack = createStackNavigator();
 export default function AprenderJogos(props) {
   const navigation = useNavigation();
-  
-  
-    return (
-      <>
+
+
+  return (
+    <>
       <NavigationContainer independent={true}>
         <Stack.Navigator
           initialRouteName="AprenderJogosView"
@@ -28,7 +27,7 @@ export default function AprenderJogos(props) {
         >
           <Stack.Screen
             name="AprenderJogosView"
-            children={()=><AprenderJogosView setIconBackDisplay={props.setIconBackDisplay}/>}
+            children={() => <AprenderJogosView setIconBackDisplay={props.setIconBackDisplay} />}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -38,7 +37,7 @@ export default function AprenderJogos(props) {
           />
           <Stack.Screen
             name="TextoAprendizagem1"
-            children={()=><TextoAprendizagem1 setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display}/>}
+            children={() => <TextoAprendizagem1 setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display} />}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -48,7 +47,7 @@ export default function AprenderJogos(props) {
           />
           <Stack.Screen
             name="TextoAprendizagem2"
-            children={()=><TextoAprendizagem2 setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display}/>}
+            children={() => <TextoAprendizagem2 setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display} />}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -58,7 +57,7 @@ export default function AprenderJogos(props) {
           />
           <Stack.Screen
             name="Questionario"
-            children={()=><Questionario setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display}/>}
+            children={() => <Questionario setIconBackDisplay={props.setIconBackDisplay} swipe={props.swipe} display={props.display} />}
             options={{
               tabBarStyle: { display: "none" },
               headerShown: false,
@@ -68,9 +67,9 @@ export default function AprenderJogos(props) {
           />
         </Stack.Navigator>
       </NavigationContainer>
-     
-      
-      </>
-    );
-  
+
+
+    </>
+  );
+
 }

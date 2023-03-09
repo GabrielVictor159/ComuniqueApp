@@ -125,8 +125,6 @@ export default function CalendarioCronogramaView(props) {
   }
 
   function atividadeReturn(callback) {
-    console.log(mesSelecionado)
-    console.log(callback)
     if (callback.length != 0) {
       return callback
         .filter((post) => {
@@ -152,7 +150,6 @@ export default function CalendarioCronogramaView(props) {
         })
         .map((value, index) => {
           const postDate = new Date(value.dataAtividade);
-          console.log(value)
           return (
             <View style={{ left: "14%" }} key={index}>
               <CronogramaAtividade
@@ -202,8 +199,11 @@ export default function CalendarioCronogramaView(props) {
               onMonthChange={(month) => setMesSelecionado(month)}
               futureScrollRange={12}
               showScrollIndicator={true}
+              theme={{
+                calendarBackground: 'transparent'
+              }}
               style={{
-                borderWidth: 0.5,
+                borderWidth: 0,
                 borderColor: "gray",
                 width: 380
               }}

@@ -3,9 +3,8 @@ import {
   CardStyleInterpolators, createStackNavigator
 } from "@react-navigation/stack";
 import React, { useContext, useEffect, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { UserContext } from "../../../../../../App";
-import IconBack from "../../../../../../assets/IconBack";
 import keys from "../../../../../../configs/keys";
 import QuestoesComponente from "./QuestoesComponente";
 import Resultado from "./Resultado";
@@ -43,36 +42,36 @@ export default function Questionario(props) {
 
   function mapQuestion() {
 
-    if(questions.length!=0){
-    return questions.map((value, i) => {
-      return (
-        <Stack.Screen
-          key={value.idQuestao}
-          name={"" + i}
-          children={() => (
-            <QuestoesComponente
-              RC={value.RespostaCorreta}
-              R1={value.Resposta1}
-              R2={value.Resposta2}
-              R3={value.Resposta3}
-              R4={value.Resposta4}
-              titulo={value.Titulo}
-              buttonText={i == 9 ? 'Resultado' : 'Proxima questão'}
-              respostas={respostas}
-              setRespostas={setRespostas}
-              navigate={i == 9 ? 'resultado' : '' + (i + 1)}
-            />
-          )}
-          options={{
-            tabBarStyle: { display: "none" },
-            headerShown: false,
-            tabBarShowLabel: false,
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          }}
-        />
-      );
-    });
-  }
+    if (questions.length != 0) {
+      return questions.map((value, i) => {
+        return (
+          <Stack.Screen
+            key={value.idQuestao}
+            name={"" + i}
+            children={() => (
+              <QuestoesComponente
+                RC={value.RespostaCorreta}
+                R1={value.Resposta1}
+                R2={value.Resposta2}
+                R3={value.Resposta3}
+                R4={value.Resposta4}
+                titulo={value.Titulo}
+                buttonText={i == 9 ? 'Resultado' : 'Proxima questão'}
+                respostas={respostas}
+                setRespostas={setRespostas}
+                navigate={i == 9 ? 'resultado' : '' + (i + 1)}
+              />
+            )}
+            options={{
+              tabBarStyle: { display: "none" },
+              headerShown: false,
+              tabBarShowLabel: false,
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }}
+          />
+        );
+      });
+    }
   }
 
   return (
@@ -118,7 +117,9 @@ export default function Questionario(props) {
             navigation.navigate('AprenderJogosView');
           }}
         >
-          <IconBack width={28} height={29} />
+          <View>
+            <Image source={require("../../../../../../assets/IconBack.png")} />
+          </View>
         </TouchableOpacity>
       </View>
     </>

@@ -3,64 +3,60 @@ import GenerateMoves from "../GenerateMoves"
 import MovementAction from "../MovementAction"
 import moveBasedRelativeStrength from "./moveBasedRelativeStrength"
 import relativeStrengthCalculation from "./relativeStrengthCalculation"
-import segureMovement from "./segureMovement"
+import secureMovement from "./segureMovement"
 
 
-export default function miniMax(color,enemyColor,board){
-    let CheckMate = CheckMatte(color,board) 
-    let generateMoves = GenerateMoves(color, board)
-    let segureAleatoryMoves = []
-    let aleatoryMoviment;
-    for(let i=0; i<generateMoves.length; i++){
-        if(segureMovement(generateMoves[i],'w',board)){
-            if(generateMoves[i].piece!="King"){
-            segureAleatoryMoves.push(generateMoves[i])
-           
-            }
+export default function miniMax(color, enemyColor, board) {
+    const checkMate = CheckMatte(color, board);
+    const generateMoves = GenerateMoves(color, board);
+    const secureMoves = [];
+
+    for (const move of generateMoves) {
+        if (secureMovement(move, 'w', board) && move.piece !== 'King') {
+            secureMoves.push(move);
         }
     }
-    if(segureAleatoryMoves.length>0){
-      aleatoryMoviment = segureAleatoryMoves[Math.floor(Math.random() * segureAleatoryMoves.length)]
+
+    const selectedMove = secureMoves.length > 0
+        ? secureMoves[Math.floor(Math.random() * secureMoves.length)]
+        : generateMoves[Math.floor(Math.random() * generateMoves.length)];
+
+    let newBoard = MovementAction(selectedMove, board);
+    const initialStrength = relativeStrengthCalculation(board);
+
+    if (checkMate) {
+        return false;
     }
-    else{
-     aleatoryMoviment = generateMoves[Math.floor(Math.random() * generateMoves.length)]
+
+    let bestBoard = newBoard;
+    let bestStrength = relativeStrengthCalculation(newBoard);
+    const mapMoves = GenerateMoves(color, board);
+
+    for (const mapMove of mapMoves) {
+        const mapBoard = MovementAction(mapMove, board);
+        const enemyAttack = moveBasedRelativeStrength('w', mapBoard);
+
+        if (enemyAttack === false) {
+            bestBoard = mapBoard;
+            break;
+        }
+
+        const enemyMoves = GenerateMoves(enemyColor, enemyAttack);
+        const strength = relativeStrengthCalculation(enemyAttack);
+        const bestEnemyMove = moveBasedRelativeStrength('b', enemyAttack);
+        const relativeStrength = relativeStrengthCalculation(bestEnemyMove);
+
+        if (color === 'b' && relativeStrength < bestStrength) {
+            bestStrength = relativeStrength;
+            bestBoard = mapBoard;
+        } else if (color === 'w' && relativeStrength > bestStrength) {
+            bestStrength = relativeStrength;
+            bestBoard = mapBoard;
+        }
     }
-    let newBoard = MovementAction(aleatoryMoviment,board);
-    let initialStrength = relativeStrengthCalculation(board);
-   
-    if(CheckMate!=true){
-       
-        let mapMoves = GenerateMoves(color, board)
-         let z = relativeStrengthCalculation(newBoard)
-        for(let i=0; i<mapMoves.length; i++){
-            let mapBoard = MovementAction(mapMoves[i],board)
-            let enemyAttack = moveBasedRelativeStrength('w',mapBoard)
-            if(enemyAttack===false){
-                newBoard = mapBoard;
-                break;
-            }
-            let newsMovement = GenerateMoves(color, enemyAttack)
-            let strength = relativeStrengthCalculation(enemyAttack);
-            let finalMovement = moveBasedRelativeStrength('b',enemyAttack)
-            let relativeStrength = relativeStrengthCalculation(finalMovement)
-            if(color==='b'){
-            if(relativeStrength<z){
-                z = relativeStrength
-                newBoard = mapBoard
-            }
-        }
-        else{
-            if(relativeStrength>z){
-                z = relativeStrength
-                newBoard = mapBoard
-            } 
-        }
-    
-        }
-     return newBoard;
+
+    return bestBoard;
 }
-else{
-    return false;
-}
-}
+
+
 

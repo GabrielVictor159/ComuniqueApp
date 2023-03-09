@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, useNavigation } from "@react-navigation/native";
 import { Overlay } from "@rneui/themed";
 import React, { useContext, useState } from "react";
@@ -24,12 +25,17 @@ export default function Logar(props) {
   };
 
   const LogarTest = async () => {
+
     let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${Usuario}/${Senha}`)
     if (resposta.status === 200) {
       let data = await resposta.json();
       data.senha = Senha;
       setUser(data)
+      AsyncStorage.clear()
+        .then(() => console.log('Todos os itens foram removidos com sucesso'))
+        .catch(error => console.log(error))
       navigation.navigate("PaginaInicial")
+
     }
     else if (resposta.status === 401) {
       alert('Email ou senha invalidos!')

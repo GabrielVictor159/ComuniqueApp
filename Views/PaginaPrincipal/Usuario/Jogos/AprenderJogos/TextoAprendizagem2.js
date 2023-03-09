@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { color } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
-import IconBack from "../../../../../assets/IconBack";
 export default function TextoAprendizagem2(props) {
   const navigation = useNavigation();
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function TextoAprendizagem2(props) {
             "   O tabuleiro de xadrez conta com 64 casas distribuídas em 8 colunas (verticais) e 8 fileiras (horizontais), cada uma com 8 casas. As casas são alternadamente escuras e claras. A primeira casa no extremo esquerdo do tabuleiro deve ser uma casa preta e a última casa no extremo direito, uma casa branca."
           }
         </Text>
-        
+
         <Text style={styles.paragrafo}>
           {
             "\n  Cada coluna é designada por uma letra (a a h), enquanto as fileiras são designadas por um número (1 a 8). Dessa forma cada casa é designada pela letra e número correspondentes a sua coluna e fileira (a1, b6, f5, etc.). Esse é o sistema padrão de notação em competições oficiais."
@@ -60,7 +59,7 @@ export default function TextoAprendizagem2(props) {
             "   Pode mover-se em qualquer direção, porém apenas uma casa por vez. \n"
           }
         </Text>
-        <Image style={styles.images} source={require('../../../../../assets/Rei.png')}/>
+        <Image style={styles.images} source={require('../../../../../assets/Rei.png')} />
         <Text>{"\n\n\n\n"}</Text>
         <Text style={styles.paragrafo}>
           {"        Dama \n"}
@@ -70,7 +69,7 @@ export default function TextoAprendizagem2(props) {
             "    Assim como o Rei, pode mover-se em qualquer direção (vertical, horizontal e diagonal), porém quantas casas quiser, desde que estejam livres."
           }
         </Text>
-        
+
         <Text>{"\n"}</Text>
         <Image
           style={styles.images}
@@ -135,7 +134,7 @@ export default function TextoAprendizagem2(props) {
         <Text>{"\n"}</Text>
         <Text>{"\n\n\n\n\n"}</Text>
         <View style={styles.containerBotao}>
-        <TouchableOpacity
+          <TouchableOpacity
             style={styles.botaoTouchable}
             onPress={() => {
               navigation.goBack();
@@ -145,7 +144,7 @@ export default function TextoAprendizagem2(props) {
               <Text style={styles.botaoText}>{"Voltar"}</Text>
             </View>
           </TouchableOpacity>
-          <View style={{width:20}}/>
+          <View style={{ width: 20 }} />
           <TouchableOpacity
             style={styles.botaoTouchable}
             onPress={() => {
@@ -157,34 +156,36 @@ export default function TextoAprendizagem2(props) {
             </View>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.containerBotao}>
-        
-          <View style={{width:20}}/>
+
+          <View style={{ width: 20 }} />
           <TouchableOpacity
             style={styles.textTouchable}
             onPress={() => {
               navigation.navigate("AprenderJogosView");
             }}
           >
-           
-              <Text style={{color:'white', fontSize:14, left:-10}}>{"Voltar ao menu"}</Text>
-         
+
+            <Text style={{ color: 'white', fontSize: 14, left: -10 }}>{"Voltar ao menu"}</Text>
+
           </TouchableOpacity>
         </View>
         <Text>{"\n"}</Text>
       </ScrollView>
-      <View style={{ position: "absolute", top: 50, left: 20}}>
+      <View style={{ position: "absolute", top: 50, left: 20 }}>
         <TouchableOpacity
           onPress={() => {
-           navigation.goBack();
+            navigation.goBack();
           }}
         >
-          
-          <IconBack width={28} height={29} />
+
+          <View>
+            <Image source={require("../../../../../assets/IconBack.png")} />
+          </View>
         </TouchableOpacity>
       </View>
-      
+
     </View>
   );
 }
@@ -233,8 +234,8 @@ const styles = StyleSheet.create({
   textTouchable: {
     width: "40%",
     height: 40,
-    alignItems:'center',
-    top:10
+    alignItems: 'center',
+    top: 10
   },
   botao: {
     width: "100%",
@@ -252,8 +253,8 @@ const styles = StyleSheet.create({
   containerBotao: {
     width: "100%",
     alignItems: "center",
-    flexDirection:'row',
-    justifyContent:'center',
-    
+    flexDirection: 'row',
+    justifyContent: 'center',
+
   },
 });

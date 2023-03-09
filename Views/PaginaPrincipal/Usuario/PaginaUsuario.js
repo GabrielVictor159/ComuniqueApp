@@ -32,7 +32,7 @@ export default function PaginaUsuario(props) {
         />
         <Stack.Screen
           name="Cronograma"
-          children={() => <Cronograma swipe={props.swipe} navDisplay={props.navDisplay} />}
+          children={() => <Cronograma setJogando={props.setJogando} swipe={props.swipe} navDisplay={props.navDisplay} />}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -42,7 +42,7 @@ export default function PaginaUsuario(props) {
         />
         <Stack.Screen
           name="Jogos"
-          children={() => <Jogos swipe={props.swipe} navDisplay={props.navDisplay} />}
+          children={() => <Jogos setJogando={props.setJogando} swipe={props.swipe} navDisplay={props.navDisplay} />}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,
@@ -52,7 +52,7 @@ export default function PaginaUsuario(props) {
         />
         <Stack.Screen
           name="Noticias"
-          children={() => <Noticias swipe={props.swipe} navDisplay={props.navDisplay} />}
+          children={() => <Noticias setJogando={props.setJogando} swipe={props.swipe} navDisplay={props.navDisplay} />}
           options={{
             tabBarStyle: { display: "none" },
             headerShown: false,

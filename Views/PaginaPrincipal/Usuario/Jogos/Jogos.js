@@ -1,8 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import IconBack from "../../../../assets/IconBack";
+import { Image, TouchableOpacity, View } from "react-native";
 import AprenderJogos from "./AprenderJogos/AprenderJogos";
 import Jogar from "./Jogar/Jogar";
 const Tab = createMaterialTopTabNavigator();
@@ -11,6 +10,7 @@ export default function Jogos(props) {
   useEffect(() => {
     props.swipe(false);
     props.navDisplay('none');
+    props.setJogando(true)
     return function () {
       props.swipe(true);
       props.navDisplay('flex');
@@ -57,7 +57,7 @@ export default function Jogos(props) {
           }}
         >
           <Tab.Screen name="Aprenda" children={() => <AprenderJogos swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay} />} />
-          <Tab.Screen name="Jogue" children={() => <Jogar swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay} />} />
+          <Tab.Screen name="Jogue" children={() => <Jogar setJogando={props.setJogando} swipe={setSwipe} display={setDisplay} setIconBackDisplay={setIconBackDisplay} />} />
         </Tab.Navigator>
 
       </NavigationContainer>
@@ -67,7 +67,7 @@ export default function Jogos(props) {
             navigation.goBack();
           }}
         >
-          <IconBack width={28} height={29} />
+          <Image source={require("../../../../assets/IconBack.png")} />
         </TouchableOpacity>
       </View>
     </>

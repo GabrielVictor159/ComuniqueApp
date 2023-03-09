@@ -20,7 +20,9 @@ export default function ListaCronogramaView(props) {
   }, [props.cronograma, props.busca]);
 
   function atividadeReturn(callback) {
+
     if (callback.length != 0) {
+
       return callback
         .filter((post) => {
           if (props.busca === "") {
@@ -31,7 +33,7 @@ export default function ListaCronogramaView(props) {
           ) {
             return post;
           }
-        })
+        }).sort((a, b) => new Date(a.dataAtividade) - new Date(b.dataAtividade)).reverse()
         .map((value, index) => (
           <View style={{ left: "14%" }} key={index}>
             <CronogramaAtividade

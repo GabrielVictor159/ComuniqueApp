@@ -41,10 +41,12 @@ export default function Chessboard(props) {
     props.swipe(false);
     props.display("none");
     props.setIconBackDisplay("none");
+    props.setJogando(true)
     return function () {
       props.swipe(true);
       props.display("flex");
       props.setIconBackDisplay("flex");
+      props.setJogando(false)
     };
   });
 

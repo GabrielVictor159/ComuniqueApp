@@ -1,12 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Noticias from "../../../../componentes/Noticias";
+import keys from "../../../../configs/keys";
 export default function NoticiasView(props) {
     const [noticiasMap, setNoticiasMap] = useState();
     useEffect(() => {
         setNoticiasMap(mapNoticias(props.noticias))
-    }, []);
+    }, [props.noticias]);
     const navigation = useNavigation();
 
     function mapNoticias(callback) {
@@ -27,7 +28,7 @@ export default function NoticiasView(props) {
                             width='100%'
                             height='90%'
                             borderRadius={20}
-                            Image={value.imagem}
+                            Image={`${keys.linkBackEnd}images/${value.imagem}`}
                             titulo={value.titulo}
                         />
                         <Text>{'\n'}</Text>
@@ -59,6 +60,7 @@ export default function NoticiasView(props) {
                     >
 
                         <View>
+                            <Image source={require("../../../../assets/IconBack.png")} />
 
                         </View>
 
