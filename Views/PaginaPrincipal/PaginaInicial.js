@@ -8,7 +8,7 @@ import { UserContext } from '../../App';
 import TabBarIcons from "../../componentes/TabBarIcons";
 import ImageStorage from '../../configs/ImageStorage';
 import keys from '../../configs/keys';
-import mensagensImmageTextConvert from '../../configs/mensagensImageTextConverts';
+import mensagensImageTextConvert from '../../configs/mensagensImageTextConverts';
 import Personalizar from "./Configurações/Personalizar";
 import Comunicacao from "./Mensagens/Comunicacao";
 import PaginaUsuario from "./Usuario/PaginaUsuario";
@@ -122,7 +122,7 @@ export default function PaginaInicial(props) {
                       });
                   }
                   if (novaMensagem.isFile) {
-                    ImageStorage.addImage(`${keys.linkBackEnd}images/${mensagensImmageTextConvert.getContentBetweenDelimiters(novaMensagem.mensagem, "§")}`)
+                    ImageStorage.addImage(`${keys.linkBackEnd}images/${mensagensImageTextConvert.getContentBetweenDelimiters(novaMensagem.mensagem, "§")}`)
                   }
                 }
               });

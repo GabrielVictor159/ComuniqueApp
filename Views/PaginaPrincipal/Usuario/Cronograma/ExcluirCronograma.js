@@ -21,12 +21,12 @@ export default function ExcluirCronograma(props) {
   }, [props.cronograma])
   async function deleteAtividade(id) {
     try {
-      const cronogramas = await AsyncStorage.getItem('cronogramas');
+      const cronogramas = await AsyncStorage.getItem(`${user.idUsuario}_cronogramas`);
       const arrayCronogramas = JSON.parse(cronogramas);
       const index = arrayCronogramas.findIndex(cronograma => cronograma.idCronograma === id);
       if (index !== -1) {
         arrayCronogramas.splice(index, 1);
-        await AsyncStorage.setItem('cronogramas', JSON.stringify(arrayCronogramas));
+        await AsyncStorage.setItem(`${user.idUsuario}_cronogramas`, JSON.stringify(arrayCronogramas));
         console.log(arrayCronogramas.toString())
         await props.setCronograma(arrayCronogramas)
 

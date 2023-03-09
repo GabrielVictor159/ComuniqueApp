@@ -65,10 +65,10 @@ export default function AdicionarCronograma(props) {
 
       if (response.ok) {
         const novoCronogramaComID = await response.json();
-        const cronogramas = await AsyncStorage.getItem('cronogramas');
+        const cronogramas = await AsyncStorage.getItem(`${user.idUsuario}_cronogramas`);
         const arrayCronogramas = JSON.parse(cronogramas);
         const cronogramasAtualizados = [...arrayCronogramas, novoCronogramaComID];
-        await AsyncStorage.setItem('cronogramas', JSON.stringify(cronogramasAtualizados));
+        await AsyncStorage.setItem(`${user.idUsuario}_cronogramas`, JSON.stringify(cronogramasAtualizados));
         props.setCronograma(cronogramasAtualizados);
         return navigation.goBack();
       } else {
