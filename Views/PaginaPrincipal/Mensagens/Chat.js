@@ -154,7 +154,7 @@ export default function Chat(props) {
                   <ImagePerfil
                     width={70}
                     height={70}
-                    imageUrl={value.chat.usuario1.idUsuario === user.idUsuario ? `${keys.linkBackEnd}images/${value.chat.usuario2.fotoPerfil}` : `${keys.linkBackEnd}images/${value.chat.usuario1.fotoPerfil}`}
+                    imageUrl={props.chatEscolhido.usuario1.idUsuario === user.idUsuario ? props.chatEscolhido.usuario2.fotoPerfil : props.chatEscolhido.usuario1.fotoPerfil}
                   />
 
 
@@ -214,7 +214,7 @@ export default function Chat(props) {
             shadowColor="#5C5C5C"
             shadowOpacity={0.2}
 
-            imageUrl={`${keys.linkBackEnd}images/${props.chatEscolhido.usuario1.idUsuario === user.idUsuario ? props.chatEscolhido.usuario2.fotoPerfil : props.chatEscolhido.usuario1.fotoPerfil}`}
+            imageUrl={props.chatEscolhido.usuario1.idUsuario === user.idUsuario ? props.chatEscolhido.usuario2.fotoPerfil : props.chatEscolhido.usuario1.fotoPerfil}
           />
           <View style={[styles.indicadorOnline, { backgroundColor: props.chatEscolhido.usuario1.idUsuario === user.idUsuario ? props.chatEscolhido.usuario2.usuarioOnline === true ? 'green' : '' : props.chatEscolhido.usuario1.usuarioOnline === true ? 'green' : '' }]} />
         </View>

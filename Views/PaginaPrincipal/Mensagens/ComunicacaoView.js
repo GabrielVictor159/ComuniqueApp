@@ -50,7 +50,7 @@ export default function ComunicacaoView(props) {
                 height={100}
                 backgroundColor="white"
                 tipoUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.tipoUsuario : value.usuario1.tipoUsuario}
-                imageUrl={`${keys.linkBackEnd}images/${value.usuario1.idUsuario === user.idUsuario ? value.usuario2.fotoPerfil : value.usuario1.fotoPerfil}`}
+                imageUrl={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.fotoPerfil : value.usuario1.fotoPerfil}
                 nomeUsuario={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.nomeUsuario : value.usuario1.nomeUsuario}
                 mensagem={filteredMessages[filteredMessages.length - 1].mensagem}
                 online={value.usuario1.idUsuario === user.idUsuario ? value.usuario2.usuarioOnline : value.usuario1.usuarioOnline}
@@ -120,7 +120,7 @@ export default function ComunicacaoView(props) {
             shadowColor="#5C5C5C"
             shadowOpacity={0.2}
             fontSize={15}
-            imageUrl={`${keys.linkBackEnd}images/${user.fotoPerfil}`}
+            imageUrl={user.fotoPerfil}
           />
         </View>
       </View>

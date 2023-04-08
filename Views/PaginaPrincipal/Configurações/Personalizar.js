@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Image, Keyboard, StyleSheet, View } from "react-native";
-
-
-
-
+import React, { useContext, useEffect, useState } from "react";
+import { Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { UserContext } from "../../../App";
+import PersonalizarIcons from "../../../assets/PersonalizarIcons";
+import ImagePerfil from "../../../componentes/ImagePerfil";
+import InputImagePerfil from "../../../componentes/InputImagePerfil";
+import InputImagesPerfil from "../../../componentes/InputImagesPerfil";
+import InputsOverlay from "../../../componentes/InputsOverlay";
+import PersonalizarOption from "../../../componentes/PersonalizarOption";
+import SucessoOverlay from "../../../componentes/SucessoOverlay";
+import addImageToBackground from "../../../configs/addImageToBackground";
+import createFormData from "../../../configs/createFormData";
+import keys from "../../../configs/keys";
 export default function Personalizar(props) {
+  const { user, setUser } = useContext(UserContext);
   const [alterarSenha, setAlterarSenha] = useState(false);
   const [alterarEmail, setAlterarEmail] = useState(false);
   const [alterarNome, setAlterarNome] = useState(false);
@@ -21,8 +29,8 @@ export default function Personalizar(props) {
   const [alterarImages, setAlterarImage] = useState(false)
   const [pickerImagePerfil, setPickerImagePerfil] = useState(false)
   const [pickerBanner, setPickerBanner] = useState(false)
-  const [imageBanner, setImageBanner] = useState(require('../../../assets/BannerSubmit.png'))
-  const [imagePerfil, setImagePerfil] = useState(require('../../../assets/BannerSubmit.png'))
+  const [imagePerfil, setImagePerfil] = useState(user.fotoPerfil)
+  const [backgroundImage, setBackgroundImage] = useState(null);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -37,7 +45,6 @@ export default function Personalizar(props) {
         setKeyboardVisible(false);
       }
     );
-
     return () => {
       keyboardDidHideListener.remove();
       keyboardDidShowListener.remove();
@@ -53,28 +60,128 @@ export default function Personalizar(props) {
     setAlterarImage(false)
   };
 
-  function alterarImagensPerfil(banner, perfil) {
-    let bannerPadrao = require('../../../assets/BannerSubmit.png')
-    let perfilPadrao = require('../../../assets/BannerSubmit.png')
-    if (banner !== bannerPadrao) {
-      if (perfil !== perfilPadrao) {
-        props.usuario.usuario.perfil.imageBanner = banner
-        props.usuario.usuario.perfil.imagePerfil = perfil
-        return false
+  async function alterarImagensPerfil() {
+
+    if (imagePerfil !== user.fotoPerfil && imagePerfil !== "userIcon.png") {
+      try {
+        let formData = await createFormData(imagePerfil.assets[0].uri, imagePerfil.assets[0].type, 'image');
+        console.log(formData)
+        let resposta = await fetch(`${keys.linkBackEnd}Images/usuarioImage/${user.email}/${user.senha}`, {
+          method: 'PUT',
+          body: formData
+        });
+
+        if (resposta.status === 200) {
+          let senhaAntiga = user.senha;
+
+          let data = await resposta.json();
+          data.senha = senhaAntiga;
+          setUser(data);
+        }
+        else {
+          alert("Houve um erro!")
+        }
       }
-      else {
-        props.usuario.usuario.perfil.imageBanner = banner
-        return false
+      catch (e) {
+        console.log(e.getMessage())
       }
     }
-    else {
-      if (perfil !== perfilPadrao) {
-        props.usuario.usuario.perfil.imagePerfil = perfil
-        return false
-      }
-      else {
-        return false
-      }
+  }
+  const alterarNomeFunction = async () => {
+    if (alterarNomeInput.length < 5) {
+      alert("Por favor o nome deve ter pelo menos 5 caracteres!")
+      return false
+    }
+    let dto = { ...user };
+    dto.nomeUsuario = alterarNomeInput;
+    let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${user.email}/${user.senha}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json' // Tipo de conteúdo do corpo da requisição
+      },
+      body: JSON.stringify(dto)
+    })
+    if (resposta.status === 401) {
+      alert("Você não tem autorização para alterar os dados desse usuario!");
+      return false
+    }
+    if (resposta.status === 500) {
+      alert("Houve algum erro!")
+      return false
+    }
+    if (resposta.ok) {
+      let senhaAntiga = user.senha;
+      let data = await resposta.json();
+      data.senha = senhaAntiga;
+      setUser(data);
+      return true
+    }
+  }
+  const alterarSenhaFunction = async () => {
+    if (alterarSenhaInputAntigo != user.senha) {
+      alert("A senha antiga esta errada!")
+      return false
+    }
+    if (alterarSenhaInputNovo != alterarSenhaInputConfirma) {
+      alert("As novas senhas não são iguais por favor verifique os dados!")
+      return false
+    }
+    if (alterarSenhaInputNovo.length < 8) {
+      alert("Por favor a senha deve ter pelo menos 8 caracteres!")
+      return false
+    }
+    let dto = { ...user };
+    dto.senha = alterarSenhaInputNovo;
+    let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${user.email}/${user.senha}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json' // Tipo de conteúdo do corpo da requisição
+      },
+      body: JSON.stringify(dto)
+    })
+    if (resposta.status === 401) {
+      alert("Você não tem autorização para alterar os dados desse usuario!");
+      return false
+    }
+    if (resposta.status === 500) {
+      alert("Houve algum erro!")
+      return false
+    }
+    if (resposta.ok) {
+      let data = await resposta.json();
+      data.senha = alterarSenhaInputNovo;
+      setUser(data);
+      return true
+    }
+  }
+  const alterarEmailFunction = async () => {
+    if (alterarEmailInputAntigo != user.senha) {
+      alert("A senha antiga esta errada!")
+      return false
+    }
+    let dto = { ...user };
+    dto.email = alterarEmailInputNovo;
+    let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${user.email}/${user.senha}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json' // Tipo de conteúdo do corpo da requisição
+      },
+      body: JSON.stringify(dto)
+    })
+    if (resposta.status === 401) {
+      alert("Você não tem autorização para alterar os dados desse usuario!");
+      return false
+    }
+    if (resposta.status === 500) {
+      alert("Houve algum erro!")
+      return false
+    }
+    if (resposta.ok) {
+      let senhaAntiga = user.senha;
+      let data = await resposta.json();
+      data.senha = senhaAntiga;
+      setUser(data);
+      return true
     }
   }
   return (
@@ -88,7 +195,8 @@ export default function Personalizar(props) {
         overflow: "visible",
       }}
     >
-      {/* <View
+
+      <View
         style={{
           position: "absolute",
           width: "100%",
@@ -102,7 +210,7 @@ export default function Personalizar(props) {
 
           {
             width: "100%",
-            height: 250,
+            height: 150,
             backgroundColor: "white",
             top: 0,
             position: "absolute",
@@ -110,31 +218,34 @@ export default function Personalizar(props) {
           }
         ]}
       >
-        <Image
+        <View
           style={{
             width: "100%",
             height: "105%",
             position: "absolute",
-            opacity: 0.7,
+            backgroundColor: '#69B1C9',
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            elevation: 20
           }}
-          source={props.usuario.usuario.perfil.imageBanner}
         />
-        <View style={{ top: "80%" }}>
+        <View style={{ top: "80%", elevation: 20 }}>
           <ImagePerfil
             shadow="true"
             width={120}
             height={120}
-            imageUrl={props.usuario.usuario.perfil.imagePerfil}
+            imageUrl={user.fotoPerfil}
           />
         </View>
       </View>
-      <View style={{ position: "absolute", top: 280, left: "85%" }}>
+      <View style={{ position: "absolute", top: 180, left: "85%" }}>
         <TouchableOpacity
           onPress={() =>
             setAlterarImage(true)
           }
         >
           <PersonalizarIcons icon="Pencil" width={29} height={29} />
+
         </TouchableOpacity>
       </View>
       <View style={{ width: "100%", alignItems: "center", top: "20%" }}>
@@ -194,12 +305,13 @@ export default function Personalizar(props) {
         overlayStyle={[styles.overlayStyles, { height: isKeyboardVisible === false ? '50%' : 500, top: isKeyboardVisible === false ? '50%' : 50 }]}
         titulo={'Alterar Email'}
         tituloStyle={styles.overlayTitulo}
-        iconInput1={require("../../../assets/user.png")}
+        iconInput1={require("../../../assets/padlock.png")}
         InputStyle1={styles.overlayInput}
-        KeyboardType1={'email-address'}
-        Placeholder1={'Digite seu email antigo'}
+        KeyboardType1={'default'}
+        Placeholder1={'Digite sua senha'}
         onChangeText1={setAlterarEmailInputAntigo}
-        iconInput2={require("../../../assets/user.png")}
+        SecureText1={true}
+        iconInput2={require("../../../assets/mail.png")}
         InputStyle2={styles.overlayInput}
         KeyboardType2={'email-address'}
         Placeholder2={'Digite seu Novo email'}
@@ -208,9 +320,7 @@ export default function Personalizar(props) {
         buttonHeight={70}
         buttonColor={"#0D5692"}
         buttonText={'Alterar'}
-        buttonAction={props.usuario.AlterarEmail}
-        actionParam1={alterarEmailInputAntigo}
-        actionParam2={alterarEmailInputNovo}
+        buttonAction={alterarEmailFunction}
         overlaySucesso={setAlterarEmailSucesso}
       />
       <SucessoOverlay
@@ -253,10 +363,7 @@ export default function Personalizar(props) {
         buttonHeight={70}
         buttonColor={"#0D5692"}
         buttonText={'Alterar'}
-        buttonAction={props.usuario.AlterarSenha}
-        actionParam1={alterarSenhaInputAntigo}
-        actionParam2={alterarSenhaInputNovo}
-        actionParam3={alterarSenhaInputConfirma}
+        buttonAction={alterarSenhaFunction}
         overlaySucesso={setAlterarSenhaSucesso}
       />
       <SucessoOverlay
@@ -286,8 +393,7 @@ export default function Personalizar(props) {
         buttonHeight={70}
         buttonColor={"#0D5692"}
         buttonText={'Alterar'}
-        buttonAction={props.usuario.AlterarNome}
-        actionParam1={alterarNomeInput}
+        buttonAction={alterarNomeFunction}
         overlaySucesso={setAlterarNomeSucesso}
       />
       <SucessoOverlay
@@ -308,13 +414,12 @@ export default function Personalizar(props) {
         onBackdropPress={toggleOverlay}
         overlayStyle={styles.overlayImagesInput}
         styleTituloImage1={{ fontSize: 20 }}
-        tituloImage1={'Adicione as imagens'}
+        tituloImage1={'Adicione a imagem de perfil'}
         pickerImagePerfil={pickerImagePerfil}
         setPickerImagePerfil={setPickerImagePerfil}
         pickerBanner={pickerBanner}
         setPickerBanner={setPickerBanner}
-        imageBanner={imageBanner}
-        setImageBanner={setImageBanner}
+
         imagePerfil={imagePerfil}
         setImagePerfil={setImagePerfil}
         buttonWidth={"60%"}
@@ -329,14 +434,9 @@ export default function Personalizar(props) {
         overlayStyle={styles.overlayInputStyle}
         setIsVisible={setPickerImagePerfil}
         setImage={setImagePerfil}
+        type={"perfil"}
       />
-      <InputImagePerfil
-        isVisible={pickerBanner}
-        onBackdropPress={setPickerBanner}
-        overlayStyle={styles.overlayInputStyle}
-        setIsVisible={setPickerBanner}
-        setImage={setImageBanner}
-      /> */}
+
     </View>
 
   );

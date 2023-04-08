@@ -1,5 +1,5 @@
 const keys = {
-    linkBackEnd: "https://47ed-2804-1b2-10c1-4ef1-2867-41d8-ccb9-9273.sa.ngrok.io/"
+    linkBackEnd: "https://7851-2804-1b2-10c1-8804-5c73-c6ef-5203-c719.ngrok-free.app/"
 }
 
 export default keys;

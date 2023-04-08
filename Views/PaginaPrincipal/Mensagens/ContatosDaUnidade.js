@@ -111,7 +111,7 @@ export default function ContatosDaUnidade(props) {
                   <ImagePerfil
                     width={60}
                     height={60}
-                    imageUrl={`${keys.linkBackEnd}images/${value.fotoPerfil}`}
+                    imageUrl={value.fotoPerfil}
                   />
                 </View>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
+import { cores } from "../estilos";
 
 const TabBarIcons = (props) => {
   if (props.name === "Home") {
@@ -116,7 +117,7 @@ const TabBarIcons = (props) => {
           }}
         >
           {props.mensagensNaoLidas != undefined && props.mensagensNaoLidas > 0 ?
-            <View style={{ width: 20, height: 20, backgroundColor: "#277BC0", borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ width: 20, height: 20, backgroundColor: cores.buttonGradientColor1, borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', transform: [{ translateX: 18 }, { translateY: -20 }] }}>
               <Text>{props.mensagensNaoLidas}</Text>
 
             </View>

@@ -1,6 +1,6 @@
 import cores from "../cores";
 const LogarStyle = {
-  body: {
+  bodyLogar: {
     width: "100%",
     height: "100%",
     display: "flex",
@@ -44,6 +44,9 @@ const LogarStyle = {
     alignItems: "center",
   },
   InputIcons: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
     position: "relative",
     left: -80,
     top: "30%",

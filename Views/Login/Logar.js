@@ -29,6 +29,7 @@ export default function Logar(props) {
     let resposta = await fetch(`${keys.linkBackEnd}Usuarios/${Usuario}/${Senha}`)
     if (resposta.status === 200) {
       let data = await resposta.json();
+      data.codeSenha = data.senha;
       data.senha = Senha;
       setUser(data)
       AsyncStorage.clear()
@@ -46,12 +47,12 @@ export default function Logar(props) {
   }
   return (
     <>
-      <View style={styles.LogarStyle.body}>
+      <View style={styles.LogarStyle.bodyLogar}>
         <TouchableOpacity
           style={styles.LogarStyle.buttonBack}
           onPress={() => props.navigation.goBack()}
         >
-          <Image source={require("../../assets/IconBack.png")} />
+          <Image style={{ width: 25, height: 25, resizeMode: 'contain' }} source={require("../../assets/IconBack.png")} />
         </TouchableOpacity>
         <Image
           style={styles.LogarStyle.ImageBack}
@@ -138,7 +139,7 @@ export default function Logar(props) {
           </View>
           <View style={{ height: 50 }}>
             <Image
-              style={{ top: "35%" }}
+              style={{ width: 25, height: 25, resizeMode: 'contain', top: "35%" }}
               source={require("../../assets/user.png")}
             />
             <TextInput

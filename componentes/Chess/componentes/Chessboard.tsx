@@ -9,6 +9,7 @@ import {
   View
 } from "react-native";
 import { UserContext } from "../../../App";
+import keys from "../../../configs/keys";
 import Check from "../Controller/Check";
 import CheckMatte from "../Controller/CheckMatte";
 import miniMax from "../Controller/IA/miniMax";
@@ -569,7 +570,7 @@ export default function Chessboard(props) {
               />
             </TouchableOpacity>
             <View style={{ width: "50%", height: 100, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <Text style={{ left: -17, fontSize: 20, color: 'white' }}>{user.fotoPerfil}</Text>
+              <Text style={{ left: -17, fontSize: 20, color: 'white' }}>{user.nomeUsuario}</Text>
               <View
                 style={{
                   width: 100,
@@ -585,7 +586,7 @@ export default function Chessboard(props) {
               >
                 <Image
                   style={{ width: "100%", height: "100%" }}
-                  source={user.fotoPerfil}
+                  source={{ uri: `${keys.linkBackEnd}images/${user.fotoPerfil}` }}
                 />
               </View>
 

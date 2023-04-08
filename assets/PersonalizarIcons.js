@@ -1,28 +1,29 @@
 import React from "react";
+import { Image } from "react-native";
 import Email from "./Email";
 import Logout from "./Logout";
 import Padlock from "./Padlock";
 import Pencil from "./Pencil";
 
-const PersonalizarIcons = (props) =>{
-    if(props.icon==='Pencil'){
-        return(
-            <Pencil width={props.width} height={props.height}/>
-        );
-    }
-    else if(props.icon ==='Email'){
-        return(
-            <Email width={props.width} height={props.height}/>
-        );
-    }
-    else if(props.icon ==='Logout'){
-        return(
-            <Logout width={props.width} height={props.height}/>
-        );
-    }
-    else if(props.icon ==='Padlock'){
+const PersonalizarIcons = (props) => {
+    if (props.icon === 'Pencil') {
         return (
-            <Padlock width={props.width} height={props.height} />
+            <Image style={{ width: props.width, height: props.height, resizeMode: 'contain' }} source={require("./Pencil.png")} />
+        );
+    }
+    else if (props.icon === 'Email') {
+        return (
+            <Image style={{ width: props.width, height: props.height, resizeMode: 'contain' }} source={require("./mail.png")} />
+        );
+    }
+    else if (props.icon === 'Logout') {
+        return (
+            <Image style={{ width: props.width, height: props.height, resizeMode: 'contain' }} source={require("./log-out.png")} />
+        );
+    }
+    else if (props.icon === 'Padlock') {
+        return (
+            <Image style={{ width: props.width, height: props.height, resizeMode: 'contain' }} source={require("./padlock.png")} />
         );
     }
 }

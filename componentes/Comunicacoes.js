@@ -30,11 +30,14 @@ const Comunicacoes = (props) => {
 
       <View style={{ left: "25%", position: "absolute" }}>
         <Text style={{ top: -10, fontSize: 15, fontWeight: "regular" }}>
-          {props.nomeUsuario}
+          {
+            props.nomeUsuario.length > 9 ?
+              `${props.nomeUsuario.substring(0, 9)}...`
+              : props.nomeUsuario}
         </Text>
         {props.mensagem !== undefined ?
           <Text style={{ opacity: 0.4 }}>
-            {props.mensagem.length < 35
+            {props.mensagem.length < 20
               ? `${props.mensagem}`
               : `${props.mensagem.substring(0, 20)}...`}
           </Text>

@@ -6,6 +6,8 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { AppState, BackHandler, Text } from "react-native";
 import { UserContext } from '../../App';
 import TabBarIcons from "../../componentes/TabBarIcons";
+import addImageToBackground from '../../configs/addImageToBackground';
+import createBlobFromLocalImage from '../../configs/createBlobFromLocalImage';
 import ImageStorage from '../../configs/ImageStorage';
 import keys from '../../configs/keys';
 import mensagensImageTextConvert from '../../configs/mensagensImageTextConverts';
@@ -113,7 +115,7 @@ export default function PaginaInicial(props) {
                 if (!mensagemExistente) {
                   mensagensAtualizadas.push(novaMensagem);
                   if (novaMensagem.usuarioEnviou !== user.idUsuario && novaMensagem.entregue === false) {
-                    axios.put(`${keys.linkBackEnd}Mensagens/confirmarEntrega/${user.email}/${user.senha}/${novaMensagem.idMensagem}`)
+                    axios.put(`${keys.linkBackEnd}Mensagens/confirmarEntrega/${user.email}/${user.senha}/${novaMensagem.idMensagens}`)
                       .then(response => {
                         console.log('Mensagem entregue com sucesso!');
                       })
@@ -144,7 +146,7 @@ export default function PaginaInicial(props) {
       }
     })
     setMensagensNaoLidas(naoLidas);
-  }, []);
+  }, [mensagens]);
 
   return (
     <NavigationContainer independent={true}>
