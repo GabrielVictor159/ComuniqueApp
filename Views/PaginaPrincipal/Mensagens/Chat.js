@@ -176,10 +176,10 @@ export default function Chat(props) {
                     <View >
                       {value.entregue === true ?
                         <>
-                          <Image style={{ tintColor: 'black', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 20 }, { translateY: 2 }] }} source={require("../../../assets/verifiqued.png")} />
-                          <Image style={{ tintColor: value.lida ? cores.backgroundColor : 'white', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 20 }] }} source={require("../../../assets/verifiqued.png")} />
-                          <Image style={{ tintColor: 'black', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 30 }, { translateY: 2 }] }} source={require("../../../assets/verifiqued.png")} />
-                          <Image style={{ tintColor: value.lida ? cores.backgroundColor : 'white', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 30 }] }} source={require("../../../assets/verifiqued.png")} />
+                          <Image style={{ tintColor: 'black', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 60 }, { translateY: 2 }] }} source={require("../../../assets/verifiqued.png")} />
+                          <Image style={{ tintColor: value.lida ? cores.backgroundColor : 'white', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 60 }] }} source={require("../../../assets/verifiqued.png")} />
+                          <Image style={{ tintColor: 'black', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 70 }, { translateY: 2 }] }} source={require("../../../assets/verifiqued.png")} />
+                          <Image style={{ tintColor: value.lida ? cores.backgroundColor : 'white', width: 25, height: 20, position: 'absolute', transform: [{ translateX: 70 }] }} source={require("../../../assets/verifiqued.png")} />
                         </>
                         : <></>
                       }

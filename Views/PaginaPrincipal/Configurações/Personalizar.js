@@ -184,6 +184,14 @@ export default function Personalizar(props) {
       return true
     }
   }
+  const sair = async () => {
+    fetch(`${keys.linkBackEnd}Usuarios/online/${user.email}/${user.senha}/false`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json' // Tipo de conteúdo do corpo da requisição
+      },
+    })
+  }
   return (
     <View
       style={{
@@ -297,6 +305,7 @@ export default function Personalizar(props) {
           textColor="#BE0B16"
           reset='Logar'
           navigation={props.navigationReset}
+          action={sair}
         />
       </View>
       <InputsOverlay

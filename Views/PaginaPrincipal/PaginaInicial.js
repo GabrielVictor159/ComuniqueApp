@@ -107,7 +107,7 @@ export default function PaginaInicial(props) {
             .then(mensagensValue => {
               const arrayMensagens = JSON.parse(mensagensValue);
               const mensagensAtualizadas = [...arrayMensagens];
-
+              console.log(JSON.stringify(mensagensValue))
               response.data.forEach(novaMensagem => {
                 const mensagemExistente = mensagensAtualizadas.find(
                   mensagem => mensagem.idMensagens === novaMensagem.idMensagens

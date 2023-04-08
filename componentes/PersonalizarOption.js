@@ -38,16 +38,16 @@ const PersonalizarOption = (props) => {
             flexDirection: "row",
             alignItems: "center",
           }}
-          onPress={() =>
-            props.reset != undefined
-          
-              ? props.navigation.reset({
-                  index: 0,
-                  routes: [{ name: props.reset }],
-                })
-              : 
-            props.action(true)
-          }
+          onPress={async () => {
+            if (props.reset !== undefined) {
+              await props.action();
+              props.navigation.reset({
+                index: 0,
+                routes: [{ name: props.reset }],
+              });
+            }
+
+          }}
         >
           <View style={{ left: 20 }}>
             <PersonalizarIcons icon={props.icon} width={29} height={29} />

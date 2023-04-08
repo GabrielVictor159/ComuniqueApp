@@ -116,13 +116,7 @@ const TabBarIcons = (props) => {
             top: props.topInactive,
           }}
         >
-          {props.mensagensNaoLidas != undefined && props.mensagensNaoLidas > 0 ?
-            <View style={{ width: 20, height: 20, backgroundColor: cores.buttonGradientColor1, borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', transform: [{ translateX: 18 }, { translateY: -20 }] }}>
-              <Text>{props.mensagensNaoLidas}</Text>
 
-            </View>
-            : <></>
-          }
           <Image
             style={{ width: "65%", height: "60%" }}
             source={require("../assets/TabBarIconChatInactive.png")}

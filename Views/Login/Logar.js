@@ -32,9 +32,7 @@ export default function Logar(props) {
       data.codeSenha = data.senha;
       data.senha = Senha;
       setUser(data)
-      AsyncStorage.clear()
-        .then(() => console.log('Todos os itens foram removidos com sucesso'))
-        .catch(error => console.log(error))
+
       navigation.navigate("PaginaInicial")
 
     }
