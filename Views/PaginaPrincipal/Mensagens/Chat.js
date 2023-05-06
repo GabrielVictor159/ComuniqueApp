@@ -1,16 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { UserContext } from "../../../App";
 import ImagePerfil from "../../../componentes/ImagePerfil";
 import keys from "../../../configs/keys";
 import { cores } from "../../../estilos";
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
+import { Video } from 'expo-av';
 
 export default function Chat(props) {
   const navigation = useNavigation();
   const [listMessage, setListMessage] = useState();
   const [conversa, setConversa] = useState([]);
   const [mensagemInput, setMensagemInput] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
   const { user, setUser } = useContext(UserContext);
   const scrollViewRef = useRef(null);
   const handleContentSizeChange = (contentWidth, contentHeight) => {
@@ -118,28 +122,88 @@ export default function Chat(props) {
       }
       if (z === true) {
         try {
-          console.log("passou aqui")
-          const response2 = await fetch(`${keys.linkBackEnd}Mensagens/${user.email}/${user.senha}/${props.chatEscolhido.idChat}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(a)
-          })
 
-          if (response2.ok) {
-            const novaMensagem = await response2.json();
-            props.setMensagens([...props.mensagens, novaMensagem]);
+          if (selectedImage != '') {
+            setSelectedImage('');
+            let imageRequest = await fetch(selectedImage);
+            let imageBlob = await imageRequest.blob();
+            let fileName = getFileName(selectedImage);
+            let formData = new FormData();
+            formData.append('image', {
+              uri: selectedImage,
+              type: imageBlob.type,
+              name: fileName,
+            });
+            let encodedMessage = encodeURIComponent(mensagemInput);
+            const response3 = await fetch(`${keys.linkBackEnd}Images/mensagens/${user.email}/${user.senha}/${props.chatEscolhido.idChat}/${encodedMessage}`, {
+              method: 'POST',
+              body: formData
+            })
+            if (response3.ok) {
+              const novaMensagem = await response3.json();
+              props.setMensagens([...props.mensagens, novaMensagem]);
+            }
+            else {
+              alert("Houve um erro!")
+            }
+          }
+          else {
+            const response2 = await fetch(`${keys.linkBackEnd}Mensagens/${user.email}/${user.senha}/${props.chatEscolhido.idChat}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(a)
+            })
+
+            if (response2.ok) {
+              const novaMensagem = await response2.json();
+              props.setMensagens([...props.mensagens, novaMensagem]);
+            }
           }
         }
-        catch { }
+        catch (error) {
+          console.error(error);
+        }
       }
 
 
     }
   }
+  function getFileName(fileUri) {
+    const startIndex = fileUri.lastIndexOf('/') + 1;
+    const endIndex = fileUri.length;
+    const fileName = fileUri.substring(startIndex, endIndex);
+    return fileName;
+  }
 
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permissão de acesso à galeria negada!');
+      return;
+    }
 
+    const result = await DocumentPicker.getDocumentAsync({});
+
+    if (result.type === 'success') {
+      const uri = result.uri;
+      const sizeInBytes = result.size;
+      const sizeInMb = sizeInBytes / (1024 * 1024);
+
+      if (sizeInMb > 60) {
+        alert('O arquivo selecionado é muito grande! Por favor selecione um arquivo menor que 10 MB.');
+        return;
+      }
+
+      setSelectedImage(uri)
+      console.log('selectedFile atualizado:', uri);
+    }
+  };
+
+  function getFileExtension(filePath) {
+    return filePath.split('.').pop();
+  }
 
   function mapChat() {
     if (conversa.length !== 0) {
@@ -238,17 +302,36 @@ export default function Chat(props) {
           <Image style={{ width: '60%', height: '50%' }} source={require('../../../assets/SendMessage.png')} />
         </TouchableOpacity>
       </View>
+      {selectedImage != '' ?
+        <View style={{ width: '100%', top: -160, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: '7%' }}>
+          <TouchableOpacity onPress={() => { setSelectedImage('') }} style={{ left: '75%' }}>
+            <Image source={require("../../../assets/X.png")} style={{ width: 20, height: 20 }} />
+          </TouchableOpacity>
+          <View style={{ width: '80%', height: 180, backgroundColor: 'white', borderRadius: 10, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {selectedImage && (getFileExtension(selectedImage) === 'mp4' || getFileExtension(selectedImage) === 'mkv'
+              ? <Video
+                source={{ uri: selectedImage }}
+                style={{ width: '95%', height: '95%' }}
+                resizeMode="contain"
+                useNativeControls
+              />
+              : getFileExtension(selectedImage) === 'jpg' || getFileExtension(selectedImage) === 'png' || getFileExtension(selectedImage) === 'jpeg'
+                ? <Image source={{ uri: selectedImage }} style={{ width: '95%', height: '95%' }} />
+                : <View style={{ width: '90%', height: 60, backgroundColor: '#03A7C4', borderRadius: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 20 }}>
+                  <Image source={require("../../../assets/icons8-file-64.png")} style={{ width: 40, height: 40 }} />
+                  <Text style={{ width: '70%' }}>{getFileName(selectedImage)}</Text>
+                </View>)}
 
-
+          </View>
+        </View> : <></>}
       <View style={styles.mensagemInputContainer}>
         <TextInput style={styles.mensagemInput}
           placeholder="Mensagem"
           onChangeText={setMensagemInput}
         />
-
-
-
-
+        <TouchableOpacity style={{ position: 'absolute', left: '67%' }} onPress={pickImage} >
+          <Image source={require("../../../assets/icons8-gallery-100.png")} style={{ width: 40, height: 40 }} />
+        </TouchableOpacity>
       </View>
       <View style={styles.buttonReturnContainer}>
         <TouchableOpacity style={styles.buttonReturn}

@@ -288,18 +288,6 @@ export default function Personalizar(props) {
           color1="#FCFCFC"
           color2="#FCFCFC"
           fontSize={20}
-          texto="Alterar E-mail  "
-          icon="Email"
-          action={setAlterarEmail}
-        />
-        <Text>{"\n"}</Text>
-        <PersonalizarOption
-          borderRadius={15}
-          width="85%"
-          height={50}
-          color1="#FCFCFC"
-          color2="#FCFCFC"
-          fontSize={20}
           texto="Sair"
           icon="Logout"
           textColor="#BE0B16"
@@ -308,42 +296,7 @@ export default function Personalizar(props) {
           action={sair}
         />
       </View>
-      <InputsOverlay
-        isVisible={alterarEmail}
-        onBackdropPress={toggleOverlay}
-        overlayStyle={[styles.overlayStyles, { height: isKeyboardVisible === false ? '50%' : 500, top: isKeyboardVisible === false ? '50%' : 50 }]}
-        titulo={'Alterar Email'}
-        tituloStyle={styles.overlayTitulo}
-        iconInput1={require("../../../assets/padlock.png")}
-        InputStyle1={styles.overlayInput}
-        KeyboardType1={'default'}
-        Placeholder1={'Digite sua senha'}
-        onChangeText1={setAlterarEmailInputAntigo}
-        SecureText1={true}
-        iconInput2={require("../../../assets/mail.png")}
-        InputStyle2={styles.overlayInput}
-        KeyboardType2={'email-address'}
-        Placeholder2={'Digite seu Novo email'}
-        onChangeText2={setAlterarEmailInputNovo}
-        buttonWidth={"60%"}
-        buttonHeight={70}
-        buttonColor={"#0D5692"}
-        buttonText={'Alterar'}
-        buttonAction={alterarEmailFunction}
-        overlaySucesso={setAlterarEmailSucesso}
-      />
-      <SucessoOverlay
-        overlayStyle={styles.overlaySucessoStyle}
-        isVisible={alterarEmailSucesso}
-        onBackdropPress={toggleOverlay}
-        titulo={"Seu E-mail foi alterado!"}
-        texto={"Agora utilize esse novo email para acessar! "}
-        buttonWidth={"60%"}
-        buttonHeight={70}
-        buttonColor={"#0D5692"}
-        buttonText={'voltar'}
-        buttonAction={toggleOverlay}
-      />
+
       <InputsOverlay
         isVisible={alterarSenha}
         onBackdropPress={toggleOverlay}
@@ -460,7 +413,7 @@ const styles = StyleSheet.create({
   },
   overlayInputStyle: {
     width: "100%",
-    height: 500,
+    height: 220,
     position: "absolute",
   },
   overlayImagesInput: {

@@ -46,7 +46,9 @@ const PersonalizarOption = (props) => {
                 routes: [{ name: props.reset }],
               });
             }
-
+            else {
+              props.action(true);
+            }
           }}
         >
           <View style={{ left: 20 }}>

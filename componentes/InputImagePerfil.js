@@ -69,26 +69,6 @@ export default function InputImagePerfil(props) {
         , { alignItems: 'center', backgroundColor: 'white' }]}>
       <TouchableOpacity style={{ elevation: 10 }}
         onPress={() =>
-          deleteImage()
-        }
-      >
-        <View style={{ width: 300, height: 70, backgroundColor: '#FCFCFC', borderRadius: 20, elevation: 10, justifyContent: 'center' }}>
-          <Text style={{ color: '#BE0B16', textAlign: 'center', fontSize: 20 }}>{'Apagar foto'}</Text>
-        </View>
-      </TouchableOpacity>
-      <Text>{'\n'}</Text>
-      <TouchableOpacity style={{ elevation: 10 }}
-        onPress={() =>
-          openCameraPickerAsync()
-        }
-      >
-        <View style={{ width: 300, height: 70, backgroundColor: '#FCFCFC', borderRadius: 20, elevation: 10, justifyContent: 'center' }}>
-          <Text style={{ textAlign: 'center', fontSize: 20 }}>{'Tirar foto'}</Text>
-        </View>
-      </TouchableOpacity>
-      <Text>{'\n'}</Text>
-      <TouchableOpacity style={{ elevation: 10 }}
-        onPress={() =>
           openImagePickerAsync()
         }
       >
