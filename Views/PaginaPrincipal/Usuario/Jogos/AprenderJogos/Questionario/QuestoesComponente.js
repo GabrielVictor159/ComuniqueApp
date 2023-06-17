@@ -14,25 +14,25 @@ export default function QuestoesComponente(props) {
     const navigation = useNavigation();
 
     function select(callback) {
-        if (callback === 'A') {
+        if (callback === 'R1') {
             setR1Color('#282A2C')
             setR2Color('#0F4C75')
             setR3Color('#0F4C75')
             setR4Color('#0F4C75')
         }
-        else if (callback === 'B') {
+        else if (callback === 'R2') {
             setR1Color('#0F4C75')
             setR2Color('#282A2C')
             setR3Color('#0F4C75')
             setR4Color('#0F4C75')
         }
-        else if (callback === 'C') {
+        else if (callback === 'R3') {
             setR1Color('#0F4C75')
             setR2Color('#0F4C75')
             setR3Color('#282A2C')
             setR4Color('#0F4C75')
         }
-        else if (callback === 'D') {
+        else if (callback === 'R4') {
             setR1Color('#0F4C75')
             setR2Color('#0F4C75')
             setR3Color('#0F4C75')
@@ -62,7 +62,7 @@ export default function QuestoesComponente(props) {
             <View style={styles.questoesContainer}>
                 <TouchableNativeFeedback
                     onPress={() => {
-                        select('A')
+                        select('R1')
                     }}
                 >
                     <View style={[styles.questaoContainer, { backgroundColor: R1Color }]}>
@@ -79,7 +79,7 @@ export default function QuestoesComponente(props) {
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback
                     onPress={() => {
-                        select('B')
+                        select('R2')
                     }}
                 >
                     <View style={[styles.questaoContainer, { backgroundColor: R2Color }]}>
@@ -96,7 +96,7 @@ export default function QuestoesComponente(props) {
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback
                     onPress={() => {
-                        select('C')
+                        select('R3')
                     }}
                 >
                     <View style={[styles.questaoContainer, { backgroundColor: R3Color }]}>
@@ -113,7 +113,7 @@ export default function QuestoesComponente(props) {
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback
                     onPress={() => {
-                        select('D')
+                        select('R4')
                     }}
                 >
                     <View style={[styles.questaoContainer, { backgroundColor: R4Color }]}>

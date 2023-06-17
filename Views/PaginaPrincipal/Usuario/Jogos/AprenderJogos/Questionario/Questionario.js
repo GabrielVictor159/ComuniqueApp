@@ -9,6 +9,8 @@ import keys from "../../../../../../configs/keys";
 import QuestoesComponente from "./QuestoesComponente";
 import Resultado from "./Resultado";
 const Stack = createStackNavigator();
+// ...imports
+
 export default function Questionario(props) {
   const navigation = useNavigation();
   const [respostas, setRespostas] = useState(0);
@@ -17,49 +19,55 @@ export default function Questionario(props) {
 
   useEffect(() => {
     props.swipe(false);
-
     props.display("none");
     props.setIconBackDisplay("none");
+
+    console.log("useEffect props");
+
     return function () {
       props.swipe(true);
       props.display("flex");
       props.setIconBackDisplay("flex");
     };
-  });
+  }, [props]);
 
   useEffect(() => {
+    console.log("useEffect user.instituicao.idInstituicao");
+
     fetch(`${keys.linkBackEnd}Questoes/LimitRange/${user.instituicao.idInstituicao}/10`)
       .then((response) => {
         if (response.status === 200) {
-          setQuestions(response.json())
-        }
-        else {
+          response.json().then(data => setQuestions(data))
+        } else {
           alert("Houve um problema na busca das questões!")
           navigation.goBack()
         }
-      })
-  }, [])
+      });
+  }, [user.instituicao.idInstituicao, navigation]);
 
   function mapQuestion() {
+    console.log("mapQuestion - questions", questions);
 
-    if (questions.length != 0) {
+    if (questions.length !== 0) {
       return questions.map((value, i) => {
+        console.log("mapQuestion - value", value);
+
         return (
           <Stack.Screen
             key={value.idQuestao}
             name={"" + i}
             children={() => (
               <QuestoesComponente
-                RC={value.RespostaCorreta}
-                R1={value.Resposta1}
-                R2={value.Resposta2}
-                R3={value.Resposta3}
-                R4={value.Resposta4}
-                titulo={value.Titulo}
-                buttonText={i == 9 ? 'Resultado' : 'Proxima questão'}
+                RC={value.respostaCorreta}
+                R1={value.resposta1}
+                R2={value.resposta2}
+                R3={value.resposta3}
+                R4={value.resposta4}
+                titulo={value.titulo}
+                buttonText={i === 9 ? 'Resultado' : 'Proxima questão'}
                 respostas={respostas}
                 setRespostas={setRespostas}
-                navigate={i == 9 ? 'resultado' : '' + (i + 1)}
+                navigate={i === 9 ? 'resultado' : '' + (i + 1)}
               />
             )}
             options={{
@@ -74,15 +82,17 @@ export default function Questionario(props) {
     }
   }
 
+  console.log("Render - questions", questions);
+
   return (
+    questions.length>0
+    ?
     <>
       <NavigationContainer independent={true}>
         <Stack.Navigator
           initialRouteName="0"
           transitionConfig={() => fromLeft(1000)}
         >
-
-
           {mapQuestion()}
           <Stack.Screen
             name={"resultado"}
@@ -122,6 +132,8 @@ export default function Questionario(props) {
           </View>
         </TouchableOpacity>
       </View>
+    
     </>
+    :<></>
   );
 }
